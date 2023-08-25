@@ -33,7 +33,7 @@ jobs:
       matrix:
         include:
           - os: macos-latest
-            flutter_path: /opt/hostedtoolcache/flutter
+            flutter_path: /Users/runner/hostedtoolcache/flutter
             artifact_name: macos
             artifact_path: build/macos/Build/Products/Release/flutter_groundstation.app
           - os: ubuntu-latest
@@ -45,7 +45,7 @@ jobs:
             artifact_name: linux
             artifact_path: '*.AppImage'
           - os: windows-latest
-            flutter_path: /opt/hostedtoolcache/flutter
+            flutter_path: C:\hostedtoolcache\flutter
             artifact_name: windows
             artifact_path: build/windows/runner/Release/*
       fail-fast: false
