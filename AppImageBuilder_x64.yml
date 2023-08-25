@@ -1,0 +1,65 @@
+# appimage-builder recipe see https://appimage-builder.readthedocs.io for details
+# source: https://github.com/HosamHasanRamadan/flutter_groundstation/blob/main/AppImageBuilder.yml
+version: 1
+script:
+  - rm -rf AppDir | true
+  - mkdir AppDir
+AppDir:
+  after_bundle:
+    - cp build/linux/x64/release/bundle/flutter_groundstation AppDir
+    - cp -r build/linux/x64/release/bundle/lib/. AppDir/lib
+    - cp -r build/linux/x64/release/bundle/data AppDir
+    - cp flutter_groundstation_icon.svg AppDir/usr/share/icons/
+    - chmod +x AppDir/flutter_groundstation
+  path: /home/hosam/Desktop/flutter_groundstation/AppDir
+  app_info:
+    id: com.example.flutter_groundstation
+    name: Flutter Appimage
+    icon: flutter_groundstation_icon
+    version: latest
+    exec: flutter_groundstation
+    exec_args: $@
+  pacman:
+    Architecture: x86_64
+    repositories:
+      core:
+        - https://mirror.rackspace.com/archlinux/$repo/os/$arch
+      extra:
+        - https://mirror.rackspace.com/archlinux/$repo/os/$arch
+    include:
+      - gtk3
+      - python
+      - perl
+    exclude: []
+  files:
+    include: []
+    exclude:
+      - usr/share/man
+      - usr/share/doc/*/README.*
+      - usr/share/doc/*/changelog.*
+      - usr/share/doc/*/NEWS.*
+      - usr/share/doc/*/TODO.*
+  test:
+    fedora-30:
+      image: appimagecrafters/tests-env:fedora-30
+      command: ./AppRun
+      use_host_x: true
+    debian-stable:
+      image: appimagecrafters/tests-env:debian-stable
+      command: ./AppRun
+      use_host_x: true
+    archlinux-latest:
+      image: appimagecrafters/tests-env:archlinux-latest
+      command: ./AppRun
+      use_host_x: true
+    centos-7:
+      image: appimagecrafters/tests-env:centos-7
+      command: ./AppRun
+      use_host_x: true
+    ubuntu-xenial:
+      image: appimagecrafters/tests-env:ubuntu-xenial
+      command: ./AppRun
+      use_host_x: true
+AppImage:
+  arch: x86_64
+  update-information: guess
