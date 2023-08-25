@@ -1,7 +1,8 @@
 import 'serial_none.dart';
 
 class WebSerial implements AbstractSerial {
-   List<String> serialPorts() { 
+   @override
+  List<String> serialPorts() { 
     return ['web serial impl'];
   }
 }

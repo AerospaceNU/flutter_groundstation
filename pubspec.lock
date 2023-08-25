@@ -89,9 +89,11 @@ packages:
   flutter_libserialport:
     dependency: "direct main"
     description:
-      path: "../flutter_libserialport"
-      relative: true
-    source: path
+      path: "."
+      ref: "7b98e97e244ccabc95a41f334590c3e25533aa3f"
+      resolved-ref: "7b98e97e244ccabc95a41f334590c3e25533aa3f"
+      url: "https://github.com/AerospaceNU/flutter_libserialport"
+    source: git
     version: "0.2.6"
   flutter_lints:
     dependency: "direct dev"

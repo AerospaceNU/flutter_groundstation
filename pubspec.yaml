@@ -37,7 +37,9 @@ dependencies:
   cupertino_icons: ^1.0.2
 
   flutter_libserialport: 
-    path: ../flutter_libserialport
+    git:
+      url: https://github.com/AerospaceNU/flutter_libserialport
+      ref: 7b98e97e244ccabc95a41f334590c3e25533aa3f
   io: ^1.0.4
   html: ^0.15.4
 
