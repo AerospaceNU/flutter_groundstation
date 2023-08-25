@@ -1,5 +1,7 @@
 # appimage-builder recipe see https://appimage-builder.readthedocs.io for details
 # source: https://github.com/HosamHasanRamadan/flutter_groundstation/blob/main/AppImageBuilder.yml
+# Only known working on x64 systems
+
 version: 1
 script:
   - rm -rf AppDir | true
