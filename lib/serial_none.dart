@@ -1,7 +1,6 @@
-abstract class AbstractSerial {
-  List<String> serialPorts();
-  factory AbstractSerial() => getAbstractSerial();
+class AbstractSerial {
+  List<String> serialPorts() { return ["none impl"]; }
 }
 
-AbstractSerial getAbstractSerial() => throw UnsupportedError('Cannot create an abstract AbstractSerial!');
+AbstractSerial getAbstractSerial() => AbstractSerial();
  

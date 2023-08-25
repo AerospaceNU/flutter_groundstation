@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'serial_none.dart' 
   if (dart.library.html) 'serial_web.dart' 
-  if (dart.library.io) 'serial_desktop.dart';
+  if (dart.library.flutter_libserialport) 'serial_desktop.dart';
 
 var serialthing = getAbstractSerial();
 

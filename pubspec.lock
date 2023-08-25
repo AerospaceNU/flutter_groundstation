@@ -77,10 +77,10 @@ packages:
     dependency: transitive
     description:
       name: ffi
-      sha256: "7bf0adc28a23d395f19f3f1eb21dd7cfd1dd9f8e1c50051c069122e6853bc878"
+      sha256: "13a6ccf6a459a125b3fcdb6ec73bd5ff90822e071207c663bfd1f70062d51d18"
       url: "https://pub.dev"
     source: hosted
-    version: "2.1.0"
+    version: "1.2.1"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -89,11 +89,10 @@ packages:
   flutter_libserialport:
     dependency: "direct main"
     description:
-      name: flutter_libserialport
-      sha256: "34cc4909eaa5b1502b9e1ad5a7dc597542f009d9adfa37c9a86ae0fb0d3b13fa"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.3.0"
+      path: "../flutter_libserialport"
+      relative: true
+    source: path
+    version: "0.2.6"
   flutter_lints:
     dependency: "direct dev"
     description:
@@ -127,10 +126,10 @@ packages:
     dependency: transitive
     description:
       name: libserialport
-      sha256: "392e1592def65282429832ec66fa25e9e163d3b37716b97691482e2406720727"
+      sha256: eddc9e648270ba47ab71e5551b63e40f1d7e157d88c7e95ed67474453f85dfe0
       url: "https://pub.dev"
     source: hosted
-    version: "0.3.0+1"
+    version: "0.2.0+3"
   lints:
     dependency: transitive
     description:
@@ -250,4 +249,4 @@ packages:
     version: "0.1.4-beta"
 sdks:
   dart: ">=3.1.0 <4.0.0"
-  flutter: ">=3.0.0"
+  flutter: ">=1.20.0"
