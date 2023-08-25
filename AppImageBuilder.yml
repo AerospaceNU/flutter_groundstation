@@ -5,7 +5,7 @@
 version: 1
 script:
   - rm -rf AppDir | true
-  - mkdir AppDir
+  - mkdir -p AppDir/usr/share/icons/
 AppDir:
   after_bundle:
     - cp build/linux/x64/release/bundle/flutter_groundstation AppDir
@@ -15,32 +15,42 @@ AppDir:
     - chmod +x AppDir/flutter_groundstation
   path: /home/hosam/Desktop/flutter_groundstation/AppDir
   app_info:
-    id: com.example.flutter_groundstation
-    name: Flutter Appimage
+    id: com.aeronu.flutter_groundstation
+    name: Flutter Groundstation
     icon: flutter_groundstation_icon
     version: latest
     exec: flutter_groundstation
     exec_args: $@
-  pacman:
-    Architecture: x86_64
-    repositories:
-      core:
-        - https://mirror.rackspace.com/archlinux/$repo/os/$arch
-      extra:
-        - https://mirror.rackspace.com/archlinux/$repo/os/$arch
-    include:
-      - gtk3
-      - python
-      - perl
-    exclude: []
+  apt:
+    arch: amd64
+    allow_unauthenticated: true
+    sources:
+    - sourceline: deb http://archive.ubuntu.com/ubuntu/ jammy main restricted
+    - sourceline: deb http://archive.ubuntu.com/ubuntu/ jammy-updates main restricted
+    - sourceline: deb http://archive.ubuntu.com/ubuntu/ jammy universe
+    - sourceline: deb http://archive.ubuntu.com/ubuntu/ jammy-updates universe
+    - sourceline: deb http://archive.ubuntu.com/ubuntu/ jammy multiverse
+    - sourceline: deb http://archive.ubuntu.com/ubuntu/ jammy-updates multiverse
+    - sourceline: deb http://archive.ubuntu.com/ubuntu/ jammy-backports main restricted
+        universe multiverse
+    - sourceline: deb http://security.ubuntu.com/ubuntu/ jammy-security main restricted
+    - sourceline: deb http://security.ubuntu.com/ubuntu/ jammy-security universe
+    - sourceline: deb http://security.ubuntu.com/ubuntu/ jammy-security multiverse
+    - sourceline: deb https://apt.kitware.com/ubuntu/ jammy main
+    - sourceline: deb http://apt.llvm.org/jammy/ llvm-toolchain-jammy-15 main
+    - sourceline: deb [signed-by=/etc/apt/keyrings/ookla_speedtest-cli-archive-keyring.gpg]
+        https://packagecloud.io/ookla/speedtest-cli/ubuntu/ jammy main
+    - sourceline: deb https://ppa.launchpadcontent.net/deadsnakes/ppa/ubuntu/ jammy
+        main
+    include: []
   files:
     include: []
     exclude:
-      - usr/share/man
-      - usr/share/doc/*/README.*
-      - usr/share/doc/*/changelog.*
-      - usr/share/doc/*/NEWS.*
-      - usr/share/doc/*/TODO.*
+    - usr/share/man
+    - usr/share/doc/*/README.*
+    - usr/share/doc/*/changelog.*
+    - usr/share/doc/*/NEWS.*
+    - usr/share/doc/*/TODO.*
   test:
     fedora-30:
       image: appimagecrafters/tests-env:fedora-30
