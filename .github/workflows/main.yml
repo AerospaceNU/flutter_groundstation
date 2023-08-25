@@ -35,7 +35,7 @@ jobs:
           - os: macos-latest
             flutter_path: /opt/hostedtoolcache/flutter
             artifact_name: macos
-            artifact_path: build
+            artifact_path: build/macos/Build/Products/Release/flutter_groundstation.app
           - os: ubuntu-latest
             flutter_path: /opt/hostedtoolcache/flutter
             artifact_name: web
