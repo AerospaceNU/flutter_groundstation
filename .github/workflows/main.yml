@@ -32,6 +32,10 @@ jobs:
     strategy:
       matrix:
         include:
+          - os: macos-latest
+            flutter_path: /opt/hostedtoolcache/flutter
+            artifact_name: macos
+            artifact_path: build
           - os: ubuntu-latest
             flutter_path: /opt/hostedtoolcache/flutter
             artifact_name: web
