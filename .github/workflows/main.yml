@@ -39,7 +39,7 @@ jobs:
           - os: ubuntu-latest
             flutter_path: /opt/hostedtoolcache/flutter
             artifact_name: linux
-            artifact_path: build/linux
+            artifact_path: *.AppImage
           - os: windows-latest
             flutter_path: /opt/hostedtoolcache/flutter
             artifact_name: windows

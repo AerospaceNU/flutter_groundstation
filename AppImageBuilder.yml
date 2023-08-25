@@ -16,7 +16,7 @@ AppDir:
   path: /home/hosam/Desktop/flutter_groundstation/AppDir
   app_info:
     id: com.aeronu.flutter_groundstation
-    name: Flutter Groundstation
+    name: flutter_groundstation
     icon: flutter_groundstation_icon
     version: latest
     exec: flutter_groundstation
