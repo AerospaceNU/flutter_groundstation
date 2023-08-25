@@ -8,9 +8,24 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        include:
+          - os: ubuntu-latest
+            flutter_path: /opt/hostedtoolcache/flutter
+      fail-fast: false
+    runs-on: ${{ matrix.os }}
+
     steps:
       - uses: actions/checkout@v3
+      - name: Cache Flutter
+        id: cache-flutter
+        uses: actions/cache@v1
+        with:
+          path: ${{ matrix.flutter_path }}
+          key: ${{ runner.os }}-flutter
       - uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
