@@ -69,10 +69,10 @@ jobs:
         run: |
           find build
 
-          wget -O /tmp/appimage-builder-x86_64.AppImage https://github.com/AppImageCrafters/appimage-builder/releases/download/v1.1.0/appimage-builder-1.1.0-x86_64.AppImage
-          chmod +x /tmp/appimage-builder-x86_64.AppImage
+          wget -O appimage-builder-x86_64.AppImage https://github.com/AppImageCrafters/appimage-builder/releases/download/v1.1.0/appimage-builder-1.1.0-x86_64.AppImage
+          chmod +x appimage-builder-x86_64.AppImage
 
-          /tmp/appimage-builder-x86_64.AppImage --skip-test 
+          ./appimage-builder-x86_64.AppImage --skip-test 
       - uses: actions/upload-artifact@master
         with:
           name: flutter_groundstation-${{ matrix.artifact_name }}
