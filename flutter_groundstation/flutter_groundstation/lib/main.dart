@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
 
+import 'serial_none.dart' 
+  if (dart.library.html) 'serial_web.dart' 
+  if (dart.library.io) 'serial_desktop.dart';
+
+var serialthing = getAbstractSerial();
+
 void main() {
   runApp(const MyApp());
 }
@@ -105,6 +111,9 @@ class _MyHomePageState extends State<MyHomePage> {
           // wireframe for each widget.
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            Text(
+              'Ports: ${serialthing.serialPorts()}',
+            ),
             const Text(
               'You have pushed the button this many times:',
             ),
