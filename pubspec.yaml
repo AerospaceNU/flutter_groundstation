@@ -42,6 +42,7 @@ dependencies:
       ref: 7b98e97e244ccabc95a41f334590c3e25533aa3f
   io: ^1.0.4
   html: ^0.15.4
+  usb_serial: ^0.4.0
 
 dev_dependencies:
   flutter_test:

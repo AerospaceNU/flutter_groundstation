@@ -1,7 +1,5 @@
-class AbstractSerial {
-  List<String> serialPorts() {
-    return ["none impl"];
-  }
+abstract class AbstractSerial {
+  List<String> serialPorts();
 }
 
-AbstractSerial getAbstractSerial() => AbstractSerial();
+AbstractSerial getAbstractSerial() => throw UnimplementedError("Serial is abstract");
