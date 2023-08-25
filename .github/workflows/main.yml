@@ -32,6 +32,10 @@ jobs:
     strategy:
       matrix:
         include:
+          - os: macos-latest
+            flutter_path: /Users/runner/hostedtoolcache/flutter
+            artifact_name: macos
+            artifact_path: build/macos/Build/Products/Release/flutter_groundstation.app
           - os: ubuntu-latest
             flutter_path: /opt/hostedtoolcache/flutter
             artifact_name: web
@@ -39,9 +43,9 @@ jobs:
           - os: ubuntu-latest
             flutter_path: /opt/hostedtoolcache/flutter
             artifact_name: linux
-            artifact_path: build/linux
+            artifact_path: '*.AppImage'
           - os: windows-latest
-            flutter_path: /opt/hostedtoolcache/flutter
+            flutter_path: C:\hostedtoolcache\flutter
             artifact_name: windows
             artifact_path: build/windows/runner/Release/*
       fail-fast: false
@@ -59,9 +63,12 @@ jobs:
         with:
           channel: 'stable'
 
+      - name: install mac desktop deps
+        if: matrix.artifact_name == 'macos'
+        run: brew install automake libtool
       - name: install linux desktop deps
         if: matrix.artifact_name == 'linux'
-        run: sudo apt-get update -y && sudo apt-get install -y ninja-build libgtk-3-dev
+        run: sudo apt-get update -y && sudo apt-get install -y ninja-build libgtk-3-dev libfuse2 libarchive-tools pacman
       - run: dart pub get
       - run: flutter build ${{ matrix.artifact_name }}
       - name: Create appimage
@@ -69,12 +76,41 @@ jobs:
         run: |
           find build
 
-          wget -O /tmp/appimage-builder-x86_64.AppImage https://github.com/AppImageCrafters/appimage-builder/releases/download/v1.1.0/appimage-builder-1.1.0-x86_64.AppImage
-          chmod +x /tmp/appimage-builder-x86_64.AppImage
+          wget -O appimage-builder-x86_64.AppImage -q https://github.com/AppImageCrafters/appimage-builder/releases/download/v1.1.0/appimage-builder-1.1.0-x86_64.AppImage
+          chmod +x appimage-builder-x86_64.AppImage
 
-          /tmp/appimage-builder-x86_64.AppImage --skip-test 
+          ./appimage-builder-x86_64.AppImage --skip-test 
       - uses: actions/upload-artifact@master
         with:
           name: flutter_groundstation-${{ matrix.artifact_name }}
           path: |
             ${{ matrix.artifact_path }}
+
+  release:
+    needs: [build]
+    runs-on: ubuntu-22.04
+    steps:
+      # Download literally every single artifact
+      - uses: actions/download-artifact@v2
+
+      # help out if we need to debug locations of things
+      - run: find
+
+      # Push to dev release on pushes to master
+      - uses: pyTooling/Actions/releaser@r0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          tag: 'Dev'
+          rm: true
+          files: |
+            **/*
+        if: github.event_name == 'push'
+
+      # Push to actual release, if tagged
+      - uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            **/*
+        if: startsWith(github.ref, 'refs/tags/v')
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
