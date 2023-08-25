@@ -1,8 +1,8 @@
 import 'serial_none.dart';
 
-class AbstractSerialWeb implements AbstractSerial {
+class WebSerial implements AbstractSerial {
    List<String> serialPorts() { 
     return ['this is a website, silly! thingy is bjork'];
   }
 }
-AbstractSerial getAbstractSerial() => AbstractSerialWeb(); //override global fxn to return Web
+AbstractSerial getAbstractSerial() => WebSerial(); //override global fxn to return Web version

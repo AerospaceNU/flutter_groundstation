@@ -3,8 +3,5 @@ abstract class AbstractSerial {
   factory AbstractSerial() => getAbstractSerial();
 }
 
-/////////////////////////////////////////////////////////
-//foo_locator.dart, contains un-implemented global function
-/////////////////////////////////////////////////////////
 AbstractSerial getAbstractSerial() => throw UnsupportedError('Cannot create an abstract AbstractSerial!');
  
