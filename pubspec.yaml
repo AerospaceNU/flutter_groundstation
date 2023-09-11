@@ -43,6 +43,7 @@ dependencies:
   io: ^1.0.4
   html: ^0.15.4
   usb_serial: ^0.4.0
+  provider: ^6.0.5
 
 dev_dependencies:
   flutter_test:
