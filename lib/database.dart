@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 
-
 class Database extends ChangeNotifier {
   var database = {};
+
+  Database() {
+    print("create database");
+  }
 
   void updateDatabase<T>(String key, T value) {
     print("database update: {$key}, {$value}");
@@ -16,5 +19,13 @@ class Database extends ChangeNotifier {
     } else {
       return defaultValue;
     }
+  }
+
+  @override
+  void addListener(VoidCallback listener) {
+    // TODO: implement addListener
+    print("HI");
+    print(listener);
+    super.addListener(listener);
   }
 }
