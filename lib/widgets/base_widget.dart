@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
+import '../callback_handler.dart';
 import '../database.dart';
+import '../constants.dart';
 
 class BaseWidget extends StatefulWidget {
   const BaseWidget({super.key});
@@ -11,12 +12,18 @@ class BaseWidget extends StatefulWidget {
 }
 
 class _BaseWidgetState extends State<BaseWidget> {
-//  _BaseWidgetState() {}
+  late CallbackHandler callbackHandler;
+  static late Database database;
 
-  Widget onDatabaseUpdate(BuildContext buildContext, Database database, Widget? widget) {
-    print("HI");
-//    setState(() {});
-    return const Text("abcd");
+  _BaseWidgetState() {
+    callbackHandler = CallbackHandler();
+    database = Database();
+
+    callbackHandler.registerCallback(Constants.databaseUpdateKey, onDatabaseUpdate);
+  }
+
+  void onDatabaseUpdate<T>(T data) {
+    setState(() {});
   }
 
   @override
@@ -25,9 +32,7 @@ class _BaseWidgetState extends State<BaseWidget> {
 
     var textWidget = const Text('Test text');
     var wid_2 = const Text('You have pushed the button this many times:');
-//    var wid_3 = Text('0', style: Theme.of(context).textTheme.headlineMedium);
-
-    var wid_3 = Consumer<Database>(builder: (context, database, child) => Text('${database.getValue("counter", 0)}', style: Theme.of(context).textTheme.headlineMedium));
+    var wid_3 = Text('${database.getValue("counter", 0)}', style: Theme.of(context).textTheme.headlineMedium);
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,

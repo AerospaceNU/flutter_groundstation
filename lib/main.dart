@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'serial_none.dart' if (dart.library.io) 'serial_desktop.dart' if (dart.library.html) 'serial_web.dart';
 
 import 'database.dart';
+import 'callback_handler.dart';
 import 'widgets/base_widget.dart';
 
 var serialthing = getAbstractSerial();
@@ -27,10 +28,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 45, 12, 192)),
         useMaterial3: true,
       ),
-      home: ChangeNotifierProvider(
-        create: (context) => Database(),
-        child: const MyHomePage(title: 'AeroNU Ground Station'),
-      ),
+      home: const MyHomePage(title: 'AeroNU Ground Station'),
     );
   }
 }
@@ -49,15 +47,19 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   late Timer guiUpdateLoopTimer;
+  late Database database;
+  late CallbackHandler callbackHandler;
 
   _MyHomePageState() {
-//    guiUpdateLoopTimer = Timer.periodic(const Duration(milliseconds: 50), runLoopOnce);
+    database = Database();
+    callbackHandler = CallbackHandler();
+
+    guiUpdateLoopTimer = Timer.periodic(const Duration(milliseconds: 50), runLoopOnce);
   }
 
   void runLoopOnce(Timer t) {}
 
-  void onButtonPress(BuildContext context) {
-    var database = context.read<Database>();
+  void onButtonPress() {
     var counterVal = database.getValue("counter", 0);
     database.updateDatabase("counter", counterVal + 1);
   }
@@ -74,7 +76,7 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[BaseWidget(), BaseWidget(), BaseWidget()],
         ),
       ),
-      floatingActionButton: FloatingActionButton(onPressed: () => onButtonPress(context), tooltip: 'Increment', child: const Icon(Icons.add)),
+      floatingActionButton: FloatingActionButton(onPressed: onButtonPress, tooltip: 'Increment', child: const Icon(Icons.add)),
     );
   }
 }

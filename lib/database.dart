@@ -1,16 +1,18 @@
-import 'package:flutter/material.dart';
+import 'callback_handler.dart';
+import 'constants.dart';
 
-class Database extends ChangeNotifier {
-  var database = {};
+class Database {
+  static var database = {};
+  static late CallbackHandler callbackHandler;
 
   Database() {
-    print("create database");
+    callbackHandler = CallbackHandler();
   }
 
   void updateDatabase<T>(String key, T value) {
     print("database update: {$key}, {$value}");
     database["counter"] = value;
-    notifyListeners();
+    callbackHandler.runCallback(Constants.databaseUpdateKey);
   }
 
   T getValue<T>(String key, T defaultValue) {
@@ -19,13 +21,5 @@ class Database extends ChangeNotifier {
     } else {
       return defaultValue;
     }
-  }
-
-  @override
-  void addListener(VoidCallback listener) {
-    // TODO: implement addListener
-    print("HI");
-    print(listener);
-    super.addListener(listener);
   }
 }
