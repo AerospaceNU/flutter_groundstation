@@ -4,7 +4,7 @@ import '../callback_handler.dart';
 import '../database.dart';
 import '../constants.dart';
 
-class BaseWidgetState<WidgetClass extends StatefulWidget> extends State<WidgetClass> {
+abstract class BaseWidgetState<WidgetClass extends StatefulWidget> extends State<WidgetClass> {
   late CallbackHandler callbackHandler;
   static late Database database;
 
@@ -21,11 +21,5 @@ class BaseWidgetState<WidgetClass extends StatefulWidget> extends State<WidgetCl
 
   void onDatabaseUpdate<T>(T data) {
     setState(() {});
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
   }
 }
