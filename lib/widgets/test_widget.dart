@@ -16,7 +16,7 @@ class _TestWidgetState extends BaseWidgetState<TestWidget> {
 
   @override
   Widget build(BuildContext context) {
-    print("Ayy");
+//    print("Rebuilding");
 
     var textWidget = const Text('Test text');
     var wid_2 = const Text('You have pushed the button this many times:');

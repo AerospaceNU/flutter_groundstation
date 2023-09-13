@@ -13,7 +13,7 @@ class Database {
   }
 
   void updateDatabase<T>(String key, T value) {
-    print("database update: {$key}, {$value}");
+//    print("database update: {$key}, {$value}");
     database[key] = value;
     updatedKeys.add(key);
     updateWidgets();

@@ -53,7 +53,7 @@ class _MyHomePageState extends State<MyHomePage> {
     database = Database();
     callbackHandler = CallbackHandler();
 
-    guiUpdateLoopTimer = Timer.periodic(const Duration(milliseconds: 1000), runLoopOnce);
+    guiUpdateLoopTimer = Timer.periodic(const Duration(milliseconds: 100), runLoopOnce);
   }
 
   void runLoopOnce(Timer t) {
