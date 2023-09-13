@@ -1,7 +1,7 @@
 import 'package:flutter_libserialport/flutter_libserialport.dart';
 import 'package:usb_serial/usb_serial.dart';
 
-import "serial_none.dart";
+import 'serial_none.dart';
 import 'dart:io' show Platform;
 
 class DesktopSerial implements AbstractSerial {
