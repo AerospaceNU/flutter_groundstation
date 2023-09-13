@@ -54,10 +54,12 @@ class _MyHomePageState extends State<MyHomePage> {
     database = Database();
     callbackHandler = CallbackHandler();
 
-    guiUpdateLoopTimer = Timer.periodic(const Duration(milliseconds: 50), runLoopOnce);
+    guiUpdateLoopTimer = Timer.periodic(const Duration(milliseconds: 1000), runLoopOnce);
   }
 
-  void runLoopOnce(Timer t) {}
+  void runLoopOnce(Timer t) {
+    database.updateDatabase("test", 0);
+  }
 
   void onButtonPress() {
     var counterVal = database.getValue("counter", 0);
