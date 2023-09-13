@@ -6,7 +6,7 @@ import 'serial_none.dart' if (dart.library.io) 'serial_desktop.dart' if (dart.li
 
 import 'database.dart';
 import 'callback_handler.dart';
-import 'widgets/base_widget.dart';
+import 'widgets/test_widget.dart';
 
 var serialthing = getAbstractSerial();
 
@@ -73,7 +73,7 @@ class _MyHomePageState extends State<MyHomePage> {
       body: const Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[BaseWidget(), BaseWidget(), BaseWidget()],
+          children: <Widget>[TestWidget(), TestWidget(), TestWidget()],
         ),
       ),
       floatingActionButton: FloatingActionButton(onPressed: onButtonPress, tooltip: 'Increment', child: const Icon(Icons.add)),
