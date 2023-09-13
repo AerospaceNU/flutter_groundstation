@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import 'serial_none.dart' if (dart.library.io) 'serial_desktop.dart' if (dart.library.html) 'serial_web.dart';
 
@@ -8,7 +7,7 @@ import 'database.dart';
 import 'callback_handler.dart';
 import 'widgets/test_widget.dart';
 
-var serialthing = getAbstractSerial();
+var serialThing = getAbstractSerial();
 
 void main() {
   runApp(const MyApp());
