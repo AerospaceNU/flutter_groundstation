@@ -44,6 +44,8 @@ dependencies:
   html: ^0.15.4
   usb_serial: ^0.4.0
   provider: ^6.0.5
+  fl_chart: ^0.63.0
+  show_fps: ^1.0.6
 
 dev_dependencies:
   flutter_test:

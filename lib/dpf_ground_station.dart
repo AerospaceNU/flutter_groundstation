@@ -1,7 +1,11 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_groundstation/widgets/graph_widget.dart';
+import 'package:show_fps/show_fps.dart';
 
-import 'serial/serial_none.dart' if (dart.library.io) 'serial/serial_desktop.dart' if (dart.library.html) 'serial/serial_web.dart';
+import 'serial/serial_none.dart'
+    if (dart.library.io) 'serial/serial_desktop.dart'
+    if (dart.library.html) 'serial/serial_web.dart';
 
 import 'database.dart';
 import 'callback_handler.dart';
@@ -20,10 +24,11 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         //The theme
         //TODO: Lets get this looking as good as we can at some point
-        colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 45, 12, 192)),
+        colorScheme: ColorScheme.fromSeed(
+            seedColor: const Color.fromARGB(255, 45, 12, 192)),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'AeroNU Ground Station'),
+      home: const ShowFPS(child: MyHomePage(title: 'AeroNU Ground Station')),
     );
   }
 }
@@ -49,11 +54,13 @@ class _MyHomePageState extends State<MyHomePage> {
     database = Database();
     callbackHandler = CallbackHandler();
 
-    guiUpdateLoopTimer = Timer.periodic(const Duration(milliseconds: 100), runLoopOnce);
+    guiUpdateLoopTimer =
+        Timer.periodic(const Duration(milliseconds: 20), runLoopOnce);
   }
 
+  int i = 0;
   void runLoopOnce(Timer t) {
-    database.updateDatabase("test", 0);
+    database.updateDatabase("test", i++);
   }
 
   void onButtonPress() {
@@ -66,14 +73,27 @@ class _MyHomePageState extends State<MyHomePage> {
     // This method is rerun every time setState is called, for instance as done
 
     return Scaffold(
-      appBar: AppBar(backgroundColor: Theme.of(context).colorScheme.inversePrimary, title: Text(widget.title)),
+      appBar: AppBar(
+          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+          title: Text(widget.title)),
       body: const Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[TestWidget(), TestWidget(), TestWidget()],
+          children: <Widget>[
+            TestWidget(),
+            TestWidget(),
+            GraphWidget(),
+            GraphWidget(),
+            // GraphWidget(),
+            // GraphWidget(),
+            // GraphWidget(),
+          ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(onPressed: onButtonPress, tooltip: 'Increment', child: const Icon(Icons.add)),
+      floatingActionButton: FloatingActionButton(
+          onPressed: onButtonPress,
+          tooltip: 'Increment',
+          child: const Icon(Icons.add)),
     );
   }
 }
