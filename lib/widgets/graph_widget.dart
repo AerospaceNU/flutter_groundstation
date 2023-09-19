@@ -13,7 +13,7 @@ class GraphWidget extends StatefulWidget {
 }
 
 // This is pretty expensive to do, so try to avoid doing it very often
-make_chart(List<List<FlSpot>> points) {
+makeChart(List<List<FlSpot>> points) {
     var ret = LineChartData(
           // lineTouchData: const LineTouchData(enabled: false, ), // Setting this to false throws LateInitializationError: Field 'mostLeftSpot' has not been initialized.
           lineBarsData: points.map((it) => 
@@ -33,7 +33,7 @@ make_chart(List<List<FlSpot>> points) {
 class _GraphWidgetState extends BaseWidgetState<GraphWidget> {
   _GraphWidgetState() {
     subscribeToDatabaseKey("test");
-    data = make_chart([points, points2, points3]);
+    data = makeChart([points, points2, points3]);
   }
 
   List<FlSpot> points = List.empty(growable: true);
@@ -70,7 +70,7 @@ class _GraphWidgetState extends BaseWidgetState<GraphWidget> {
     // return chart;
     var ret = ListView(
       shrinkWrap: true,
-      children: <Widget>[AspectRatio(aspectRatio: 6, child: LineChart(
+      children: <Widget>[AspectRatio(aspectRatio: 2, child: LineChart(
         data,
         duration: Duration(milliseconds: 0),
       ))],

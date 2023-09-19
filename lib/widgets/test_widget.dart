@@ -17,10 +17,11 @@ class _TestWidgetState extends BaseWidgetState<TestWidget> {
     var textWidget = const Text('Test text');
     var wid_2 = const Text('You have pushed the button this many times:');
     var wid_3 = Text('${getDatabaseValue("counter", 0)}', style: Theme.of(context).textTheme.headlineMedium);
+    var wid_4 = TextButton(onPressed: () => {}, child: const Text("hello"));
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[textWidget, wid_2, wid_3],
+      children: <Widget>[textWidget, wid_2, wid_3, wid_4],
     );
   }
 }

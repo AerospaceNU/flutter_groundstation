@@ -24,8 +24,12 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         //The theme
         //TODO: Lets get this looking as good as we can at some point
-        colorScheme: ColorScheme.fromSeed(
-            seedColor: const Color.fromARGB(255, 45, 12, 192)),
+        // colorScheme: ColorScheme.fromSeed(
+        //     seedColor: const Color(0xffe8202e)),
+        colorScheme: const ColorScheme.dark(
+          primary: Color(0xffe8202e),
+          secondary: Color(0xffedbb18),
+        ),
         useMaterial3: true,
       ),
       home: const ShowFPS(child: MyHomePage(title: 'AeroNU Ground Station')),
@@ -55,7 +59,7 @@ class _MyHomePageState extends State<MyHomePage> {
     callbackHandler = CallbackHandler();
 
     guiUpdateLoopTimer =
-        Timer.periodic(const Duration(milliseconds: 20), runLoopOnce);
+        Timer.periodic(const Duration(milliseconds: 50), runLoopOnce);
   }
 
   int i = 0;
