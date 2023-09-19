@@ -10,10 +10,6 @@ class TestWidget extends StatefulWidget {
 }
 
 class _TestWidgetState extends BaseWidgetState<TestWidget> {
-  _TestWidgetState() {
-    subscribeToDatabaseKey("counter");
-  }
-
   @override
   Widget build(BuildContext context) {
 //    print("Rebuilding");
