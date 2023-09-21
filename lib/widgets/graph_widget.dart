@@ -32,15 +32,17 @@ makeChart(List<List<FlSpot>> points) {
 }
 
 class _GraphWidgetState extends BaseWidgetState<GraphWidget> {
+  _GraphWidgetState() {
+    subscribeToDatabaseKey("test");
+    data = makeChart([points, points2, points3]);
+  }
+
   List<FlSpot> points = List.empty(growable: true);
   List<FlSpot> points2 = List.empty(growable: true);
   List<FlSpot> points3 = List.empty(growable: true);
 
   late LineChartData data;
 
-  _GraphWidgetState() {
-    data = makeChart([points, points2, points3]);
-  }
 
   @override
   Widget build(BuildContext context) {
