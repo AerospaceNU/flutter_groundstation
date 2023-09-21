@@ -10,6 +10,10 @@ List parseData(ByteData data, String format) {
     var character = format[i];
 
     switch (character) {
+      case 'c':
+        output.add(data.getInt8(index));
+        index += 1;
+        break;
       case 'f':
         output.add(data.getFloat32(index));
         index += 4;
