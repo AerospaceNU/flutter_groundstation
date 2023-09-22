@@ -49,7 +49,6 @@ class _DesktopHomePageState extends BaseHomePageState<DesktopHomePage> {
         body: TabBarView(
           children: [
             Scaffold(
-              appBar: AppBar(backgroundColor: Theme.of(context).colorScheme.inversePrimary, title: Text(widget.title)),
               body: const Center(child: TestWidget()),
               floatingActionButton: FloatingActionButton(onPressed: onButtonPress, tooltip: 'Increment', child: const Icon(Icons.add)),
             ),
