@@ -6,6 +6,7 @@ import '../../hardware_interface/test_interface.dart';
 import 'base_home_page.dart';
 
 import '../tabs/test_tab.dart';
+import '../tabs/graphs_tab.dart';
 
 import '../test_widget.dart';
 import '../graph_widget.dart';
@@ -39,17 +40,21 @@ class _DesktopHomePageState extends BaseHomePageState<DesktopHomePage> {
         appBar: AppBar(
           bottom: const TabBar(
             tabs: [
-              Tab(text: "Tab 1",),
-              Tab(text: "Tab 2"),
-              Tab(text: "Tab 3"),
+              Tab(text: "Test widget"),
+              Tab(text: "Test tab"),
+              Tab(text: "Graphs tab"),
             ],
           ),
         ),
-        body: const TabBarView(
+        body: TabBarView(
           children: [
-            TestWidget(),
-            GraphWidget(),
-            TestTab(),
+            Scaffold(
+              appBar: AppBar(backgroundColor: Theme.of(context).colorScheme.inversePrimary, title: Text(widget.title)),
+              body: const Center(child: TestWidget()),
+              floatingActionButton: FloatingActionButton(onPressed: onButtonPress, tooltip: 'Increment', child: const Icon(Icons.add)),
+            ),
+            const TestTab(),
+            const GraphTab(),
           ],
         ),
       ),

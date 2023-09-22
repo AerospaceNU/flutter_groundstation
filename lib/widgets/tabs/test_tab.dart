@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 
 import '../test_widget.dart';
+import '../graph_widget.dart';
 
 class TestTab extends StatelessWidget {
-  const TestTab
-
-  ({super.key});
+  const TestTab ({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,16 +15,8 @@ class TestTab extends StatelessWidget {
       mainAxisSpacing: 10,
       crossAxisCount: 2,
       children: <Widget>[
-        Container(
-          padding: const EdgeInsets.all(8),
-          color: Colors.teal[100],
-          child: const Text("Box 1"),
-        ),
-        Container(
-          padding: const EdgeInsets.all(8),
-          color: Colors.teal[200],
-          child: const Text('aaa'),
-        ),
+        const TestWidget(),
+        const GraphWidget(),
         Container(
           padding: const EdgeInsets.all(8),
           color: Colors.teal[300],
