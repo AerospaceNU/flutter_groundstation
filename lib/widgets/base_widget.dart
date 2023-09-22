@@ -36,7 +36,7 @@ abstract class BaseWidgetState<WidgetClass extends StatefulWidget> extends State
       }
     }
 
-    if (needsToUpdate) {
+    if (mounted && needsToUpdate) {
       setState(() {});
     }
   }

@@ -5,24 +5,22 @@ import '../../hardware_interface/test_interface.dart';
 
 import 'base_home_page.dart';
 
-import '../tabs/test_tab.dart';
-
 import '../test_widget.dart';
 import '../graph_widget.dart';
 
-class DesktopHomePage extends StatefulWidget {
+class TestingHomePage extends StatefulWidget {
   final String title;
 
-  const DesktopHomePage({super.key, required this.title});
+  const TestingHomePage({super.key, required this.title});
 
   @override
-  State<DesktopHomePage> createState() => _DesktopHomePageState();
+  State<TestingHomePage> createState() => _TestingHomePageState();
 }
 
-///Desktop home page
+///Testing home page
 ///Will have a bunch of tabs to show different data streams from the rocket
-class _DesktopHomePageState extends BaseHomePageState<DesktopHomePage> {
-  _DesktopHomePageState() {
+class _TestingHomePageState extends BaseHomePageState<TestingHomePage> {
+  _TestingHomePageState() {
     addHardwareInterface(TestHardwareInterface());
   }
 
@@ -33,26 +31,19 @@ class _DesktopHomePageState extends BaseHomePageState<DesktopHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 3,
-      child: Scaffold(
-        appBar: AppBar(
-          bottom: const TabBar(
-            tabs: [
-              Tab(text: "Tab 1",),
-              Tab(text: "Tab 2"),
-              Tab(text: "Tab 3"),
-            ],
-          ),
-        ),
-        body: const TabBarView(
+    return Scaffold(
+      appBar: AppBar(backgroundColor: Theme.of(context).colorScheme.inversePrimary, title: Text(widget.title)),
+      body: const Center(
+        child: SingleChildScrollView(
+            child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             TestWidget(),
             GraphWidget(),
-            TestTab(),
           ],
-        ),
+        )),
       ),
+      floatingActionButton: FloatingActionButton(onPressed: onButtonPress, tooltip: 'Increment', child: const Icon(Icons.add)),
     );
   }
 }
