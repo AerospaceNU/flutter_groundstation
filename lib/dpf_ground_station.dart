@@ -2,10 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:show_fps/show_fps.dart';
 
-import 'serial/serial_none.dart' if (dart.library.io) 'serial/serial_desktop.dart' if (dart.library.html) 'serial/serial_web.dart';
-
 import 'widgets/home_pages/desktop_home_page.dart';
-import 'widgets/home_pages/testing_home_page.dart';
+//import 'widgets/home_pages/testing_home_page.dart';
 
 class DpfGroundStation extends StatelessWidget {
   const DpfGroundStation({super.key});

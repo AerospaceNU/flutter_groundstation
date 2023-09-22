@@ -1,4 +1,4 @@
-import 'dart:math';
+// ignore_for_file: unused_local_variable
 
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
