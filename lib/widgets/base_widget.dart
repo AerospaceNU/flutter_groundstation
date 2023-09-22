@@ -6,12 +6,12 @@ import '../constants.dart';
 
 abstract class BaseWidgetState<WidgetClass extends StatefulWidget> extends State<WidgetClass> {
   late CallbackHandler callbackHandler;
-  static late Database _database;
+  static late Database database;
   final _subscribedKeys = <String>{}; //I don't understand why you can keep adding to a list declared final, but I'm not going to question it
 
   BaseWidgetState() {
     callbackHandler = CallbackHandler();
-    _database = Database();
+    database = Database();
 
     callbackHandler.registerCallback(Constants.databaseUpdateKey, onDatabaseUpdate);
   }
@@ -22,11 +22,11 @@ abstract class BaseWidgetState<WidgetClass extends StatefulWidget> extends State
 
   T getDatabaseValue<T>(String key, T defaultValue) {
     subscribeToDatabaseKey(key);
-    return _database.getValue(key, defaultValue);
+    return database.getValue(key, defaultValue);
   }
 
   void onDatabaseUpdate<T>(T data) {
-    var updatedKeys = _database.getUpdatedKeys();
+    var updatedKeys = database.getUpdatedKeys();
     bool needsToUpdate = false;
 
     for (var key in updatedKeys) {
