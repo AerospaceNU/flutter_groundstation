@@ -7,5 +7,4 @@ class WebSerial implements AbstractSerial {
   }
 }
 
-AbstractSerial getAbstractSerial() =>
-    WebSerial(); //override global fxn to return Web version
+AbstractSerial getAbstractSerial() => WebSerial(); //override global fxn to return Web version

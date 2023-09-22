@@ -4,7 +4,7 @@ import '../test_widget.dart';
 import '../graph_widget.dart';
 
 class TestTab extends StatelessWidget {
-  const TestTab ({super.key});
+  const TestTab({super.key});
 
   @override
   Widget build(BuildContext context) {
