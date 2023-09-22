@@ -19,6 +19,11 @@ class ListView<T> with ListMixin<T>, ChangeNotifier {
   int get length => endPlusOne - start;
 
   @override
+  set length(int newLength) {
+    // TODO: implement length
+  }
+
+  @override
   T operator [](int index) {
     return _buf[index + start];
   }
@@ -27,10 +32,5 @@ class ListView<T> with ListMixin<T>, ChangeNotifier {
   void operator []=(int index, T value) {
     _buf[index] = value;
     notifyListeners();
-  }
-
-  @override
-  set length(int newLength) {
-    throw UnsupportedError('Cannot resize a list view.');
   }
 }

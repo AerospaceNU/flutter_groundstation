@@ -12,13 +12,11 @@ class DesktopSerial implements AbstractSerial {
 
       () async {
         devices = await UsbSerial.listDevices();
-      } ();  // NOTE: '()' may be an error
+      }(); // NOTE: '()' may be an error
       return devices.map((e) => e.deviceName).toList();
-
     }
     return SerialPort.availablePorts;
   }
 }
 
-AbstractSerial getAbstractSerial() =>
-    DesktopSerial(); //override global fxn to return desktop version
+AbstractSerial getAbstractSerial() => DesktopSerial(); //override global fxn to return desktop version
