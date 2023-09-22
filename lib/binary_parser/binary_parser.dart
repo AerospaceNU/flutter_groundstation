@@ -18,7 +18,7 @@ List parseData(ByteData data, String format) {
         output.add(data.getInt8(index));
         index += 1;
         break;
-      case 'B':A
+      case 'B':
         output.add(data.getUint8(index));
         index += 1;
         break;
