@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_groundstation/widgets/displays/two_column_display.dart';
 
 import '../displays/data_display.dart';
-import '../test_widget.dart';
-import '../graph_widget.dart';
 
 /// Tab for testing the two column display widget.
 class TwoDisplayTestTab extends StatelessWidget {
