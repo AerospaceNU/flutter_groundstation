@@ -33,4 +33,8 @@ class Database {
       return defaultValue;
     }
   }
+
+  T? getValueOrNull<T>(String key) {
+    return database[key];
+  }
 }

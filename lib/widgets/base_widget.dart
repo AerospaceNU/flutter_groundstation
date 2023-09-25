@@ -25,6 +25,10 @@ abstract class BaseWidgetState<WidgetClass extends StatefulWidget> extends State
     return database.getValue(key, defaultValue);
   }
 
+  T? getDatabaseValueOrNull<T>(String key) {
+      return database.getValueOrNull(key);
+  }
+
   void onDatabaseUpdate<T>(T data) {
     var updatedKeys = database.getUpdatedKeys();
     bool needsToUpdate = false;
