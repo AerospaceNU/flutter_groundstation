@@ -1,5 +1,3 @@
-import 'package:fl_chart/fl_chart.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 
 /// Duplicates the python struct library
@@ -31,6 +29,10 @@ List parseData(ByteData data, String format) {
         break;
       case 'B':
         output.add(data.getUint8(index));
+        index += 1;
+        break;
+      case '?': //Bool
+        output.add(data.getUint8(index) > 0);
         index += 1;
         break;
       case 'f':

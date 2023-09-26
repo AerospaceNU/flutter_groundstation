@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter_libserialport/flutter_libserialport.dart';
 import '../serial/serial_none.dart' if (dart.library.io) '../serial/serial_desktop.dart' if (dart.library.html) '../serial/serial_web.dart';
@@ -25,8 +23,15 @@ class SerialGroundstationInterface extends BaseHardwareInterface {
 
   void callback(Uint8List data) {
     var headerBytes = data.sublist(0, 15);
+    var radioInfoBytes = data.sublist(data.length - 4);
+    var packetBytes = data.sublist(15, data.length - 4);
+
     var header = ByteData.sublistView(headerBytes);
+    var radioInfo = ByteData.sublistView(radioInfoBytes);
+    var packet = ByteData.sublistView(packetBytes);
+
     var parsedHeader = parseData(header, "<BBBIcccccccc");
+    var parsedRadioInfo = parseData(radioInfo, "<Bb?B");
 
     int packetType = parsedHeader[0];
     int softwareVersion = parsedHeader[1];
@@ -34,8 +39,28 @@ class SerialGroundstationInterface extends BaseHardwareInterface {
     int timestamp = parsedHeader[3];
     var callsign = parsedHeader.sublist(4, 12).join();
 
-    print(timestamp);
-    print(callsign);
-    print("  ");
+    int radioId = parsedRadioInfo[0];
+    int rssi = parsedRadioInfo[1];
+    bool crc = parsedRadioInfo[2];
+    int lqi = parsedRadioInfo[3];
+
+    var packetDict = {
+      "packet_type": packetType,
+      "software_version": softwareVersion,
+      "board_serial_number": boardSerialNum,
+      "timestamp": timestamp,
+      "callsign": callsign,
+      "radio_id": radioId,
+      "rssi": rssi,
+      "crc": crc,
+      "lqi": lqi,
+    };
+
+    database.bulkUpdateDatabase(packetDict);
+
+//    print(parsedRadioInfo);
+//    print(timestamp);
+//    print(callsign);
+//    print("  ");
   }
 }

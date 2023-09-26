@@ -1,4 +1,3 @@
-
 import 'callback_handler.dart';
 import 'constants.dart';
 
@@ -9,6 +8,15 @@ class Database {
 
   Database() {
     callbackHandler = CallbackHandler();
+  }
+
+  void bulkUpdateDatabase(Map<String, dynamic> data) {
+    for (var key in data.keys) {
+      database[key] = data[key];
+      updatedKeys.add(key);
+    }
+
+    updateWidgets();
   }
 
   void updateDatabase<T>(String key, T value) {
