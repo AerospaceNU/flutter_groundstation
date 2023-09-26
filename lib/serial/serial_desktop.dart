@@ -14,10 +14,10 @@ class DesktopSerial implements AbstractSerial {
         devices = await UsbSerial.listDevices();
       }(); // NOTE: '()' may be an error
       return devices.map((e) => e.deviceName).toList();
-
     }
     return SerialPort.availablePorts;
   }
+
   @override
   SerialPortReader reader(String portName) {
     SerialPort port = SerialPort(portName);
@@ -28,4 +28,3 @@ class DesktopSerial implements AbstractSerial {
 }
 
 AbstractSerial getAbstractSerial() => DesktopSerial(); //override global fxn to return desktop version
-

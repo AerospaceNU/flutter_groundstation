@@ -37,7 +37,25 @@ class Database {
 
   T getValue<T>(String key, T defaultValue) {
     if (database.containsKey(key)) {
-      return database[key];
+      var value = database[key];
+
+      //We do a little type checking
+      if (value is T) {
+        return value;
+      } else if (T == String) {
+        return value.toString() as T;
+      } else if (T == double && value is num) {
+        return value.toDouble() as T;
+      } else if (T == int && value is num) {
+        return value.toInt() as T;
+      } else {
+        try {
+          return value as T;
+        } catch (e) {
+          print("Can't cast key $key ${e}");
+          return defaultValue;
+        }
+      }
     } else {
       return defaultValue;
     }

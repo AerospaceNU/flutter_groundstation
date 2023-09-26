@@ -39,7 +39,7 @@ class _TestingHomePageState extends BaseHomePageState<TestingHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             TestWidget(),
-            GraphWidget(),
+            GraphWidget(title: "Test Graph", keyList: []),
           ],
         )),
       ),
