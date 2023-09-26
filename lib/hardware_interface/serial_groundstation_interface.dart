@@ -26,16 +26,16 @@ class SerialGroundstationInterface extends BaseHardwareInterface {
   void callback(Uint8List data) {
     var headerBytes = data.sublist(0, 15);
     var header = ByteData.sublistView(headerBytes);
+    var parsedHeader = parseData(header, "<BBBIcccccccc");
 
-
-    var parsedHeader = parseData(header, "BBBIcccccccc");
-    print(headerBytes);
-    print(parsedHeader);
-
+    int packetType = parsedHeader[0];
+    int softwareVersion = parsedHeader[1];
+    int boardSerialNum = parsedHeader[2];
+    int timestamp = parsedHeader[3];
     var callsign = parsedHeader.sublist(4, 12).join();
+
+    print(timestamp);
     print(callsign);
-
     print("  ");
-
   }
 }
