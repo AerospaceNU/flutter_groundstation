@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_groundstation/widgets/base_widget.dart';
+import 'package:flutter_groundstation/widgets/tabs/map_tab.dart';
 
 import '../../hardware_interface/test_interface.dart';
 import '../../hardware_interface/serial_groundstation_interface.dart';
@@ -36,7 +37,7 @@ class _DesktopHomePageState extends BaseHomePageState<DesktopHomePage> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 3,
+      length: 4,
       child: Scaffold(
         appBar: AppBar(
           bottom: const TabBar(
@@ -44,6 +45,7 @@ class _DesktopHomePageState extends BaseHomePageState<DesktopHomePage> {
               Tab(text: "Test widget"),
               Tab(text: "Test tab"),
               Tab(text: "Graphs tab"),
+              Tab(text: "Map Tab"),
             ],
           ),
         ),
@@ -55,6 +57,7 @@ class _DesktopHomePageState extends BaseHomePageState<DesktopHomePage> {
             ),
             const TestTab(),
             const GraphTab(),
+            const MapTab(),
           ],
         ),
       ),
