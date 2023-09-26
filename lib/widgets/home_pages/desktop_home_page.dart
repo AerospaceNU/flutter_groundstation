@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_groundstation/widgets/base_widget.dart';
 
 import '../../hardware_interface/test_interface.dart';
+import '../../hardware_interface/serial_groundstation_interface.dart';
 
 import 'base_home_page.dart';
 
@@ -24,6 +25,7 @@ class DesktopHomePage extends StatefulWidget {
 class _DesktopHomePageState extends BaseHomePageState<DesktopHomePage> {
   _DesktopHomePageState() {
     addHardwareInterface(TestHardwareInterface());
+    addHardwareInterface(SerialGroundstationInterface());
   }
 
   void onButtonPress() {

@@ -35,6 +35,11 @@ List parseData(ByteData data, String format) {
         output.add(data.getInt32(index));
         index += 4;
         break;
+      case 'I':
+      case 'L':
+        output.add(data.getUint32(index));
+        index += 4;
+        break;
     }
   }
 
