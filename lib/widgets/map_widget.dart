@@ -19,14 +19,15 @@ class MapWidget extends StatefulWidget {
   State<StatefulWidget> createState() => _MapWidgetState();
 }
   
-class _MapWidgetState extends BaseWidgetState<TestWidget> {
+class _MapWidgetState extends BaseWidgetState<MapWidget> {
   @override
   Widget build(BuildContext context) {
     return FlutterMap(
       options: MapOptions(
-        center: LatLng(51.509364, -0.128928),
+        center: LatLng(42.361145, -71.0570803),
         zoom: 9.2,
       ),
+      
       nonRotatedChildren: [
         RichAttributionWidget(
           attributions: [
@@ -43,6 +44,7 @@ class _MapWidgetState extends BaseWidgetState<TestWidget> {
           userAgentPackageName: 'com.example.app',
         ),
       ],
+      
     );
   }
 }
