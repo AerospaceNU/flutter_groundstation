@@ -56,6 +56,8 @@ class SerialGroundstationInterface extends BaseHardwareInterface {
       "lqi": lqi,
     };
 
+    print(packetDict);
+
     database.bulkUpdateDatabase(packetDict);
 
 //    print(parsedRadioInfo);
