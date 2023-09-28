@@ -25,15 +25,17 @@ class MapWidget extends StatefulWidget {
 
   
 class _MapWidgetState extends BaseWidgetState<MapWidget> {
+
+
   @override
   Widget build(BuildContext context) {
-    var lat = getDatabaseValue("lat", 42.361);
-    var long = getDatabaseValue("loc", -71.057);
+    var lat = getDatabaseValue("latitude", 42.361);
+    var long = getDatabaseValue("longitude", -71.057);
     return FlutterMap(
       options: MapOptions(
         center: LatLng(lat, long),
         //center: LatLng(42.361145, -71.0570803),
-        zoom: 9.2,
+        zoom: 17,
       ),
       
       nonRotatedChildren: [
@@ -50,13 +52,8 @@ class _MapWidgetState extends BaseWidgetState<MapWidget> {
         TileLayer(
           urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
           userAgentPackageName: 'com.example.app',
-          
-        ),
-        MapTileLayer(
-
-        ),
+        ), 
       ],
-      
     );
   }
 }
