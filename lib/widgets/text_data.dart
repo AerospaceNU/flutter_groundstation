@@ -2,8 +2,8 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_groundstation/database.dart';
-import 'package:flutter_groundstation/widgets/displays/two_column_display.dart';
 
+import '../constants.dart';
 import 'base_widget.dart';
 
 /// Text widget that displays data from the [Database] given a [dataKey].
@@ -44,7 +44,7 @@ class TextData extends StatefulWidget {
     this.minFontSize = 12,
     this.maxFontSize = double.infinity,
     this.stepGranularity = 1,
-    this.presetFontSizes = TwoColumnDisplay.stdFontSizes,
+    this.presetFontSizes = Constants.stdFontSizes,
     this.group,
     this.textAlign,
     this.textDirection,
@@ -119,5 +119,80 @@ extension StringRegEx on String {
       return trimmed;
     }
     return trimmed.substring(0, trimmed.length - 1);
+  }
+}
+
+/// An AutoSizeText widget builder to create [AutoSizeText] with specific
+/// parameters.
+class AutoSizeTextBuilder {
+  // purposely made not final as to make properties changeable.
+  TextStyle? style;
+  double? minFontSize;
+  double? maxFontSize;
+  double? stepGranularity;
+  List<double>? presetFontSizes;
+  AutoSizeGroup? group;
+  TextAlign? textAlign;
+  TextDirection? textDirection;
+  Locale? locale;
+  bool? softWrap;
+  bool? wrapWords;
+  TextOverflow? overflow;
+  Widget? overflowReplacement;
+  double? textScaleFactor;
+  int? maxLines;
+  String? semanticsLabel;
+
+  /// Creates a [AutoSizeTextBuilder] that will build [AutoSizeText] widgets
+  /// with the specified parameters.
+  ///
+  /// All default values are set properly except for [presetFontSizes], which
+  /// is set to [TwoColumnDisplay.stdFontSizes] for optimization.
+  AutoSizeTextBuilder({
+    this.style,
+    this.minFontSize = 12,
+    this.maxFontSize = double.infinity,
+    this.stepGranularity = 1,
+    this.presetFontSizes = Constants.stdFontSizes,
+    this.group,
+    this.textAlign,
+    this.textDirection,
+    this.locale,
+    this.softWrap,
+    this.wrapWords = true,
+    this.overflow,
+    this.overflowReplacement,
+    this.textScaleFactor,
+    this.maxLines,
+    this.semanticsLabel,
+  });
+
+  // values that require not null are handled by saying
+  //
+  // _variable ?? default_value,
+  //
+  // since the way these builders are constructed force
+  // any unspecified parameters to be null, causing some
+  // type error. basically bad code.
+  /// Creates a [AutoSizeText] widget with the pre-determined parameters.
+  AutoSizeText build(String data) {
+    return AutoSizeText(data,
+      style: style,
+      minFontSize: minFontSize ?? 12,
+      maxFontSize: maxFontSize ?? double.infinity,
+      stepGranularity: stepGranularity ?? 1,
+      presetFontSizes: presetFontSizes,
+      group: group,
+      textAlign: textAlign,
+      textDirection: textDirection,
+      locale: locale,
+      softWrap: softWrap,
+      wrapWords: wrapWords ?? true,
+      overflow: overflow,
+      overflowReplacement: overflowReplacement,
+      textScaleFactor: textScaleFactor,
+      maxLines: maxLines,
+      semanticsLabel: semanticsLabel,
+    );
   }
 }

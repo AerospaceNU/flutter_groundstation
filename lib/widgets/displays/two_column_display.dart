@@ -2,16 +2,13 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../../constants.dart';
+import '../text_data.dart';
+
 /// Widget that displays the given values in a two column format.
 ///
 /// Can automatically resizes text to fit perfectly within its bounds.
 class TwoColumnDisplay<T, R> extends StatelessWidget {
-  // For Text Resizing Optimization of large Font Sizes
-  // TODO: should find a better place to store this
-  static const List<double> stdFontSizes =
-    [1536, 1292, 1086, 914, 768, 646, 456, 322, 272, 228, 192, 162, 136, 114,
-     96, 84, 72, 60, 48, 36, 30, 24, 21, 18, 16, 14, 12, 11, 10, 9, 8, 7, 6];
-
   // Container Widget Properties
   /// Container width.
   final double width;
@@ -51,7 +48,7 @@ class TwoColumnDisplay<T, R> extends StatelessWidget {
     double minFontSize = 12,
     double maxFontSize = double.infinity,
     double stepGranularity = 1,
-    List<double>? presetFontSizes = stdFontSizes,
+    List<double>? presetFontSizes = Constants.stdFontSizes,
     TextAlign? textAlign,
     TextDirection? textDirection,
     Locale? locale,
@@ -193,81 +190,6 @@ class TwoColumnDisplay<T, R> extends StatelessWidget {
     SizedBox(
       height: titleBuilder.style?.fontSize?.toDouble() ?? 12.0 * 3,
       child: titleRow,
-    );
-  }
-}
-
-/// An AutoSizeText widget builder to create [AutoSizeText] with specific
-/// parameters.
-class AutoSizeTextBuilder {
-  // purposely made not final as to make properties changeable.
-  TextStyle? style;
-  double? minFontSize;
-  double? maxFontSize;
-  double? stepGranularity;
-  List<double>? presetFontSizes;
-  AutoSizeGroup? group;
-  TextAlign? textAlign;
-  TextDirection? textDirection;
-  Locale? locale;
-  bool? softWrap;
-  bool? wrapWords;
-  TextOverflow? overflow;
-  Widget? overflowReplacement;
-  double? textScaleFactor;
-  int? maxLines;
-  String? semanticsLabel;
-
-  /// Creates a [AutoSizeTextBuilder] that will build [AutoSizeText] widgets
-  /// with the specified parameters.
-  ///
-  /// All default values are set properly except for [presetFontSizes], which
-  /// is set to [TwoColumnDisplay.stdFontSizes] for optimization.
-  AutoSizeTextBuilder({
-    this.style,
-    this.minFontSize = 12,
-    this.maxFontSize = double.infinity,
-    this.stepGranularity = 1,
-    this.presetFontSizes = TwoColumnDisplay.stdFontSizes,
-    this.group,
-    this.textAlign,
-    this.textDirection,
-    this.locale,
-    this.softWrap,
-    this.wrapWords = true,
-    this.overflow,
-    this.overflowReplacement,
-    this.textScaleFactor,
-    this.maxLines,
-    this.semanticsLabel,
-  });
-
-  // values that require not null are handled by saying
-  //
-  // _variable ?? default_value,
-  //
-  // since the way these builders are constructed force
-  // any unspecified parameters to be null, causing some
-  // type error. basically bad code.
-  /// Creates a [AutoSizeText] widget with the pre-determined parameters.
-  AutoSizeText build(String data) {
-    return AutoSizeText(data,
-      style: style,
-      minFontSize: minFontSize ?? 12,
-      maxFontSize: maxFontSize ?? double.infinity,
-      stepGranularity: stepGranularity ?? 1,
-      presetFontSizes: presetFontSizes,
-      group: group,
-      textAlign: textAlign,
-      textDirection: textDirection,
-      locale: locale,
-      softWrap: softWrap,
-      wrapWords: wrapWords ?? true,
-      overflow: overflow,
-      overflowReplacement: overflowReplacement,
-      textScaleFactor: textScaleFactor,
-      maxLines: maxLines,
-      semanticsLabel: semanticsLabel,
     );
   }
 }
