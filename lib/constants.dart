@@ -50,6 +50,9 @@ class Constants {
   static const serialNumber = "board_serial_number";
   static const timestampMs = "time_stamp_ms";
   static const callsign = "callsign";
-  static const temperature = "temperature";
   static const bluetoothConnection = "ble_client";
+
+  //Misc
+  static const batteryVoltage = "battery_voltage";
+  static const temperature = "temperature";
 }
