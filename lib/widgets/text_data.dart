@@ -103,8 +103,21 @@ class _DataDisplayState extends BaseWidgetState<TextData> {
     var data = super.getDatabaseValueOrNull(widget.dataKey);
     const defaultVal = "N\\A";
     if (data is num && widget.decimals != null) {
-      data = data.toStringAsFixed(widget.decimals!);
+      data = data.toStringAsFixed(widget.decimals!).removeTrailingZero();
     }
     return data ?? defaultVal;
+  }
+}
+
+extension StringRegEx on String {
+  String removeTrailingZero() {
+    if (!contains('.')) {
+      return this;
+    }
+    String trimmed = replaceAll(RegExp(r'0*$'), '');
+    if (!trimmed.endsWith('.')) {
+      return trimmed;
+    }
+    return trimmed.substring(0, trimmed.length - 1);
   }
 }
