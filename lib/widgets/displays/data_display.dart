@@ -1,36 +1,44 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter_groundstation/widgets/displays/two_column_display.dart';
 
-import '../base_widget.dart';
+import '../text_data.dart';
 
-/// Data text display for testing the two column display.
-/// This is super scuff...
-class DataDisplay extends StatefulWidget {
-  final String dataKey;
-
-  DataDisplay({super.key, required this.dataKey}) {}
-
-  @override
-  State<StatefulWidget> createState() => _DataDisplayState();
-}
-
-class _DataDisplayState extends BaseWidgetState<DataDisplay> {
-  bool _subscribed = false;
-
-  _DataDisplayState();
-
-  @override
-  Widget build(BuildContext context) {
-    if (!_subscribed) {
-      super.subscribeToDatabaseKey(widget.dataKey);
-      _subscribed = true;
+// everything about this and the two column display is scuff.
+/// Widgets that displays data form the [Database] in a two column format.
+///
+/// Highly recommended to set the [decimals] parameter to a nonnull value.
+/// Not doing so will cause the data to 'jitter' uncontrollably.
+class DataDisplay extends TwoColumnDisplay<String, TextData> {
+  DataDisplay(Map<String, String> entries, {
+    super.key,
+    super.width = double.infinity,
+    super.height = double.infinity,
+    super.title,
+    super.titleStyle,
+    super.entryStyle,
+    super.minFontSize,
+    super.maxFontSize,
+    super.stepGranularity,
+    super.presetFontSizes,
+    super.textAlign,
+    super.textDirection,
+    super.locale,
+    super.softWrap,
+    super.wrapWords,
+    super.overflow,
+    super.overflowReplacement,
+    super.textScaleFactor,
+    super.maxLines = 3,
+    super.semanticsLabel,
+    super.autoFit = false,
+    super.group = true,
+    int? decimals,
+  }) : super(entries: {}) {
+    for (MapEntry<String, String> entry in entries.entries) {
+      super.entries[entry.key] = TextData(
+        dataKey: entry.value,
+        textBuilder: super.entryBuilder,
+        decimals: decimals,
+      );
     }
-    final data = super.getDatabaseValueOrNull(widget.dataKey);
-    final defaultVal = data is num ? 0 : "N\\A";
-
-    return Text(
-      (data ?? defaultVal).toString(),
-      style: Theme.of(context).textTheme.bodyMedium,
-    );
   }
 }
