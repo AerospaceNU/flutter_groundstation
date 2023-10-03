@@ -3,7 +3,9 @@ import 'package:flutter_libserialport/flutter_libserialport.dart';
 import '../serial/serial_none.dart' if (dart.library.io) '../serial/serial_desktop.dart' if (dart.library.html) '../serial/serial_web.dart';
 
 import '../binary_parser/binary_parser.dart';
+import 'fcb_message_definitions.dart';
 
+import '../constants.dart';
 import 'base_hardware_interface.dart';
 
 ///Reads data from serial port, and updates database
@@ -22,6 +24,11 @@ class SerialGroundstationInterface extends BaseHardwareInterface {
   }
 
   void callback(Uint8List data) {
+    if (data.length < 132) {
+      print(data.length);
+      return;
+    }
+
     var headerBytes = data.sublist(0, 15);
     var radioInfoBytes = data.sublist(data.length - 4);
     var packetBytes = data.sublist(15, data.length - 4);
@@ -44,19 +51,25 @@ class SerialGroundstationInterface extends BaseHardwareInterface {
     bool crc = parsedRadioInfo[2];
     int lqi = parsedRadioInfo[3];
 
+    //TODO: More constants
     var packetDict = {
       "packet_type": packetType,
-      "software_version": softwareVersion,
-      "board_serial_number": boardSerialNum,
-      "timestamp": timestamp,
-      "callsign": callsign,
+      Constants.softwareVersion: softwareVersion,
+      Constants.serialNumber: boardSerialNum,
+      Constants.timestampMs: timestamp,
+      Constants.callsign: callsign,
       "radio_id": radioId,
       "rssi": rssi,
       "crc": crc,
       "lqi": lqi,
     };
 
-    print(packetDict);
+    var messageDict = parseMessage(packetType, packet);
+
+    packetDict.addAll(messageDict);
+
+//    print(packetDict);
+//    print(messageDict);
 
     database.bulkUpdateDatabase(packetDict);
 

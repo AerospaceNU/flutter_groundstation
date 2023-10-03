@@ -52,14 +52,12 @@ List parseData(ByteData data, String format) {
         output.add(data.getUint8(index) > 0);
         index += 1;
         break;
-      case BinaryTypes.FLOAT_32_TYPE:
-        output.add(data.getFloat32(index, endianness));
-        index += 4;
-        break;
-      case BinaryTypes.FLOAT_64_TYPE:
-        output.add(data.getFloat64(index, endianness));
-        index += 8;
-        break;
+      case BinaryTypes.INT_16_TYPE:
+        output.add(data.getUint16(index, endianness));
+        index += 2;
+      case BinaryTypes.UINT_16_TYPE:
+        output.add(data.getUint16(index, endianness));
+        index += 2;
       case BinaryTypes.INT_32_TYPE:
       case 'l':
         output.add(data.getInt32(index, endianness));
@@ -69,6 +67,14 @@ List parseData(ByteData data, String format) {
       case 'L':
         output.add(data.getUint32(index, endianness));
         index += 4;
+        break;
+      case BinaryTypes.FLOAT_32_TYPE:
+        output.add(data.getFloat32(index, endianness));
+        index += 4;
+        break;
+      case BinaryTypes.FLOAT_64_TYPE:
+        output.add(data.getFloat64(index, endianness));
+        index += 8;
         break;
       default:
         print("Unknown binary format specifier $character");

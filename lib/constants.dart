@@ -31,6 +31,13 @@ class Constants {
   static const pitch = "pitch";
   static const yaw = "yaw";
 
+  static const qX = "q_x";
+  static const qY = "q_y";
+  static const qZ = "q_z";
+  static const qW = "q_w";
+
+  static const angleVertical = "angle_vertical";
+
   //GPS Data
   static const latitude = "fcb_latitude";
   static const longitude = "fcb_longitude";
@@ -55,4 +62,7 @@ class Constants {
   //Misc
   static const batteryVoltage = "battery_voltage";
   static const temperature = "temperature";
+  static const groundElevation = "ground_elevation";
+  static const groundTemperature = "ground_temperature";
+  static const pitotPressure = "pitot_pressure";
 }
