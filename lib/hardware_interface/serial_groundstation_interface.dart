@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter_libserialport/flutter_libserialport.dart';
 import '../serial/serial_none.dart' if (dart.library.io) '../serial/serial_desktop.dart' if (dart.library.html) '../serial/serial_web.dart';
@@ -13,14 +15,44 @@ class SerialGroundstationInterface extends BaseHardwareInterface {
   var serialInterface = getAbstractSerial();
   late SerialPort port;
   late SerialPortReader reader;
+  var desiredPort = "/dev/ttyACM0";
+  var portOpen = false;
 
-  SerialGroundstationInterface() {
-    var ports = serialInterface.serialPorts();
-    print("Serial ports ${ports}");
+  var lastDataTime = 0;
+  var nextCheckTime = 0;
 
-    reader = serialInterface.reader("/dev/ttyACM0");
-    reader.port.config.baudRate = 115200;
-    reader.stream.listen(callback);
+  SerialGroundstationInterface();
+
+  @override
+  void runLoopOnce(Timer t) {
+    var currentTime = DateTime.timestamp().millisecondsSinceEpoch;
+
+    if (currentTime > nextCheckTime && !portOpen) {
+      var ports = serialInterface.serialPorts();
+      if (ports.contains(desiredPort)) {
+        try {
+          reader = serialInterface.reader(desiredPort);
+          reader.port.config.baudRate = 115200;
+          reader.stream.listen(callback);
+          print("Opened port $desiredPort");
+          portOpen = true;
+          lastDataTime = currentTime + 5000;
+        } catch (e) {
+          print(e);
+        }
+      } else {
+        print("Unable to open serial port $desiredPort, options are $ports");
+      }
+
+      nextCheckTime = currentTime + 1000;
+    }
+
+    if (portOpen && currentTime - lastDataTime > 2200) {
+      reader.port.close();
+      reader.close();
+      portOpen = false;
+      print("Closed port");
+    }
   }
 
   void callback(Uint8List data) {
@@ -72,6 +104,8 @@ class SerialGroundstationInterface extends BaseHardwareInterface {
 //    print(messageDict);
 
     database.bulkUpdateDatabase(packetDict);
+
+    lastDataTime = DateTime.timestamp().millisecondsSinceEpoch;
 
 //    print(parsedRadioInfo);
 //    print(timestamp);
