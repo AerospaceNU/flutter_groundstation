@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../pyro_continuity_widget.dart';
+import '../pyro_data_widget.dart';
 
 class DiagnosticsTab extends StatelessWidget {
   const DiagnosticsTab({super.key});
@@ -15,6 +16,7 @@ class DiagnosticsTab extends StatelessWidget {
       crossAxisCount: 3,
       children: const <Widget>[
         PyroContinuityWidget(),
+        PyroDataWidget(),
       ],
     );
   }

@@ -12,7 +12,8 @@ class PyroContinuityWidget extends StatefulWidget {
 }
 
 class _PyroWidgetState extends BaseWidgetState<PyroContinuityWidget> {
-  var event = ['Approved', 'Rejected', 'Approved', 'Approved', 'Approved', 'Approved'];
+  var event = ['Approved', 'Rejected', 'Approved', 'Approved', 'Approved', 'Approved', 'Approved'];
+  static const max_pyros = 7;
 
   _PyroWidgetState() {
   }
@@ -41,72 +42,16 @@ class _PyroWidgetState extends BaseWidgetState<PyroContinuityWidget> {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.end,
-            children: <Widget>[
-              Expanded(
-                child: Container(
+            children: [
+              for (int i = 0; i < max_pyros; i++) Expanded(child: Container(
                   height: 75,
                   decoration: BoxDecoration(
-                    color: _getColorByEvent(event[0].toString()),
+                    color: _getColorByEvent(event[i].toString()),
                     border: Border.all(color: Colors.black)),
-                  child: const Center(
-                    child: Text('1'),
+                  child: Center(
+                    child: Text((i+1).toString()),
                   ),
-                ),
-              ),
-              Expanded(
-                child: Container(
-                  height: 75,
-                  decoration: BoxDecoration(
-                    color: _getColorByEvent(event[1].toString()),
-                    border: Border.all(color: Colors.black)),
-                  child: const Center(
-                    child: Text('2'),
-                  ),
-                ),
-              ),
-              Expanded(
-                child: Container(
-                  height: 75,
-                  decoration: BoxDecoration(
-                    color: _getColorByEvent(event[2].toString()),
-                    border: Border.all(color: Colors.black)),
-                  child: const Center(
-                    child: Text('3'),
-                  ),
-                ),
-              ),
-              Expanded(
-                child: Container(
-                  height: 75,
-                  decoration: BoxDecoration(
-                    color: _getColorByEvent(event[3].toString()),
-                    border: Border.all(color: Colors.black)),
-                  child: const Center(
-                    child: Text('4'),
-                  ),
-                ),
-              ),
-              Expanded(
-                child: Container(
-                  height: 75,
-                  decoration: BoxDecoration(
-                    color: _getColorByEvent(event[4].toString()),
-                    border: Border.all(color: Colors.black)),
-                  child: const Center(
-                    child: Text('5'),
-                  ),
-                ),
-              ),
-              Expanded(
-                child: Container(
-                  height: 75,
-                  decoration: BoxDecoration(
-                    color: _getColorByEvent(event[5].toString()),
-                    border: Border.all(color: Colors.black)),
-                  child: const Center(
-                    child: Text('6'),
-                  ),
-                ),
+                )
               ),
             ],
           ),
@@ -116,12 +61,14 @@ class _PyroWidgetState extends BaseWidgetState<PyroContinuityWidget> {
   }
 }
 
+// changes the color based on input data
 Color _getColorByEvent(String event) {
   if (event == "Approved") return Colors.green;
   if (event == "Rejected") return Colors.red;
   return Colors.white;
 }
 
+// was trying to make it draggable - it didn't cooperate
 class _DragAreaStateStateful extends _PyroWidgetState {
   Offset position = Offset(100, 100);
   double prevScale = 1;
