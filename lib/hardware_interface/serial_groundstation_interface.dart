@@ -21,9 +21,7 @@ class SerialGroundstationInterface extends BaseHardwareInterface {
 
   @override
   void runLoopOnce(Timer t) {
-    var currentTime = DateTime
-        .timestamp()
-        .millisecondsSinceEpoch;
+    var currentTime = DateTime.timestamp().millisecondsSinceEpoch;
 
     if (currentTime > nextCheckTime && !portOpen) {
       var ports = serialInterface.serialPorts();
@@ -103,9 +101,7 @@ class SerialGroundstationInterface extends BaseHardwareInterface {
 
     database.bulkUpdateDatabase(packetDict);
 
-    lastDataTime = DateTime
-        .timestamp()
-        .millisecondsSinceEpoch;
+    lastDataTime = DateTime.timestamp().millisecondsSinceEpoch;
 
 //    print(parsedRadioInfo);
 //    print(timestamp);
