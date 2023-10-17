@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_groundstation/widgets/home_pages/testing_home_page.dart';
 import 'package:show_fps/show_fps.dart';
 
 import 'widgets/home_pages/desktop_home_page.dart';
@@ -13,6 +14,7 @@ class DpfGroundStation extends StatelessWidget {
   Widget build(BuildContext context) {
     //TODO: Load a different home page on different platforms
     var home = const DesktopHomePage(title: 'AeroNU Ground Station');
+//    var home = const TestingHomePage(title: 'testing');
 
     StatefulWidget homePage;
     if (kDebugMode) {

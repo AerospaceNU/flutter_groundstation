@@ -2,15 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_groundstation/widgets/base_widget.dart';
 import 'package:flutter_groundstation/widgets/graph_widget.dart';
 import 'package:flutter_groundstation/widgets/tabs/home_tab.dart';
-import 'package:flutter_groundstation/widgets/text_data.dart';
-import 'package:flutter_resizable_container/flutter_resizable_container.dart';
-
+import 'package:flutter_groundstation/widgets/entry_data.dart';
 import '../../hardware_interface/test_interface.dart';
-
+import '../../hardware_interface/serial_groundstation_interface.dart';
 import 'base_home_page.dart';
-
 import '../tabs/test_tab.dart';
 import '../tabs/graphs_tab.dart';
+import '/constants.dart';
 
 class DesktopHomePage extends StatefulWidget {
   final String title;
@@ -26,6 +24,7 @@ class DesktopHomePage extends StatefulWidget {
 class _DesktopHomePageState extends BaseHomePageState<DesktopHomePage> {
   _DesktopHomePageState() {
     addHardwareInterface(TestHardwareInterface());
+    addHardwareInterface(SerialGroundstationInterface());
   }
 
   void onButtonPress() {
@@ -54,11 +53,9 @@ class _DesktopHomePageState extends BaseHomePageState<DesktopHomePage> {
                 topBar: HomeTopBar(widgets: [
                   TextData(dataKey: "test", wrapWords: false,),
                   TextData(dataKey: "random_1", wrapWords: false, decimals: 6,),
-                  GraphWidget(),
                 ], border: Colors.black38),
                 leftBar: HomeLeftBar(widgets: [
-                  GraphWidget(),
-                  GraphWidget(),
+                  GraphWidget(title: "Altitude", keyList: [Constants.altitude, Constants.gpsAltitude]),
                   TextData(dataKey: "random_2", wrapWords: false, decimals: 6,)
                 ], border: Colors.black38),
               )),
