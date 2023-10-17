@@ -1,8 +1,23 @@
-import 'package:flutter_libserialport/flutter_libserialport.dart';
+import 'dart:typed_data';
 
+/// Serial interface
 abstract class AbstractSerial {
   List<String> serialPorts();
-  SerialPortReader reader(String portName);
+
+  AbstractSerialPortReader reader(String portName);
+}
+
+/// Reader wrapper
+abstract class AbstractSerialPortReader {
+  AbstractSerialPortReader(String portName);
+
+  void setBaudRate(int baudRate);
+
+  Stream<Uint8List>? getIncomingStream();
+
+  void close();
 }
 
 AbstractSerial getAbstractSerial() => throw UnimplementedError("Serial is abstract");
+
+AbstractSerialPortReader createReader(String port) => throw UnimplementedError("Serial is abstract");

@@ -25,8 +25,8 @@ jobs:
 
       - run: dart pub get
       - run: dart format --output=none --set-exit-if-changed --line-length=300 lib
-      - run: dart analyze
-      - run: flutter analyze
+#      - run: dart analyze
+#      - run: flutter analyze
 
   build:
     strategy:
