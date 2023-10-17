@@ -340,22 +340,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.2"
-  provider:
-    dependency: "direct main"
-    description:
-      name: provider
-      sha256: cdbe7530b12ecd9eb455bdaa2fcb8d4dad22e80b8afb4798b41479d5ce26847f
-      url: "https://pub.dev"
-    source: hosted
-    version: "6.0.5"
-  show_fps:
-    dependency: "direct main"
-    description:
-      name: show_fps
-      sha256: "398124dd74456ad92fbb791cd6dd1018b5ced5ac3b9d0b401ab8c0e035ac9920"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.1.1"
   pool:
     dependency: transitive
     description:
