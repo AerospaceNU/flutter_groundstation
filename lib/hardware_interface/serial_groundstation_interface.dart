@@ -9,33 +9,30 @@ import 'fcb_message_definitions.dart';
 import '../constants.dart';
 import 'base_hardware_interface.dart';
 
-
-
 ///Reads data from serial port, and updates database
 class SerialGroundstationInterface extends BaseHardwareInterface {
   var serialInterface = getAbstractSerial();
-  late SerialPortReader reader;
+  late var reader;
   var desiredPort = "/dev/ttyACM0";
   var portOpen = false;
 
   var lastDataTime = 0;
   var nextCheckTime = 0;
 
-  SerialGroundstationInterface() {}
-
   @override
   void runLoopOnce(Timer t) {
-    var currentTime = DateTime.timestamp().millisecondsSinceEpoch;
+    var currentTime = DateTime
+        .timestamp()
+        .millisecondsSinceEpoch;
 
     if (currentTime > nextCheckTime && !portOpen) {
       var ports = serialInterface.serialPorts();
-      print(ports);
-      return;
       if (ports.contains(desiredPort)) {
         try {
-          reader = serialInterface.reader(desiredPort);
-          reader.port.config.baudRate = 115200;
-          reader.stream.listen(callback);
+          reader = createReader(desiredPort);
+          // reader = serialInterface.reader(desiredPort);
+          reader.setBaudRate(115200);
+          reader.getIncomingStream()?.listen(callback);
           print("Opened port $desiredPort");
           portOpen = true;
           lastDataTime = currentTime + 5000;
@@ -50,7 +47,6 @@ class SerialGroundstationInterface extends BaseHardwareInterface {
     }
 
     if (portOpen && currentTime - lastDataTime > 2200) {
-      reader.port.close();
       reader.close();
       portOpen = false;
       print("Closed port");
@@ -107,7 +103,9 @@ class SerialGroundstationInterface extends BaseHardwareInterface {
 
     database.bulkUpdateDatabase(packetDict);
 
-    lastDataTime = DateTime.timestamp().millisecondsSinceEpoch;
+    lastDataTime = DateTime
+        .timestamp()
+        .millisecondsSinceEpoch;
 
 //    print(parsedRadioInfo);
 //    print(timestamp);
