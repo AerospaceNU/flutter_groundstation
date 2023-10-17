@@ -16,7 +16,7 @@ class TestTab extends StatelessWidget {
       crossAxisCount: 2,
       children: <Widget>[
         const TestWidget(),
-        const GraphWidget(),
+        const GraphWidget(title: "Test Graph", keyList: ["test_1", "test_2", "random_1", "counter"]),
         Container(
           padding: const EdgeInsets.all(8),
           color: Colors.teal[300],

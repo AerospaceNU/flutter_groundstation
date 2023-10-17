@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_groundstation/widgets/base_widget.dart';
-import 'package:flutter_groundstation/widgets/tabs/two_display_test_tab.dart';
 
 import '../../hardware_interface/test_interface.dart';
+import '../../hardware_interface/serial_groundstation_interface.dart';
 
 import 'base_home_page.dart';
 
@@ -25,6 +25,7 @@ class DesktopHomePage extends StatefulWidget {
 class _DesktopHomePageState extends BaseHomePageState<DesktopHomePage> {
   _DesktopHomePageState() {
     addHardwareInterface(TestHardwareInterface());
+    addHardwareInterface(SerialGroundstationInterface());
   }
 
   void onButtonPress() {
@@ -35,7 +36,7 @@ class _DesktopHomePageState extends BaseHomePageState<DesktopHomePage> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 4,
+      length: 3,
       child: Scaffold(
         appBar: AppBar(
           bottom: const TabBar(
@@ -43,7 +44,6 @@ class _DesktopHomePageState extends BaseHomePageState<DesktopHomePage> {
               Tab(text: "Test widget"),
               Tab(text: "Test tab"),
               Tab(text: "Graphs tab"),
-              Tab(text: "Core Info tab"),
             ],
           ),
         ),
@@ -55,7 +55,6 @@ class _DesktopHomePageState extends BaseHomePageState<DesktopHomePage> {
             ),
             const TestTab(),
             const GraphTab(),
-            const TwoDisplayTestTab(),
           ],
         ),
       ),

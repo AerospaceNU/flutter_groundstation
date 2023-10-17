@@ -17,6 +17,14 @@ class DesktopSerial implements AbstractSerial {
     }
     return SerialPort.availablePorts;
   }
+
+  @override
+  SerialPortReader reader(String portName) {
+    SerialPort port = SerialPort(portName);
+    port.openReadWrite();
+    SerialPortReader reader = SerialPortReader(port);
+    return reader;
+  }
 }
 
 AbstractSerial getAbstractSerial() => DesktopSerial(); //override global fxn to return desktop version
