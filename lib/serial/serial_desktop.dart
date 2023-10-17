@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter_libserialport/flutter_libserialport.dart';
 import 'package:usb_serial/usb_serial.dart';
 
@@ -27,4 +29,14 @@ class DesktopSerial implements AbstractSerial {
   }
 }
 
+class DesktopSerialReader implements AbstractSerialPortReader {
+  late SerialPortReader wrapped;
+
+  Stream<Uint8List> getIncomingStream() {
+    return wrapped.stream;
+  }
+}
+
 AbstractSerial getAbstractSerial() => DesktopSerial(); //override global fxn to return desktop version
+
+AbstractSerialPortReader createReader(String port) => DesktopSerialReader();
