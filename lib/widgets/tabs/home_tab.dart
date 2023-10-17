@@ -1,12 +1,14 @@
 
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_groundstation/widgets/map_widget.dart';
+import 'package:flutter_groundstation/widgets/qrcode.dart';
 import 'package:flutter_resizable_container/flutter_resizable_container.dart';
 
 class HomeTab extends StatelessWidget {
   final HomeTopBar topBar;
   final HomeLeftBar leftBar;
-
 
   const HomeTab({
     super.key,
@@ -17,32 +19,65 @@ class HomeTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-        children: [
-          Expanded(
+      children: [
+        Expanded(
             flex: 9,
             child: Column(
               children: [
                 Flexible(
-                  flex: 1,
-                  child: topBar
+                    flex: 1,
+                    child: topBar
                 ),
                 const Expanded(
-                  flex: 9,
-                  child: Center(
-                    child: MapWidget(),
-                  )
-                )
+                    flex: 9,
+                    child: Center(
+                      child: Scaffold(
+                        floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
+                        body: MapWidget(),
+                        floatingActionButton: QRCodeContainer(),
+                        ),
+                      ),
+                    )
               ],
             )
-          ), Expanded(
-            flex: 2,
-            child: leftBar,
-          )
-        ]
+        ), Expanded(
+          flex: 2,
+          child: leftBar,
+        )
+      ]
     );
   }
 }
 
+class QRCodeContainer extends StatefulWidget {
+  const QRCodeContainer({super.key});
+
+  @override
+  State<StatefulWidget> createState() => _QRCodeContainerState();
+}
+
+class _QRCodeContainerState extends State<QRCodeContainer> {
+  final double _small = 3;
+  final double _large = 25;
+  double _scaleFactor = 3;
+
+  @override
+  Widget build(BuildContext context) {
+    double QRdim = min(
+        MediaQuery.of(context).size.width,
+        MediaQuery.of(context).size.height)
+        / _scaleFactor;
+    return SizedBox(
+        width: QRdim,
+        height: QRdim,
+        child: GestureDetector(
+          onTap: () => {
+            setState(() => _scaleFactor = _scaleFactor == _small ? _large : _small)
+          }, child: const QRCode(),
+        )
+    );
+  }
+}
 
 class ResizeableHomeTab extends StatelessWidget {
   final HomeTopBar topBar;
