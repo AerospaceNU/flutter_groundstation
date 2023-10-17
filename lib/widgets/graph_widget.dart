@@ -33,7 +33,6 @@ class _GraphWidgetState extends BaseWidgetState<GraphWidget> {
     }
 
     data = makeChart(pointsList.values.toList());
-
   }
 
   @override
@@ -82,7 +81,6 @@ class _GraphWidgetState extends BaseWidgetState<GraphWidget> {
     return ret;
   }
 }
-
 
 // This is pretty expensive to do, so try to avoid doing it very often
 makeChart(List<List<FlSpot>> points) {

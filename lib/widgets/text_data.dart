@@ -75,9 +75,9 @@ class _DataDisplayState extends BaseWidgetState<TextData> {
       _subscribed = true;
     }
     final data = getData();
-    return widget.textBuilder != null ?
-    widget.textBuilder!.build(data.toString()) :
-        AutoSizeText(
+    return widget.textBuilder != null
+        ? widget.textBuilder!.build(data.toString())
+        : AutoSizeText(
             data.toString(),
             style: widget.style,
             minFontSize: widget.minFontSize,
@@ -95,7 +95,7 @@ class _DataDisplayState extends BaseWidgetState<TextData> {
             textScaleFactor: widget.textScaleFactor,
             maxLines: widget.maxLines,
             semanticsLabel: widget.semanticsLabel,
-        );
+          );
   }
 
   /// Gets data from the [Database] using [widget.dataKey].
@@ -176,7 +176,8 @@ class AutoSizeTextBuilder {
   // type error. basically bad code.
   /// Creates a [AutoSizeText] widget with the pre-determined parameters.
   AutoSizeText build(String data) {
-    return AutoSizeText(data,
+    return AutoSizeText(
+      data,
       style: style,
       minFontSize: minFontSize ?? 12,
       maxFontSize: maxFontSize ?? double.infinity,

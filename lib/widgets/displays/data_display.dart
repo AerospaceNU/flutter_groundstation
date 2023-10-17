@@ -8,7 +8,8 @@ import '../text_data.dart';
 /// Highly recommended to set the [decimals] parameter to a nonnull value.
 /// Not doing so will cause the data to 'jitter' uncontrollably.
 class DataDisplay extends TwoColumnDisplay<String, TextData> {
-  DataDisplay(Map<String, String> entries, {
+  DataDisplay(
+    Map<String, String> entries, {
     super.key,
     super.width = double.infinity,
     super.height = double.infinity,

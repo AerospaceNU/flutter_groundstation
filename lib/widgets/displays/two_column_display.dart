@@ -12,16 +12,19 @@ class TwoColumnDisplay<T, R> extends StatelessWidget {
   // Container Widget Properties
   /// Container width.
   final double width;
+
   /// Container height.
   final double height;
   // Display Values
   /// The displayed entries.
   final Map<T, R> entries;
+
   /// The displayed title.
   final String? title;
   // Child Text Widget Properties
   /// [AutoSizeTextBuilder] for the title.
   late final AutoSizeTextBuilder entryBuilder;
+
   /// [AutoSizeTextBuilder] for entries.
   late final AutoSizeTextBuilder titleBuilder;
   // Format Options
@@ -31,6 +34,7 @@ class TwoColumnDisplay<T, R> extends StatelessWidget {
   /// If false, the container will turn into a list view so that all
   /// the data can still be viewed.
   final bool autoFit;
+
   /// Whether to synchronize the font size of all the entries.
   late final AutoSizeGroup? group;
 
@@ -104,10 +108,7 @@ class TwoColumnDisplay<T, R> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    EdgeInsets padding = EdgeInsets.symmetric(
-      horizontal: MediaQuery.of(context).size.width / 50.0,
-      vertical: autoFit ? MediaQuery.of(context).size.height / 100.0 : 0
-    );
+    EdgeInsets padding = EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width / 50.0, vertical: autoFit ? MediaQuery.of(context).size.height / 100.0 : 0);
     List<Widget> children = [];
     for (final entry in entries.entries) {
       children.add(_createEntryValueRowWidget(entry, padding, context));
@@ -127,9 +128,7 @@ class TwoColumnDisplay<T, R> extends StatelessWidget {
       height: this.height,
       color: Theme.of(context).focusColor,
       alignment: Alignment.center,
-      child: autoFit ?
-      Column (children: children) :
-      ListView(children: children),
+      child: autoFit ? Column(children: children) : ListView(children: children),
     );
   }
 
@@ -144,52 +143,37 @@ class TwoColumnDisplay<T, R> extends StatelessWidget {
   /// recommended to convert the non-widget objects of [entries] to
   /// widgets or strings before constructing the [TwoColumnDisplay]
   /// if nonsense is displayed.
-  Widget _createEntryValueRowWidget(MapEntry<T, R> entry,
-      EdgeInsets padding,
-      BuildContext context) {
-    final Widget entryValueRow = Row(
-        children: [
-          Expanded(
-              child:
-              Padding(
-                padding: padding,
-                child:
-                entry.key is Widget ? entry.key as Widget :
-                entryBuilder.build(entry.key.toString()),
-              )
-          ),
-          Expanded(
-            child:
-            Padding(
-                padding: padding,
-                child:
-                entry.value is Widget ? entry.value as Widget :
-                entryBuilder.build(entry.value.toString())
-            ),
-          ),
-        ]
-    );
+  Widget _createEntryValueRowWidget(MapEntry<T, R> entry, EdgeInsets padding, BuildContext context) {
+    final Widget entryValueRow = Row(children: [
+      Expanded(
+          child: Padding(
+        padding: padding,
+        child: entry.key is Widget ? entry.key as Widget : entryBuilder.build(entry.key.toString()),
+      )),
+      Expanded(
+        child: Padding(padding: padding, child: entry.value is Widget ? entry.value as Widget : entryBuilder.build(entry.value.toString())),
+      ),
+    ]);
     // Uses Expanded to split all available space with other children
     // Uses SizedBox to keep space taken up to a constant
-    return autoFit ? Expanded(child: entryValueRow) :
-    SizedBox(
-      height: titleBuilder.style?.fontSize?.toDouble() ?? 12.0 * 3,
-      child: entryValueRow,
-    );
+    return autoFit
+        ? Expanded(child: entryValueRow)
+        : SizedBox(
+            height: titleBuilder.style?.fontSize?.toDouble() ?? 12.0 * 3,
+            child: entryValueRow,
+          );
   }
 
   /// Creates a title widget with the specified [title] using [titleBuilder].
   Widget _createTitleWidget(String title, BuildContext context) {
-    final Widget titleRow =
-    Row( children: [ Expanded (
-        child: titleBuilder.build(title)
-    )]);
+    final Widget titleRow = Row(children: [Expanded(child: titleBuilder.build(title))]);
     // Uses Expanded to split all available space with other children
     // Uses SizedBox to keep space taken up to a constant
-    return autoFit ? Expanded(child: titleRow) :
-    SizedBox(
-      height: titleBuilder.style?.fontSize?.toDouble() ?? 12.0 * 3,
-      child: titleRow,
-    );
+    return autoFit
+        ? Expanded(child: titleRow)
+        : SizedBox(
+            height: titleBuilder.style?.fontSize?.toDouble() ?? 12.0 * 3,
+            child: titleRow,
+          );
   }
 }
