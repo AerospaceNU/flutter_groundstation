@@ -1,7 +1,7 @@
 import 'package:flutter_libserialport/flutter_libserialport.dart';
 import 'package:usb_serial/usb_serial.dart';
 
-import "serial_none.dart";
+import 'serial_none.dart';
 import 'dart:io' show Platform;
 
 class DesktopSerial implements AbstractSerial {
@@ -12,13 +12,19 @@ class DesktopSerial implements AbstractSerial {
 
       () async {
         devices = await UsbSerial.listDevices();
-      } ();  // NOTE: '()' may be an error
+      }(); // NOTE: '()' may be an error
       return devices.map((e) => e.deviceName).toList();
-
     }
     return SerialPort.availablePorts;
   }
+
+  @override
+  SerialPortReader reader(String portName) {
+    SerialPort port = SerialPort(portName);
+    port.openReadWrite();
+    SerialPortReader reader = SerialPortReader(port);
+    return reader;
+  }
 }
 
-AbstractSerial getAbstractSerial() =>
-    DesktopSerial(); //override global fxn to return desktop version
+AbstractSerial getAbstractSerial() => DesktopSerial(); //override global fxn to return desktop version
