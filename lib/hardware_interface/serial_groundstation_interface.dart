@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter_libserialport/flutter_libserialport.dart';
 import '../serial/serial_none.dart' if (dart.library.io) '../serial/serial_desktop.dart' if (dart.library.html) '../serial/serial_web.dart';
 
 import '../binary_parser/binary_parser.dart';
@@ -10,10 +9,11 @@ import 'fcb_message_definitions.dart';
 import '../constants.dart';
 import 'base_hardware_interface.dart';
 
+
+
 ///Reads data from serial port, and updates database
 class SerialGroundstationInterface extends BaseHardwareInterface {
   var serialInterface = getAbstractSerial();
-  late SerialPort port;
   late SerialPortReader reader;
   var desiredPort = "/dev/ttyACM0";
   var portOpen = false;
@@ -21,7 +21,7 @@ class SerialGroundstationInterface extends BaseHardwareInterface {
   var lastDataTime = 0;
   var nextCheckTime = 0;
 
-  SerialGroundstationInterface();
+  SerialGroundstationInterface() {}
 
   @override
   void runLoopOnce(Timer t) {
@@ -29,6 +29,8 @@ class SerialGroundstationInterface extends BaseHardwareInterface {
 
     if (currentTime > nextCheckTime && !portOpen) {
       var ports = serialInterface.serialPorts();
+      print(ports);
+      return;
       if (ports.contains(desiredPort)) {
         try {
           reader = serialInterface.reader(desiredPort);

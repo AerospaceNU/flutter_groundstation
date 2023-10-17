@@ -1,5 +1,3 @@
-import 'package:libserialport/src/reader.dart';
-
 import 'serial_none.dart';
 
 class WebSerial implements AbstractSerial {
