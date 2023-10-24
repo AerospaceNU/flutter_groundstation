@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'serial_none.dart';
 
 class WebSerial implements AbstractSerial {
@@ -6,11 +8,24 @@ class WebSerial implements AbstractSerial {
     return ['web serial impl'];
   }
 
-  @override
-  SerialPortReader reader(String portName) {
-    // TODO: implement reader
-    throw UnimplementedError();
+  AbstractSerialPortReader reader(String portName) {
+    return WebSerialPortReader(portName);
   }
 }
 
+/// Reader wrapper
+class WebSerialPortReader implements AbstractSerialPortReader {
+  WebSerialPortReader(String portName);
+
+  void setBaudRate(int baudRate) {}
+
+  Stream<Uint8List>? getIncomingStream() {
+    return null;
+  }
+
+  void close() {}
+}
+
 AbstractSerial getAbstractSerial() => WebSerial(); //override global fxn to return Web version
+
+AbstractSerialPortReader createReader(String port) => WebSerialPortReader(port);

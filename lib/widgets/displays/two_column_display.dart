@@ -1,8 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../constants.dart';
-import '../entry_data.dart';
+import '../text_data.dart';
 
 /// Widget that displays the given values in a two column format.
 ///

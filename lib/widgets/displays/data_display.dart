@@ -1,6 +1,6 @@
 import 'package:flutter_groundstation/widgets/displays/two_column_display.dart';
 
-import '../entry_data.dart';
+import '../text_data.dart';
 
 // everything about this and the two column display is scuff.
 /// Widgets that displays data form the [Database] in a two column format.
