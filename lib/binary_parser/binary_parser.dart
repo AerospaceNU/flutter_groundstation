@@ -27,7 +27,7 @@ List parseData(ByteData data, String format) {
   if (format[0] == "<") {
     endianness = Endian.little;
     format = format.substring(1);
-  } else if (format[1] == ">") {
+  } else if (format[0] == ">") {
     endianness = Endian.big;
     format = format.substring(1);
   }

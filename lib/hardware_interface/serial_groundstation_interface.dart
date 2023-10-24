@@ -52,55 +52,58 @@ class SerialGroundstationInterface extends BaseHardwareInterface {
   }
 
   void callback(Uint8List data) {
-    if (data.length < 132) {
+    if (data.length < 128) {
       print(data.length);
       return;
     }
 
     var headerBytes = data.sublist(0, 15);
-    var radioInfoBytes = data.sublist(data.length - 4);
-    var packetBytes = data.sublist(15, data.length - 4);
-
     var header = ByteData.sublistView(headerBytes);
-    var radioInfo = ByteData.sublistView(radioInfoBytes);
-    var packet = ByteData.sublistView(packetBytes);
-
     var parsedHeader = parseData(header, "<BBBIcccccccc");
+
+    var radioInfoBytes = data.sublist(data.length - 4);
+    var radioInfo = ByteData.sublistView(radioInfoBytes);
     var parsedRadioInfo = parseData(radioInfo, "<Bb?B");
 
     int packetType = parsedHeader[0];
-    int softwareVersion = parsedHeader[1];
-    int boardSerialNum = parsedHeader[2];
-    int timestamp = parsedHeader[3];
-    var callsign = parsedHeader.sublist(4, 12).join();
+    var packetDict = <String, Object>{};
+    var packet = ByteData(0);
 
-    int radioId = parsedRadioInfo[0];
-    int rssi = parsedRadioInfo[1];
-    bool crc = parsedRadioInfo[2];
-    int lqi = parsedRadioInfo[3];
+    if (packetType == 200) {
+      var packetBytes = data.sublist(1, 33);
+      packet = ByteData.sublistView(packetBytes);
+    } else {
+      int softwareVersion = parsedHeader[1];
+      int boardSerialNum = parsedHeader[2];
+      int timestamp = parsedHeader[3];
+      var callsign = parsedHeader.sublist(4, 12).join();
 
-    //TODO: More constants
-    var packetDict = {
-      "packet_type": packetType,
-      Constants.softwareVersion: softwareVersion,
-      Constants.serialNumber: boardSerialNum,
-      Constants.timestampMs: timestamp,
-      Constants.callsign: callsign,
-      "radio_id": radioId,
-      "rssi": rssi,
-      "crc": crc,
-      "lqi": lqi,
-    };
+      int radioId = parsedRadioInfo[0];
+      int rssi = parsedRadioInfo[1];
+      bool crc = parsedRadioInfo[2];
+      int lqi = parsedRadioInfo[3];
+
+      //TODO: More constants
+      packetDict = <String, Object>{
+        "packet_type": packetType,
+        Constants.softwareVersion: softwareVersion,
+        Constants.serialNumber: boardSerialNum,
+        Constants.timestampMs: timestamp,
+        Constants.callsign: callsign,
+        "radio_id": radioId,
+        "rssi": rssi,
+        "crc": crc,
+        "lqi": lqi,
+      };
+
+      var packetBytes = data.sublist(15, data.length - 4);
+      packet = ByteData.sublistView(packetBytes);
+    }
 
     var messageDict = parseMessage(packetType, packet);
-
     packetDict.addAll(messageDict);
 
-//    print(packetDict);
-//    print(messageDict);
-
     database.bulkUpdateDatabase(packetDict);
-
     lastDataTime = DateTime.timestamp().millisecondsSinceEpoch;
 
 //    print(parsedRadioInfo);
