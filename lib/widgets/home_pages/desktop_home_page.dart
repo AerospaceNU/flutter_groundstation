@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_groundstation/widgets/base_widget.dart';
+import 'package:flutter_groundstation/widgets/battery_indicator.dart';
 import 'package:flutter_groundstation/widgets/graph_widget.dart';
 import 'package:flutter_groundstation/widgets/tabs/home_tab.dart';
-import 'package:flutter_groundstation/widgets/entry_data.dart';
+import 'package:flutter_groundstation/widgets/text_data.dart';
 import '../../hardware_interface/test_interface.dart';
 import '../../hardware_interface/serial_groundstation_interface.dart';
 import 'base_home_page.dart';
@@ -49,12 +50,13 @@ class _DesktopHomePageState extends BaseHomePageState<DesktopHomePage> {
         body: TabBarView(
           children: [
             Scaffold(
-              body: const Center(child: HomeTab(
+              body: Center(child: HomeTab(
                 topBar: HomeTopBar(widgets: [
-                  TextData(dataKey: "test", wrapWords: false,),
-                  TextData(dataKey: "random_1", wrapWords: false, decimals: 6,),
+                  const TextData(dataKey: "test", wrapWords: false,),
+                  const TextData(dataKey: "random_1", wrapWords: false, decimals: 6,),
+                  BatteryIndicator(label: "random", dataKey: "random_1", min: 0, max: 1, width: 20, displayData: true,)
                 ], border: Colors.black38),
-                leftBar: HomeLeftBar(widgets: [
+                leftBar: const HomeLeftBar(widgets: [
                   GraphWidget(title: "Altitude", keyList: [Constants.altitude, Constants.gpsAltitude]),
                   TextData(dataKey: "random_2", wrapWords: false, decimals: 6,)
                 ], border: Colors.black38),
