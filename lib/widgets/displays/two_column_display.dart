@@ -144,24 +144,7 @@ class TwoColumnDisplay<T, R> extends StatelessWidget {
   /// widgets or strings before constructing the [TwoColumnDisplay]
   /// if nonsense is displayed.
   Widget _createEntryValueRowWidget(MapEntry<T, R> entry, EdgeInsets padding, BuildContext context) {
-    final Widget entryValueRow = Row(children: [
-      Expanded(
-          child: Padding(
-        padding: padding,
-        child: entry.key is Widget ? entry.key as Widget : entryBuilder.build(entry.key.toString()),
-      )),
-      Expanded(
-        child: Padding(padding: padding, child: entry.value is Widget ? entry.value as Widget : entryBuilder.build(entry.value.toString())),
-      ),
-    ]);
-    // Uses Expanded to split all available space with other children
-    // Uses SizedBox to keep space taken up to a constant
-    return autoFit
-        ? Expanded(child: entryValueRow)
-        : SizedBox(
-            height: titleBuilder.style?.fontSize?.toDouble() ?? 12.0 * 3,
-            child: entryValueRow,
-          );
+    return EntryData(entry: entry, builder: entryBuilder, padding: padding);
   }
 
   /// Creates a title widget with the specified [title] using [titleBuilder].

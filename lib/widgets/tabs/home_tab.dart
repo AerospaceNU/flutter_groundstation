@@ -4,7 +4,6 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_groundstation/widgets/map_widget.dart';
 import 'package:flutter_groundstation/widgets/qrcode.dart';
-import 'package:flutter_resizable_container/flutter_resizable_container.dart';
 
 class HomeTab extends StatelessWidget {
   final HomeTopBar topBar;
@@ -79,53 +78,55 @@ class _QRCodeContainerState extends State<QRCodeContainer> {
   }
 }
 
-class ResizeableHomeTab extends StatelessWidget {
-  final HomeTopBar topBar;
-  final HomeLeftBar leftBar;
-
-
-  const ResizeableHomeTab({
-    super.key,
-    required this.topBar,
-    required this.leftBar,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-        child: LayoutBuilder(
-            builder: (context, constraints) => ResizableContainer(
-                direction: Axis.horizontal,
-                children: [ResizableChildData(
-                    child: ResizableContainer(
-                        direction: Axis.vertical,
-                        children: [
-                          ResizableChildData(
-                              child: topBar,
-                              startingRatio: 0.1,
-                              minSize: constraints.maxHeight / 10
-                          ),
-                          ResizableChildData(
-                              child: const MapWidget(),
-                              startingRatio: 0.9,
-                              minSize: constraints.maxHeight / 10
-                          ),
-                        ]
-                    ),
-                    startingRatio: 0.8,
-                    minSize: constraints.maxWidth / 10
-                ),
-                  ResizableChildData(
-                    child: leftBar,
-                    startingRatio: 0.2,
-                    minSize: constraints.maxWidth / 10,
-                  ),
-                ]
-            )
-        )
-    );
-  }
-}
+// import 'package:flutter_resizable_container/flutter_resizable_container.dart';
+//
+// class ResizeableHomeTab extends StatelessWidget {
+//   final HomeTopBar topBar;
+//   final HomeLeftBar leftBar;
+//
+//
+//   const ResizeableHomeTab({
+//     super.key,
+//     required this.topBar,
+//     required this.leftBar,
+//   });
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Expanded(
+//         child: LayoutBuilder(
+//             builder: (context, constraints) => ResizableContainer(
+//                 direction: Axis.horizontal,
+//                 children: [ResizableChildData(
+//                     child: ResizableContainer(
+//                         direction: Axis.vertical,
+//                         children: [
+//                           ResizableChildData(
+//                               child: topBar,
+//                               startingRatio: 0.1,
+//                               minSize: constraints.maxHeight / 10
+//                           ),
+//                           ResizableChildData(
+//                               child: const MapWidget(),
+//                               startingRatio: 0.9,
+//                               minSize: constraints.maxHeight / 10
+//                           ),
+//                         ]
+//                     ),
+//                     startingRatio: 0.8,
+//                     minSize: constraints.maxWidth / 10
+//                 ),
+//                   ResizableChildData(
+//                     child: leftBar,
+//                     startingRatio: 0.2,
+//                     minSize: constraints.maxWidth / 10,
+//                   ),
+//                 ]
+//             )
+//         )
+//     );
+//   }
+// }
 
 class HomeTopBar extends StatelessWidget {
   final List<Widget> widgets;

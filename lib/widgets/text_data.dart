@@ -6,6 +6,41 @@ import 'package:flutter_groundstation/database.dart';
 import '../constants.dart';
 import 'base_widget.dart';
 
+/// Text widget that displays a mapping of some widget to a [TextData].
+class EntryData extends StatelessWidget {
+  final AutoSizeTextBuilder builder;
+  final MapEntry entry;
+  final EdgeInsets padding;
+
+  const EntryData({
+    super.key,
+    required this.entry,
+    this.padding = EdgeInsets.zero,
+    required this.builder});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+        children: [
+          Expanded(
+              child: Padding(
+                padding: padding,
+                child: entry.key is Widget ? entry.key as Widget :
+                builder.build(entry.key.toString()),
+              )
+          ),
+          Expanded(
+            child: Padding(
+                padding: padding,
+                child: entry.value is Widget ? entry.value as Widget :
+                builder.build(entry.value.toString())
+            ),
+          ),
+        ]
+    );
+  }
+}
+
 /// Text widget that displays data from the [Database] given a [dataKey].
 ///
 /// Can automatically resize to fit within its bounds.
