@@ -1,6 +1,5 @@
 // ignore_for_file: unused_local_variable
 
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'base_widget.dart';
 
@@ -8,18 +7,124 @@ class PyroContinuityWidget extends StatefulWidget {
   const PyroContinuityWidget({super.key});
 
   @override
-  State<PyroContinuityWidget> createState() => _PyroWidgetState();
+  _PyroContinuityWidgetState createState() => _PyroContinuityWidgetState();
 }
 
-class _PyroWidgetState extends BaseWidgetState<PyroContinuityWidget> {
-  var event = ['Approved', 'Rejected', 'Approved', 'Approved', 'Approved', 'Approved', 'Approved'];
+class _PyroContinuityWidgetState extends State<PyroContinuityWidget> {
+  var event = [true, false, true, true, true, true, true];
   static const max_pyros = 7;
-
-  _PyroWidgetState() {
-  }
+  Offset _position = Offset(100, 100);
+  //_PyroWidgetState();
 
   @override
   Widget build(BuildContext context) {
+
+    var wid_3 = const [];
+    for (int i = 0; i < max_pyros; i++) {
+      //wid_3[i] = Text('${getDatabaseValue("pyro-status", false)}')  == 'true';
+    }
+
+    return Stack(
+      children: [
+        Positioned(
+          left: _position.dx,
+          top: _position.dy,
+          child: Draggable(
+            feedback: Container(
+              width: 100,
+              height: 100,
+              color: Colors.blue,
+            ),
+            child: Container(
+              children: [
+              for (int i = 0; i < max_pyros; i++) Expanded(child: Container(
+                  height: 75,
+                  decoration: BoxDecoration(
+                    color: _getColorByEvent(event[i]),
+                    border: Border.all(color: Colors.black)),
+                  child: Center(
+                    child: Text((i+1).toString()),
+                  ),
+                )
+              ),
+            ],
+            ),
+            onDraggableCanceled: (velocity, offset) {
+              setState(() {
+                _position = offset;
+              });
+            },
+          ),
+        ),
+      ],
+    );
+    /*
+    return Positioned(
+      left: position.dx, 
+      top: position.dy, 
+      child: Draggable(
+        feedback: Container(
+          
+        ),
+        child: Container(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        children: <Widget>[
+          // First Row
+          Row(
+            children: <Widget>[
+              Expanded(
+                child: Container(
+                  height: 75,
+                  decoration: BoxDecoration(border: Border.all(color: Colors.black)),
+                  child: const Center(
+                    child: Text('Pyro Continuity Status'),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              for (int i = 0; i < max_pyros; i++) Expanded(child: Container(
+                  height: 75,
+                  decoration: BoxDecoration(
+                    color: _getColorByEvent(event[i]),
+                    border: Border.all(color: Colors.black)),
+                  child: Center(
+                    child: Text((i+1).toString()),
+                  ),
+                )
+              ),
+            ],
+          ),
+        ]
+      )
+        ),
+        onDraggableCanceled: (velocity, offset) {
+          setState(() {
+            // Constrain the position within the tab's bounding box
+            position = Offset(
+              offset.dx.clamp(0, 200 - 100), // 200 is the width of the constrained area
+              offset.dy.clamp(0, 200 - 100), // 200 is the height of the constrained area
+            );
+          });
+        },
+      ),
+    );*/
+  }
+}
+
+// changes the color based on input data
+Color _getColorByEvent(bool event) {
+  if (event == true) return Colors.green;
+  if (event == false) return Colors.red;
+  return Colors.white;
+}
+
+/*
     return Container(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -38,7 +143,6 @@ class _PyroWidgetState extends BaseWidgetState<PyroContinuityWidget> {
               ),
             ],
           ),
-          // Second Row with 6 Columns
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.end,
@@ -46,7 +150,7 @@ class _PyroWidgetState extends BaseWidgetState<PyroContinuityWidget> {
               for (int i = 0; i < max_pyros; i++) Expanded(child: Container(
                   height: 75,
                   decoration: BoxDecoration(
-                    color: _getColorByEvent(event[i].toString()),
+                    color: _getColorByEvent(event[i]),
                     border: Border.all(color: Colors.black)),
                   child: Center(
                     child: Text((i+1).toString()),
@@ -62,15 +166,15 @@ class _PyroWidgetState extends BaseWidgetState<PyroContinuityWidget> {
 }
 
 // changes the color based on input data
-Color _getColorByEvent(String event) {
-  if (event == "Approved") return Colors.green;
-  if (event == "Rejected") return Colors.red;
+Color _getColorByEvent(bool event) {
+  if (event == true) return Colors.green;
+  if (event == false) return Colors.red;
   return Colors.white;
 }
 
 // was trying to make it draggable - it didn't cooperate
 class _DragAreaStateStateful extends _PyroWidgetState {
-  Offset position = Offset(100, 100);
+  Offset position = const Offset(100, 100);
   double prevScale = 1;
   double scale = 1;
 
@@ -98,6 +202,9 @@ class _DragAreaStateStateful extends _PyroWidgetState {
                 opacity: .3,
                 child: widget,
               ),
+              onDraggableCanceled: (Velocity velocity, Offset offset){
+                setState(() => position = offset);
+              },
               onDragEnd: (details) => updatePosition(details.offset),
               child: Transform.scale(
                 scale: scale,
@@ -111,4 +218,4 @@ class _DragAreaStateStateful extends _PyroWidgetState {
   }
 }
 
-
+*/

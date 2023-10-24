@@ -18,5 +18,6 @@ class TestHardwareInterface extends BaseHardwareInterface {
     database.updateDatabase("test_3", sin(i / 50) + 6);
 
     database.updateDatabase("random_1", random.nextDouble());
+    database.updateDatabase("pyro-status", random.nextBool());
   }
 }

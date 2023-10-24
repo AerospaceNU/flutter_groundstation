@@ -1,6 +1,5 @@
 // ignore_for_file: unused_local_variable
 
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'base_widget.dart';
 
@@ -14,8 +13,7 @@ class PyroDataWidget extends StatefulWidget {
 class _PyroWidgetState extends BaseWidgetState<PyroDataWidget> {
   var event = ['Approved', 'Rejected', 'Approved', 'Approved', 'Approved', 'Approved'];
 
-  _PyroWidgetState() {
-  }
+  _PyroWidgetState();
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +40,7 @@ class _PyroWidgetState extends BaseWidgetState<PyroDataWidget> {
           ),
           Row(
             children: <Widget>[DefaultTextStyle(
+              style: const TextStyle(color: Colors.white),
               child: Container(
                 height: 400,
                 width: 250,
@@ -51,8 +50,7 @@ class _PyroWidgetState extends BaseWidgetState<PyroDataWidget> {
                 child: const Center(
                   child: Text('1'),
                 ),
-              ),
-              style: TextStyle(color: Colors.white)
+              )
             ),
             ],
           ),
