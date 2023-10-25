@@ -28,20 +28,4 @@ abstract class BaseWidgetState<WidgetClass extends StatefulWidget> extends State
   T? getDatabaseValueOrNull<T>(String key) {
     return database.getValueOrNull(key);
   }
-
-  void onDatabaseUpdate<T>(T data) {
-    var updatedKeys = database.getUpdatedKeys();
-    bool needsToUpdate = false;
-
-    for (var key in updatedKeys) {
-      if (_subscribedKeys.contains(key)) {
-        needsToUpdate = true;
-        break;
-      }
-    }
-
-    if (mounted && needsToUpdate) {
-      setState(() {});
-    }
-  }
 }
