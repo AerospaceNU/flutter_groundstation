@@ -2,8 +2,8 @@ import 'dart:core';
 
 import 'package:flutter/foundation.dart';
 
-import '../binary_parser/binary_parser.dart';
-import '../constants.dart';
+import '../../binary_parser/binary_parser.dart';
+import '../../constants.dart';
 
 class OrientationMessage extends BaseMessage {
   OrientationMessage()

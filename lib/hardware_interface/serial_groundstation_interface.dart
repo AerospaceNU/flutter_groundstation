@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 import '../serial/serial_none.dart' if (dart.library.io) '../serial/serial_desktop.dart' if (dart.library.html) '../serial/serial_web.dart';
 
 import '../binary_parser/binary_parser.dart';
-import 'fcb_message_definitions.dart';
+import 'fcb_messages/fcb_message_definitions.dart';
 
 import '../constants.dart';
 import 'base_hardware_interface.dart';
