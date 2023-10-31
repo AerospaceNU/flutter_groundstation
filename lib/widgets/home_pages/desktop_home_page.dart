@@ -8,7 +8,6 @@ import 'base_home_page.dart';
 
 import '../tabs/test_tab.dart';
 import '../tabs/graphs_tab.dart';
-import 'package:flutter_groundstation/widgets/tabs/diagnostics_tab.dart';
 
 import '../test_widget.dart';
 
@@ -37,7 +36,7 @@ class _DesktopHomePageState extends BaseHomePageState<DesktopHomePage> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 4,
+      length: 3,
       child: Scaffold(
         appBar: AppBar(
           bottom: const TabBar(
@@ -45,7 +44,6 @@ class _DesktopHomePageState extends BaseHomePageState<DesktopHomePage> {
               Tab(text: "Test widget"),
               Tab(text: "Test tab"),
               Tab(text: "Graphs tab"),
-              Tab(text: "Diagnostics tab"),
             ],
           ),
         ),
@@ -57,7 +55,6 @@ class _DesktopHomePageState extends BaseHomePageState<DesktopHomePage> {
             ),
             const TestTab(),
             const GraphTab(),
-            const DiagnosticsTab(),
           ],
         ),
       ),

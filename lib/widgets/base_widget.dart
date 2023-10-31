@@ -11,7 +11,7 @@ abstract class BaseWidgetState<WidgetClass extends StatefulWidget> extends State
 
   BaseWidgetState() {
     callbackHandler = CallbackHandler();
-    database = Database();
+    _database = Database();
 
     callbackHandler.registerCallback(Constants.databaseUpdateKey, onDatabaseUpdate);
   }
