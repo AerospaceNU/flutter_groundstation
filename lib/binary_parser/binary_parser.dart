@@ -56,7 +56,7 @@ int getFormatLength(String format) {
   int length = 0;
 
   for (var i = 0; i < format.length; i++) {
-    length += getFormatLength(format[i]);
+    length += getLength(format[i]);
   }
 
   return length;

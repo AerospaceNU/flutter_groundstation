@@ -13,6 +13,8 @@ abstract class AbstractSerialPortReader {
 
   void setBaudRate(int baudRate);
 
+  void write(Uint8List bytes);
+
   Stream<Uint8List>? getIncomingStream();
 
   void close();

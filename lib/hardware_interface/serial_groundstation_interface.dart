@@ -5,6 +5,7 @@ import '../serial/serial_none.dart' if (dart.library.io) '../serial/serial_deskt
 
 import '../binary_parser/binary_parser.dart';
 import 'fcb_messages/fcb_message_definitions.dart';
+import 'fcb_messages/fcb_message_generation.dart';
 
 import '../constants.dart';
 import 'base_hardware_interface.dart';
@@ -33,6 +34,10 @@ class SerialGroundstationInterface extends BaseHardwareInterface {
           reader.getIncomingStream()?.listen(callback);
           print("Opened port $desiredPort");
           portOpen = true;
+
+          var command = createRadioBandCommandMessage(0xFF, 0, 1);
+          reader.write(command.buffer.asUint8List());
+
           lastDataTime = currentTime + 5000;
         } catch (e) {
           print(e);
