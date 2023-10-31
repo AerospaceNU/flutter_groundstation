@@ -5,8 +5,8 @@ import './base_widget.dart';
 // https://pub.dev/packages/qr_flutter
 // https://medium.com/podiihq/generating-qr-code-in-a-flutter-app-50de15e39830
 
-class QRCodeWidget extends StatelessWidget {
-  const QRCodeWidget(this.type, this.lat, this.lon, {super.key});
+class QRCodeImageWidget extends StatelessWidget {
+  const QRCodeImageWidget(this.type, this.lat, this.lon, {super.key});
 
   final String type;
   final double lat;
@@ -36,13 +36,13 @@ class QRCodeWidget extends StatelessWidget {
   }
 }
 
-class DropDown extends StatefulWidget {
-  const DropDown({super.key});
+class QRCodeWidget extends StatefulWidget {
+  const QRCodeWidget({super.key});
   @override
-  _DropDownState createState() => _DropDownState();
+  _QRCodeWidgetState createState() => _QRCodeWidgetState();
 }
 
-class _DropDownState extends BaseWidgetState<DropDown> {
+class _QRCodeWidgetState extends BaseWidgetState<QRCodeWidget> {
   String mapType = 'Google';
   String boardType = 'FCB';
   bool frozen = false;
@@ -118,7 +118,9 @@ class _DropDownState extends BaseWidgetState<DropDown> {
               ],
             ),
             Flexible(
-              child: QRCodeWidget(mapType, getDatabaseValue("qr_code_lat", 0.0),
+              child: QRCodeImageWidget(
+                  mapType,
+                  getDatabaseValue("qr_code_lat", 0.0),
                   getDatabaseValue("qr_code_lon", 0.0)),
             ),
           ])),

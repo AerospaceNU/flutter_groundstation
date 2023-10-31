@@ -15,7 +15,7 @@ class QrCodeTab extends StatelessWidget {
     //   crossAxisCount: 3,
     //   children: <Widget>[
     //const QRCodeWidget(),
-    return const DropDown();
+    return const QRCodeWidget();
     //],
     //);
   }
