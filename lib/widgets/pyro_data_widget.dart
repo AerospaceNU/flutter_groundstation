@@ -11,7 +11,6 @@ class PyroDataWidget extends StatefulWidget {
 }
 
 class _PyroWidgetState extends BaseWidgetState<PyroDataWidget> {
-  var event = ['Approved', 'Rejected', 'Approved', 'Approved', 'Approved', 'Approved'];
 
   _PyroWidgetState();
 
@@ -20,41 +19,32 @@ class _PyroWidgetState extends BaseWidgetState<PyroDataWidget> {
     return Container(
       padding: const EdgeInsets.all(16.0),
       height: 600,
-      width: 250,
       child: Column(
         
         children: <Widget>[
-          Row(
-            children: <Widget>[
-              Expanded(
-                child: Container(
-                  height: 75,
-                  width: 250,
-                  decoration: BoxDecoration(border: Border.all(color: Colors.black)),
-                  child: const Center(
-                    child: Text('Pyro Output Data'),
-                  ),
+          Container(
+              height: 75,
+              decoration: BoxDecoration(border: Border.all(color: Colors.black)),
+              child: const Center(
+                child: Text('Pyro Output Data'),
+              ),
+            ),
+          SingleChildScrollView(
+          child: Container(
+              height: 400,
+              decoration: BoxDecoration(
+                color: Colors.black,
+                border: Border.all(color: Colors.black)),
+              child: const Center(
+                child: Text(
+                  '1',
+                  style: TextStyle(color: Colors.white),
+                  textAlign: TextAlign.right,
                 ),
               ),
-            ],
-          ),
-          Row(
-            children: <Widget>[DefaultTextStyle(
-              style: const TextStyle(color: Colors.white),
-              child: Container(
-                height: 400,
-                width: 250,
-                decoration: BoxDecoration(
-                  color: Colors.black,
-                  border: Border.all(color: Colors.black)),
-                child: const Center(
-                  child: Text('1'),
-                ),
-              )
             ),
-            ],
           ),
-        ],
+        ]
       ),
     );
   }

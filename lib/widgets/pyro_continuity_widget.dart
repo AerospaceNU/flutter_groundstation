@@ -2,15 +2,18 @@
 
 import 'package:flutter/material.dart';
 import 'base_widget.dart';
+import 'dart:ui';
+
 
 class PyroContinuityWidget extends StatefulWidget {
-  const PyroContinuityWidget({super.key});
+  const PyroContinuityWidget({Key? key}) : super(key: key);
+
 
   @override
   _PyroContinuityWidgetState createState() => _PyroContinuityWidgetState();
 }
 
-class _PyroContinuityWidgetState extends State<PyroContinuityWidget> {
+class _PyroContinuityWidgetState extends BaseWidgetState<PyroContinuityWidget> {
   var event = [true, false, true, true, true, true, true];
   static const max_pyros = 7;
   Offset _position = Offset(100, 100);
@@ -19,28 +22,37 @@ class _PyroContinuityWidgetState extends State<PyroContinuityWidget> {
   @override
   Widget build(BuildContext context) {
 
-    var wid_3 = const [];
+    List<bool> wid_3 = List<bool>.filled(max_pyros, false);
     for (int i = 0; i < max_pyros; i++) {
-      //wid_3[i] = Text('${getDatabaseValue("pyro-status", false)}')  == 'true';
+      wid_3[i] = Text('${getDatabaseValue("pyro-status", true)}')  == 'true';
     }
 
-    return Stack(
-      children: [
-        Positioned(
-          left: _position.dx,
-          top: _position.dy,
-          child: Draggable(
-            feedback: Container(
-              width: 100,
-              height: 100,
-              color: Colors.blue,
-            ),
-            child: Container(
-              children: [
+    return Container(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        children: <Widget>[
+          // First Row
+          Row(
+            children: <Widget>[
+              Expanded(
+                child: Container(
+                  height: 75,
+                  decoration: BoxDecoration(border: Border.all(color: Colors.black)),
+                  child: const Center(
+                    child: Text('Pyro Continuity Status'),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
               for (int i = 0; i < max_pyros; i++) Expanded(child: Container(
                   height: 75,
                   decoration: BoxDecoration(
-                    color: _getColorByEvent(event[i]),
+                    color: _getColorByEvent(wid_3[i]),
                     border: Border.all(color: Colors.black)),
                   child: Center(
                     child: Text((i+1).toString()),
@@ -48,15 +60,9 @@ class _PyroContinuityWidgetState extends State<PyroContinuityWidget> {
                 )
               ),
             ],
-            ),
-            onDraggableCanceled: (velocity, offset) {
-              setState(() {
-                _position = offset;
-              });
-            },
           ),
-        ),
-      ],
+        ],
+      ),
     );
     /*
     return Positioned(
