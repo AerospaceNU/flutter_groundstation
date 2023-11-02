@@ -53,10 +53,7 @@ class _DesktopHomePageState extends BaseHomePageState<DesktopHomePage> {
           children: [
             Scaffold(
               body: const Center(child: TestWidget()),
-              floatingActionButton: FloatingActionButton(
-                  onPressed: onButtonPress,
-                  tooltip: 'Increment',
-                  child: const Icon(Icons.add)),
+              floatingActionButton: FloatingActionButton(onPressed: onButtonPress, tooltip: 'Increment', child: const Icon(Icons.add)),
             ),
             const TestTab(),
             const GraphTab(),

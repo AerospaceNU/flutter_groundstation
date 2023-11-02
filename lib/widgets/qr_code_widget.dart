@@ -89,8 +89,7 @@ class _QRCodeWidgetState extends BaseWidgetState<QRCodeWidget> {
                       mapType = newValue!;
                     });
                   },
-                  items: <String>['Google', 'Apple', 'Geo', 'Raw']
-                      .map<DropdownMenuItem<String>>((String value) {
+                  items: <String>['Google', 'Apple', 'Geo', 'Raw'].map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
                       value: value,
                       child: Text(value),
@@ -105,8 +104,7 @@ class _QRCodeWidgetState extends BaseWidgetState<QRCodeWidget> {
                       boardType = newValue!;
                     });
                   },
-                  items: <String>['FCB', 'EggFinder']
-                      .map<DropdownMenuItem<String>>((String value) {
+                  items: <String>['FCB', 'EggFinder'].map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
                       value: value,
                       child: Text(value),
