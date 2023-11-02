@@ -46,9 +46,25 @@ class _QRCodeWidgetState extends BaseWidgetState<QRCodeWidget> {
   String mapType = 'Google';
   String boardType = 'FCB';
   bool frozen = false;
+  double curLat = 0.0;
+  double curLon = 0.0;
 
   String printFrozen(bool yes) {
     return yes ? "frozen" : "not frozen";
+  }
+
+  double getLatNotFrozen() {
+    if (!frozen) {
+      curLat = getDatabaseValue("qr_code_lat", 0.0);
+    }
+    return curLat;
+  }
+
+  double getLonNotFrozen() {
+    if (!frozen) {
+      curLon = getDatabaseValue("qr_code_lon", 0.0);
+    }
+    return curLon;
   }
 
   @override
@@ -60,13 +76,6 @@ class _QRCodeWidgetState extends BaseWidgetState<QRCodeWidget> {
         ),
         body: Center(
           child: Container(
-              // decoration: BoxDecoration(
-              //   border: Border.all(
-              //     color: Colors.black,
-              //     width: 2,
-              //   ),
-              //   borderRadius: BorderRadius.circular(10),
-              // ),
               child: Column(children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -118,11 +127,11 @@ class _QRCodeWidgetState extends BaseWidgetState<QRCodeWidget> {
               ],
             ),
             Flexible(
-              child: QRCodeImageWidget(
-                  mapType,
-                  getDatabaseValue("qr_code_lat", 0.0),
-                  getDatabaseValue("qr_code_lon", 0.0)),
-            ),
+                child: QRCodeImageWidget(
+              mapType,
+              getLatNotFrozen(),
+              getLonNotFrozen(),
+            )),
           ])),
         ));
   }
