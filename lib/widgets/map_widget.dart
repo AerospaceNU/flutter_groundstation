@@ -31,7 +31,6 @@ class MapWidget extends StatefulWidget {
 
 late List<LatLng> circles;
 
-gi
   
 class _MapWidgetState extends BaseWidgetState<MapWidget> {
 
