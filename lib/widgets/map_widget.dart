@@ -27,7 +27,7 @@ class MapWidget extends StatefulWidget {
   State<StatefulWidget> createState() => _MapWidgetState();
 }
 
-late List<LatLng> circles;
+List<LatLng> circles = [];
 
 class _MapWidgetState extends BaseWidgetState<MapWidget> {
   var groundstation_location = LatLng(42.361145, -71.0570803);
