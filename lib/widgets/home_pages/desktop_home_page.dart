@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_groundstation/widgets/base_widget.dart';
 import 'package:flutter_groundstation/widgets/tabs/map_tab.dart';
+import 'package:flutter_groundstation/widgets/tabs/qr_code_tab.dart';
 
 import '../../hardware_interface/test_interface.dart';
 import '../../hardware_interface/serial_groundstation_interface.dart';
@@ -45,7 +46,9 @@ class _DesktopHomePageState extends BaseHomePageState<DesktopHomePage> {
               Tab(text: "Test widget"),
               Tab(text: "Test tab"),
               Tab(text: "Graphs tab"),
+
               Tab(text: "Map Tab"),
+              Tab(text: "QR Code tab"),
             ],
           ),
         ),
@@ -58,6 +61,7 @@ class _DesktopHomePageState extends BaseHomePageState<DesktopHomePage> {
             const TestTab(),
             const GraphTab(),
             const MapTab(),
+            const QrCodeTab(),
           ],
         ),
       ),
