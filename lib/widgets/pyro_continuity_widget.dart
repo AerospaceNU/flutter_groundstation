@@ -14,20 +14,14 @@ class PyroContinuityWidget extends StatefulWidget {
 }
 
 class _PyroContinuityWidgetState extends BaseWidgetState<PyroContinuityWidget> {
-  var event = [true, false, true, true, true, true, true];
-  static const max_pyros = 7;
+  
   Offset _position = Offset(100, 100);
   //_PyroWidgetState();
 
   @override
   Widget build(BuildContext context) {
-
-    //List<bool> wid_3 = List<bool>.filled(max_pyros, false);
-    //for (int i = 0; i < max_pyros; i++) {
-      //wid_3[i] = ('${getDatabaseValue("pyro-status", [])}').toString() == 'true';
-    //}
     List<bool> wid_3 = getDatabaseValue("pyro-status", []);
-    //List<bool> wid_3 = List.generate(max_pyros, (index) => ('${getDatabaseValue("pyro-status", false)}').toString() == 'true');
+    int max_pyros = wid_3.length;
 
     return Container(
       padding: const EdgeInsets.all(16.0),
