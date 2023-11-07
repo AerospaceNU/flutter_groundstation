@@ -19,6 +19,12 @@ class TestHardwareInterface extends BaseHardwareInterface {
 
     database.updateDatabase("random_1", random.nextDouble());
 
+    database.updateDatabase("rocket latitude", sin(i / 50) / 100 + 42.37);
+    database.updateDatabase("rocket longitude", cos(i / 50) / 100 - 71.06);
+
+    database.updateDatabase("groundstation latitude", 42.361145);
+    database.updateDatabase("groundstation longitude", -71.0570803);
+
     database.updateDatabase("qr_code_lat", 50 * sin(i / 50) + 50);
     database.updateDatabase("qr_code_lon", -71.0899931);
     //database.updateDatabase("qr_code_lat", 42.338807462515526);

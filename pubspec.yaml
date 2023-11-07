@@ -49,6 +49,8 @@ dependencies:
   provider: ^6.0.5
   fl_chart: ^0.63.0
   show_fps: ^1.0.6
+  flutter_map: ^6.0.1
+  url_launcher: ^6.2.0
 
 dev_dependencies:
   flutter_test:
