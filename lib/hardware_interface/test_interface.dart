@@ -9,6 +9,7 @@ class TestHardwareInterface extends BaseHardwareInterface {
   var random = Random();
 
   TestHardwareInterface();
+  int max_pyros = 7;
 
   @override
   void runLoopOnce(Timer t) {
@@ -18,6 +19,12 @@ class TestHardwareInterface extends BaseHardwareInterface {
     database.updateDatabase("test_3", sin(i / 50) + 6);
 
     database.updateDatabase("random_1", random.nextDouble());
-    database.updateDatabase("pyro-status", random.nextBool());
+
+
+    List<bool> wid_3 = List<bool>.filled(max_pyros, false);
+    for (int i = 0; i < max_pyros; i++) {
+      wid_3[i] = random.nextBool();
+    }
+    database.updateDatabase("pyro-status", wid_3);
   }
 }
