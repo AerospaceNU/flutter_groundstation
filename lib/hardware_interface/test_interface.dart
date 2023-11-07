@@ -24,5 +24,10 @@ class TestHardwareInterface extends BaseHardwareInterface {
 
     database.updateDatabase("groundstation latitude", 42.361145);
     database.updateDatabase("groundstation longitude", -71.0570803);
+
+    database.updateDatabase("qr_code_lat", 50 * sin(i / 50) + 50);
+    database.updateDatabase("qr_code_lon", -71.0899931);
+    //database.updateDatabase("qr_code_lat", 42.338807462515526);
+
   }
 }
