@@ -6,22 +6,36 @@ class StreamProvider extends ChangeNotifier {
   /// Internal, private state of the provider.
   final List<dynamic> _items = [];
 
+  // this represents the last piece of information we added to items and notified our listeners about
   dynamic lastSentMessage;
 
+  // this represents the next piece of information we're looking to send out, if any of the fields we care about have changed
   dynamic newestInformationReceived;
 
-  /// An unmodifiable view of the items in the provider.
+  // This is the number of packets we've received so far since sending the last message
+  int numberOfPackets = 0;
+
+  // An unmodifiable view of the items in the provider.
   UnmodifiableListView<dynamic> get items => UnmodifiableListView(_items);
 
-  /// Adds [item] to cart. This and [removeAll] are the only ways to modify the
+  List<String> importantFields = [];
+
+  StreamProvider(this.importantFields);
+
+  /// Adds the dictionary entry of only the fields we care about to the listeners. This and [removeAll] are the only ways to modify the
   /// provider.
   void add(dynamic item) {
-    if (!lastSentMessage) {
-      // if a message hasn't been sent yet, immediately save this and send it over
-    }
-    _items.add(item);
-    // This call tells the widgets that are listening to this model to rebuild.
+    updateInformationToSend(item);
+    _items.add(newestInformationReceived);
+    lastSentMessage = newestInformationReceived;
     notifyListeners();
+  }
+
+  // update what we know as the newest information using the dictionary entry handed to us
+  void updateInformationToSend(dynamic dictionary) {
+    for (var field in importantFields) {
+        newestInformationReceived[field] = dictionary[field];
+      }
   }
 
   /// Removes all items from the cart.
