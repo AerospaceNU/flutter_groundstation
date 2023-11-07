@@ -27,11 +27,11 @@ class MapWidget extends StatefulWidget {
   State<StatefulWidget> createState() => _MapWidgetState();
 }
 
-List<LatLng> circles = [];
-
 class _MapWidgetState extends BaseWidgetState<MapWidget> {
   var groundstation_location = LatLng(42.361145, -71.0570803);
   List<LatLng> rocket_path = [];
+  List<LatLng> circles = [];
+
   @override
   Widget build(BuildContext context) {
     var rocket_location = LatLng(getDatabaseValue("rocket latitude", 42.37), getDatabaseValue("rocket longitude", -71.06));
