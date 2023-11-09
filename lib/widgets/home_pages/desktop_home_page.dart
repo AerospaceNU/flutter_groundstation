@@ -10,6 +10,7 @@ import '../tabs/test_tab.dart';
 import '../tabs/graphs_tab.dart';
 
 import '../test_widget.dart';
+import '../tabs/stream_tab.dart';
 
 class DesktopHomePage extends StatefulWidget {
   final String title;
@@ -36,7 +37,7 @@ class _DesktopHomePageState extends BaseHomePageState<DesktopHomePage> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 3,
+      length: 4,
       child: Scaffold(
         appBar: AppBar(
           bottom: const TabBar(
@@ -44,6 +45,7 @@ class _DesktopHomePageState extends BaseHomePageState<DesktopHomePage> {
               Tab(text: "Test widget"),
               Tab(text: "Test tab"),
               Tab(text: "Graphs tab"),
+              Tab(text: "Stream tab")
             ],
           ),
         ),
@@ -51,10 +53,14 @@ class _DesktopHomePageState extends BaseHomePageState<DesktopHomePage> {
           children: [
             Scaffold(
               body: const Center(child: TestWidget()),
-              floatingActionButton: FloatingActionButton(onPressed: onButtonPress, tooltip: 'Increment', child: const Icon(Icons.add)),
+              floatingActionButton: FloatingActionButton(
+                  onPressed: onButtonPress,
+                  tooltip: 'Increment',
+                  child: const Icon(Icons.add)),
             ),
             const TestTab(),
             const GraphTab(),
+            const StreamTab(),
           ],
         ),
       ),
