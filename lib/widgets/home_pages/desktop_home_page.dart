@@ -39,11 +39,12 @@ class _DesktopHomePageState extends BaseHomePageState<DesktopHomePage> {
     return Column(
       children: [
         const DesktopHomePageMenu(),
-        DefaultTabController(
+        Expanded(
+            child: DefaultTabController(
           length: 3,
           child: Scaffold(
             appBar: AppBar(
-              bottom: const TabBar(
+              title: const TabBar(
                 tabs: [
                   Tab(text: "Test widget"),
                   Tab(text: "Test tab"),
@@ -62,7 +63,7 @@ class _DesktopHomePageState extends BaseHomePageState<DesktopHomePage> {
               ],
             ),
           ),
-        )
+        ))
       ],
     );
   }

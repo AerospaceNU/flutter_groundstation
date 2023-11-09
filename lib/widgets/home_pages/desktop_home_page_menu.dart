@@ -6,71 +6,44 @@ class DesktopHomePageMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
-      MenuBar(
-        children: <Widget>[
-          SubmenuButton(
-            menuChildren: <Widget>[
-              MenuItemButton(
-                onPressed: () {
-                  showAboutDialog(
-                    context: context,
-                    applicationName: 'MenuBar Sample',
-                    applicationVersion: '1.0.0',
-                  );
-                },
-                child: const MenuAcceleratorLabel('&About'),
-              ),
-              MenuItemButton(
-                onPressed: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Saved!'),
-                    ),
-                  );
-                },
-                child: const MenuAcceleratorLabel('&Save'),
-              ),
-              MenuItemButton(
-                onPressed: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Quit!'),
-                    ),
-                  );
-                },
-                child: const MenuAcceleratorLabel('&Quit'),
-              ),
-            ],
-            child: const MenuAcceleratorLabel('&File'),
+    var fileMenu = {"a": () {}, "c": () {}};
+    var moduleMenu = {"a": () {}, "b": () {}};
+    var fullMenu = {"file": fileMenu, "modules": moduleMenu};
+
+    var menuWidgets = <Widget>[];
+
+    for (var menu in fullMenu.keys) {
+      var subMenuWidgets = <Widget>[];
+      var subMenuData = fullMenu[menu];
+
+      for (var subMenu in subMenuData!.keys) {
+        var callback = subMenuData[subMenu];
+
+        var subMenuWidget = MenuItemButton(
+          onPressed: callback,
+          child: MenuAcceleratorLabel(subMenu),
+        );
+
+        subMenuWidgets.add(subMenuWidget);
+      }
+
+      var menuWidget = SubmenuButton(
+        menuChildren: subMenuWidgets,
+        child: MenuAcceleratorLabel(menu),
+      );
+
+      menuWidgets.add(menuWidget);
+    }
+
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        Expanded(
+          child: MenuBar(
+            children: menuWidgets,
           ),
-          SubmenuButton(
-            menuChildren: <Widget>[
-              MenuItemButton(
-                onPressed: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Magnify!'),
-                    ),
-                  );
-                },
-                child: const MenuAcceleratorLabel('&Magnify'),
-              ),
-              MenuItemButton(
-                onPressed: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Minify!'),
-                    ),
-                  );
-                },
-                child: const MenuAcceleratorLabel('Mi&nify'),
-              ),
-            ],
-            child: const MenuAcceleratorLabel('&View'),
-          ),
-        ],
-      )
-    ]);
+        ),
+      ],
+    );
   }
 }
