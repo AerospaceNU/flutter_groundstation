@@ -4,6 +4,9 @@ class Constants {
 
   //GUI internal keys
   static const databaseUpdateKey = "__database_update__";
+  static const moduleInfo = "__module_info__";
+  static const setModuleEnable = "__set_module_enable__";
+  static const toggleModuleEnable = "__toggle_module_enabled__";
 
   //TODO: Change these to what the FCB calls them
 

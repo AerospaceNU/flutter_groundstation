@@ -12,7 +12,15 @@ class BaseHardwareInterface {
     guiUpdateLoopTimer = Timer.periodic(const Duration(milliseconds: 50), runLoopOnce);
   }
 
-  void toggleEnabled(){
+  bool isEnabled() {
+    return enabled;
+  }
+
+  void setEnabled(bool shouldBeEnabled) {
+    enabled = shouldBeEnabled;
+  }
+
+  void toggleEnabled() {
     enabled = !enabled;
   }
 

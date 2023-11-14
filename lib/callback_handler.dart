@@ -36,5 +36,7 @@ class CallbackHandler {
     for (var callback in queuedCallbacks) {
       runCallback(callback.name, callback.data);
     }
+
+    queuedCallbacks = <QueuedCallback>[];
   }
 }

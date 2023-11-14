@@ -6,7 +6,7 @@ import '../../hardware_interface/serial_groundstation_interface.dart';
 
 import 'base_home_page.dart';
 
-import 'desktop_home_page_menu.dart';
+import '../desktop_home_page_menu.dart';
 import '../tabs/test_tab.dart';
 import '../tabs/graphs_tab.dart';
 
@@ -34,34 +34,12 @@ class _DesktopHomePageState extends BaseHomePageState<DesktopHomePage> {
     BaseWidgetState.database.updateDatabase("counter", counterVal + 1);
   }
 
-  void onModuleButton(String moduleName) {
-    for (var module in hardwareInterfaceList) {
-      if (module.runtimeType.toString() == moduleName) {
-        module.toggleEnabled();
-      }
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     //Make menu options
-    var fileMenu = {"a": () {}, "c": () {}};
-
-    //Module menu gets list of modules
-    var moduleMenu = {};
-    for (var module in hardwareInterfaceList) {
-      var moduleName = module.runtimeType.toString();
-
-      moduleMenu[moduleName] = () {
-        onModuleButton(moduleName);
-      };
-    }
-
-    var fullMenu = {"file": fileMenu, "modules": moduleMenu};
-
     return Column(
       children: [
-        DesktopHomePageMenu(menuOptions: fullMenu),
+        const DesktopHomePageMenu(),
         Expanded(
             child: DefaultTabController(
           length: 3,
