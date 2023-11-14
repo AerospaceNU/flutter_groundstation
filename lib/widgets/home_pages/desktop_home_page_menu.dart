@@ -2,19 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class DesktopHomePageMenu extends StatelessWidget {
-  const DesktopHomePageMenu({super.key});
+  late final menuOptions;
+  
+  DesktopHomePageMenu({required this.menuOptions, super.key});
 
   @override
   Widget build(BuildContext context) {
-    var fileMenu = {"a": () {}, "c": () {}};
-    var moduleMenu = {"a": () {}, "b": () {}};
-    var fullMenu = {"file": fileMenu, "modules": moduleMenu};
-
     var menuWidgets = <Widget>[];
 
-    for (var menu in fullMenu.keys) {
+    for (var menu in menuOptions.keys) {
       var subMenuWidgets = <Widget>[];
-      var subMenuData = fullMenu[menu];
+      var subMenuData = menuOptions[menu];
 
       for (var subMenu in subMenuData!.keys) {
         var callback = subMenuData[subMenu];

@@ -6,9 +6,14 @@ import '../database.dart';
 class BaseHardwareInterface {
   var database = Database();
   late Timer guiUpdateLoopTimer;
+  var enabled = true;
 
   BaseHardwareInterface() {
     guiUpdateLoopTimer = Timer.periodic(const Duration(milliseconds: 50), runLoopOnce);
+  }
+
+  void toggleEnabled(){
+    enabled = !enabled;
   }
 
   void runLoopOnce(Timer t) {}

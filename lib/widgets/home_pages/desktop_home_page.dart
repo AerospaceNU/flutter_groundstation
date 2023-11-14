@@ -34,11 +34,34 @@ class _DesktopHomePageState extends BaseHomePageState<DesktopHomePage> {
     BaseWidgetState.database.updateDatabase("counter", counterVal + 1);
   }
 
+  void onModuleButton(String moduleName) {
+    for (var module in hardwareInterfaceList) {
+      if (module.runtimeType.toString() == moduleName) {
+        module.toggleEnabled();
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    //Make menu options
+    var fileMenu = {"a": () {}, "c": () {}};
+
+    //Module menu gets list of modules
+    var moduleMenu = {};
+    for (var module in hardwareInterfaceList) {
+      var moduleName = module.runtimeType.toString();
+
+      moduleMenu[moduleName] = () {
+        onModuleButton(moduleName);
+      };
+    }
+
+    var fullMenu = {"file": fileMenu, "modules": moduleMenu};
+
     return Column(
       children: [
-        const DesktopHomePageMenu(),
+        DesktopHomePageMenu(menuOptions: fullMenu),
         Expanded(
             child: DefaultTabController(
           length: 3,

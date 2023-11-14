@@ -22,6 +22,15 @@ class SerialGroundstationInterface extends BaseHardwareInterface {
 
   @override
   void runLoopOnce(Timer t) {
+    if (portOpen && !enabled) {
+      reader.close();
+      portOpen = false;
+    }
+
+    if (!enabled) {
+      return;
+    }
+
     var currentTime = DateTime.timestamp().millisecondsSinceEpoch;
 
     if (currentTime > nextCheckTime && !portOpen) {
