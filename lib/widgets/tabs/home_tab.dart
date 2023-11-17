@@ -1,14 +1,59 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
+
+import 'package:flutter_groundstation/widgets/battery_indicator.dart';
+import 'package:flutter_groundstation/widgets/graph_widget.dart';
+import 'package:flutter_groundstation/widgets/text_data.dart';
 import 'package:flutter_groundstation/widgets/map_widget.dart';
 import 'package:flutter_groundstation/widgets/qr_code_widget.dart';
 
+import '../../constants.dart';
+
 class HomeTab extends StatelessWidget {
+  const HomeTab({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+          child: HomeTabFramework(
+        topBar: HomeTopBar(widgets: [
+          const TextData(
+            dataKey: "test",
+            wrapWords: false,
+          ),
+          const TextData(
+            dataKey: "random_1",
+            wrapWords: false,
+            decimals: 6,
+          ),
+          BatteryIndicator(
+            label: "random",
+            dataKey: "random_1",
+            min: 0,
+            max: 1,
+            width: 20,
+            displayData: true,
+          )
+        ], border: Colors.black38),
+        leftBar: const HomeLeftBar(widgets: [
+          GraphWidget(title: "Altitude", keyList: [Constants.altitude, Constants.gpsAltitude]),
+          TextData(
+            dataKey: "random_2",
+            wrapWords: false,
+            decimals: 6,
+          )
+        ], border: Colors.black38),
+      )),
+    );
+  }
+}
+
+class HomeTabFramework extends StatelessWidget {
   final HomeTopBar topBar;
   final HomeLeftBar leftBar;
 
-  const HomeTab({
+  const HomeTabFramework({
     super.key,
     required this.topBar,
     required this.leftBar,

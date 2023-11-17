@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_groundstation/widgets/base_widget.dart';
-import 'package:flutter_groundstation/widgets/battery_indicator.dart';
-import 'package:flutter_groundstation/widgets/graph_widget.dart';
+
 import 'package:flutter_groundstation/widgets/tabs/home_tab.dart';
-import 'package:flutter_groundstation/widgets/text_data.dart';
 
 import 'base_home_page.dart';
 
@@ -34,11 +32,6 @@ class _DesktopHomePageState extends BaseHomePageState<DesktopHomePage> {
     addHardwareInterface(SerialGroundstationInterface());
   }
 
-  void onButtonPress() {
-    var counterVal = BaseWidgetState.database.getValue("counter", 0);
-    BaseWidgetState.database.updateDatabase("counter", counterVal + 1);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Column(children: [
@@ -56,43 +49,11 @@ class _DesktopHomePageState extends BaseHomePageState<DesktopHomePage> {
               ],
             ),
           ),
-          body: TabBarView(
+          body: const TabBarView(
             children: [
-              Scaffold(
-                body: Center(
-                    child: HomeTab(
-                  topBar: HomeTopBar(widgets: [
-                    const TextData(
-                      dataKey: "test",
-                      wrapWords: false,
-                    ),
-                    const TextData(
-                      dataKey: "random_1",
-                      wrapWords: false,
-                      decimals: 6,
-                    ),
-                    BatteryIndicator(
-                      label: "random",
-                      dataKey: "random_1",
-                      min: 0,
-                      max: 1,
-                      width: 20,
-                      displayData: true,
-                    )
-                  ], border: Colors.black38),
-                  leftBar: const HomeLeftBar(widgets: [
-                    GraphWidget(title: "Altitude", keyList: [Constants.altitude, Constants.gpsAltitude]),
-                    TextData(
-                      dataKey: "random_2",
-                      wrapWords: false,
-                      decimals: 6,
-                    )
-                  ], border: Colors.black38),
-                )),
-                floatingActionButton: FloatingActionButton(onPressed: onButtonPress, tooltip: 'Increment', child: const Icon(Icons.add)),
-              ),
-              const TestTab(),
-              const GraphTab(),
+              HomeTab(),
+              TestTab(),
+              GraphTab(),
             ],
           ),
         ),
