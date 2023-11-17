@@ -69,7 +69,7 @@ class BatteryIndicator extends StatefulWidget {
     title = (label != null) ? (textBuilder != null ? textBuilder?.build(label!)
         : AutoSizeText(label!, presetFontSizes: Constants.stdFontSizes,)) : null;
     data = displayData
-        ? TextData(dataKey: dataKey, decimals: 6, textBuilder: textBuilder)
+        ? TextData(dataKey: dataKey, decimals: 1, textBuilder: textBuilder, suffix: " V",)
         : null;
     size = Size(width, height);
   }

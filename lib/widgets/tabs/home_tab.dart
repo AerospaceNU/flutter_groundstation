@@ -19,19 +19,23 @@ class HomeTab extends StatelessWidget {
           child: HomeTabFramework(
         topBar: HomeTopBar(widgets: [
           const TextData(
-            dataKey: "test",
+            prefix: "Altitude: ",
+            suffix: " m",
+            dataKey: Constants.altitude,
             wrapWords: false,
           ),
           const TextData(
-            dataKey: "random_1",
+            prefix: "Vertical Velocity: ",
+            suffix: " m/s",
+            dataKey: Constants.verticalSpeed,
             wrapWords: false,
             decimals: 6,
           ),
           BatteryIndicator(
-            label: "random",
-            dataKey: "random_1",
-            min: 0,
-            max: 1,
+            label: "Battery",
+            dataKey: Constants.batteryVoltage,
+            min: 11.1,
+            max: 12.3,
             width: 20,
             displayData: true,
           )
