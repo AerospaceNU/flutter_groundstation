@@ -50,6 +50,13 @@ class Constants {
   static const courseOverGround = "course_over_ground";
   static const gpsSatellites = "gps_sats";
 
+  //Ground station data
+  static const groundStationLongitude = "ground_station_longitude";
+  static const groundStationLatitude = "ground_station_latitude";
+  static const groundStationAltitude = "ground_station_altitude";
+  static const groundStationPressure = "ground_station_pressure";
+  static const groundStationTemperature = "ground_station_temperature";
+
   //FCB State stuff
   static const fcbState = "fcb_state_text";
   static const fcbStateNumber = "fcb_state_number";
