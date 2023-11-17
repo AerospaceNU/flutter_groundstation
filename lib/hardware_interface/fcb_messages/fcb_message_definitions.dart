@@ -2,8 +2,8 @@ import 'dart:core';
 
 import 'package:flutter/foundation.dart';
 
-import '../binary_parser/binary_parser.dart';
-import '../constants.dart';
+import '../../binary_parser/binary_parser.dart';
+import '../../constants.dart';
 
 class OrientationMessage extends BaseMessage {
   OrientationMessage()
@@ -66,6 +66,17 @@ class PyroInfo extends BaseMessage {
         ]);
 }
 
+class GroundStationMessage extends BaseMessage {
+  GroundStationMessage()
+      : super("GroundStation Message", [
+          ParameterDescription(BinaryTypes.FLOAT_32_TYPE, Constants.groundStationLatitude),
+          ParameterDescription(BinaryTypes.FLOAT_32_TYPE, Constants.groundStationLongitude),
+          ParameterDescription(BinaryTypes.FLOAT_32_TYPE, Constants.groundStationAltitude),
+          ParameterDescription(BinaryTypes.FLOAT_64_TYPE, Constants.groundStationPressure),
+          ParameterDescription(BinaryTypes.FLOAT_64_TYPE, Constants.groundStationTemperature),
+        ]);
+}
+
 ///Message ID to object mapping
 class MessageOptions {
   static Map<int, BaseMessage> options = {
@@ -73,6 +84,7 @@ class MessageOptions {
     3: PositionData(),
     6: AltitudeInfoMessage(),
     7: PyroInfo(),
+    200: GroundStationMessage(),
   };
 }
 
@@ -89,11 +101,11 @@ Map<String, Object> parseMessage(int packetType, ByteData data) {
   if (MessageOptions.options.containsKey(packetType)) {
     var packetObject = MessageOptions.options[packetType];
     var parsedBinary = parseData(data, packetObject!.binaryFormatString);
+    messageDict["message_type"] = packetObject.messageType;
 
     for (var i = 0; i < packetObject.parameters.length; i++) {
       var parameter = packetObject.parameters[i];
       var value = parsedBinary[i];
-      messageDict["message_type"] = packetObject.messageType;
 
       //TODO: Alternate format types (date & latlon)
       if (value is num) {
@@ -102,6 +114,8 @@ Map<String, Object> parseMessage(int packetType, ByteData data) {
         messageDict[parameter.databaseKey] = value;
       }
     }
+  } else {
+    print("Unknown message type $packetType");
   }
 
   return messageDict;
@@ -125,7 +139,7 @@ class ParameterDescription {
 class BaseMessage {
   List<ParameterDescription> parameters;
   String messageType;
-  String binaryFormatString = "";
+  String binaryFormatString = "<";
 
   BaseMessage(this.messageType, this.parameters) {
     for (var parameter in parameters) {

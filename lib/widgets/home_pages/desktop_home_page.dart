@@ -10,6 +10,7 @@ import 'base_home_page.dart';
 
 import '../tabs/test_tab.dart';
 import '../tabs/graphs_tab.dart';
+import '../desktop_home_page_menu.dart';
 
 import '../../hardware_interface/test_interface.dart';
 import '../../hardware_interface/serial_groundstation_interface.dart';
@@ -40,39 +41,62 @@ class _DesktopHomePageState extends BaseHomePageState<DesktopHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 3,
-      child: Scaffold(
-        appBar: AppBar(
-          bottom: const TabBar(
-            tabs: [
-              Tab(text: "Test widget"),
-              Tab(text: "Test tab"),
-              Tab(text: "Graphs tab"),
+    return Column(children: [
+      const DesktopHomePageMenu(),
+      Expanded(
+          child: DefaultTabController(
+        length: 3,
+        child: Scaffold(
+          appBar: AppBar(
+            title: const TabBar(
+              tabs: [
+                Tab(text: "Test widget"),
+                Tab(text: "Test tab"),
+                Tab(text: "Graphs tab"),
+              ],
+            ),
+          ),
+          body: TabBarView(
+            children: [
+              Scaffold(
+                body: Center(
+                    child: HomeTab(
+                  topBar: HomeTopBar(widgets: [
+                    const TextData(
+                      dataKey: "test",
+                      wrapWords: false,
+                    ),
+                    const TextData(
+                      dataKey: "random_1",
+                      wrapWords: false,
+                      decimals: 6,
+                    ),
+                    BatteryIndicator(
+                      label: "random",
+                      dataKey: "random_1",
+                      min: 0,
+                      max: 1,
+                      width: 20,
+                      displayData: true,
+                    )
+                  ], border: Colors.black38),
+                  leftBar: const HomeLeftBar(widgets: [
+                    GraphWidget(title: "Altitude", keyList: [Constants.altitude, Constants.gpsAltitude]),
+                    TextData(
+                      dataKey: "random_2",
+                      wrapWords: false,
+                      decimals: 6,
+                    )
+                  ], border: Colors.black38),
+                )),
+                floatingActionButton: FloatingActionButton(onPressed: onButtonPress, tooltip: 'Increment', child: const Icon(Icons.add)),
+              ),
+              const TestTab(),
+              const GraphTab(),
             ],
           ),
         ),
-        body: TabBarView(
-          children: [
-            Scaffold(
-              body: Center(child: HomeTab(
-                topBar: HomeTopBar(widgets: [
-                  const TextData(dataKey: "test", wrapWords: false,),
-                  const TextData(dataKey: "random_1", wrapWords: false, decimals: 6,),
-                  BatteryIndicator(label: "random", dataKey: "random_1", min: 0, max: 1, width: 20, displayData: true,)
-                ], border: Colors.black38),
-                leftBar: const HomeLeftBar(widgets: [
-                  GraphWidget(title: "Altitude", keyList: [Constants.altitude, Constants.gpsAltitude]),
-                  TextData(dataKey: "random_2", wrapWords: false, decimals: 6,)
-                ], border: Colors.black38),
-              )),
-              floatingActionButton: FloatingActionButton(onPressed: onButtonPress, tooltip: 'Increment', child: const Icon(Icons.add)),
-            ),
-            const TestTab(),
-            const GraphTab(),
-          ],
-        ),
-      ),
-    );
+      ))
+    ]);
   }
 }
