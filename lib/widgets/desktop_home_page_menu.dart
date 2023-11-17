@@ -27,9 +27,13 @@ class _DesktopHomePageMenuState extends BaseWidgetState<DesktopHomePageMenu> {
       bool enabled = moduleInfo[moduleName];
 
       if (enabled) {
-        moduleMenu["Disable $moduleName"] = () {onModuleMenu(moduleName);};
+        moduleMenu["Disable $moduleName"] = () {
+          onModuleMenu(moduleName);
+        };
       } else {
-        moduleMenu["Enable $moduleName"] = () {onModuleMenu(moduleName);};
+        moduleMenu["Enable $moduleName"] = () {
+          onModuleMenu(moduleName);
+        };
       }
     }
 
