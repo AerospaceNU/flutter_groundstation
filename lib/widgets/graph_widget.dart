@@ -1,5 +1,7 @@
 // ignore_for_file: unused_local_variable
 
+import 'dart:math';
+
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'base_widget.dart';
@@ -19,6 +21,9 @@ class _GraphWidgetState extends BaseWidgetState<GraphWidget> {
 
   late LineChartData data;
   var startTime = DateTime.now().millisecondsSinceEpoch / 1000;
+
+  var maxValue = 0.0;
+  var minValue = 0.0;
 
   @override
   void initState() {
@@ -40,8 +45,30 @@ class _GraphWidgetState extends BaseWidgetState<GraphWidget> {
     final stopwatch = Stopwatch()..start();
     var time = DateTime.now().millisecondsSinceEpoch / 1000 - startTime;
 
+    var timeToKeep = 30;
+    var oldestToKeep = time - timeToKeep;
+
+    //Loop through the lines we track, get data from the database, and add it to the line
     for (var key in pointsList.keys) {
-      pointsList[key]?.add(FlSpot(time, getDatabaseValue(key, 0.0)));
+      //Get value from database
+      var value = getDatabaseValue(key, 0.0);
+
+      //Track min and max values (this needs work eventually), since these will never get smaller
+      maxValue = max(maxValue, value);
+      minValue = min(minValue, value);
+
+      //Add it to the line
+      pointsList[key]?.add(FlSpot(time, value));
+
+      //Remove old data
+      var needsToKeepRemoving = true;
+      while (needsToKeepRemoving) {
+        if (pointsList[key]![0].x < oldestToKeep) {
+          pointsList[key]!.removeAt(0);
+        } else {
+          needsToKeepRemoving = false;
+        }
+      }
     }
 
     stopwatch.stop();
@@ -50,10 +77,10 @@ class _GraphWidgetState extends BaseWidgetState<GraphWidget> {
     stopwatch.start();
 
     // hack for min/max axis ranges. We apparently need to do it since we only create LineChartData once
-    data.minX = time - 30;
+    data.minX = oldestToKeep;
     data.maxX = time;
-    data.minY = -5;
-    data.maxY = 10;
+    data.minY = minValue;
+    data.maxY = maxValue;
 
     stopwatch.stop();
     var dt_2 = stopwatch.elapsedMicroseconds;
