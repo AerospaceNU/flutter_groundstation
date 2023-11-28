@@ -121,7 +121,7 @@ makeChart(List<List<FlSpot>> points) {
       spots: points[i],
       isCurved: false,
       dotData: const FlDotData(show: false),
-      color: colorFromName(lineColors[i]),
+      color: colorFromName(lineColors[i % lineColors.length]),
     ));
   }
 
