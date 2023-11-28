@@ -6,6 +6,18 @@ var colorNames = {
   "green": Colors.green,
   "blue": Colors.blue,
   "magenta": Colors.purple,
+  "yellow": Colors.yellow,
+  "amber": Colors.amber,
+  "black": Colors.black,
+  "brown": Colors.brown,
+  "cyan": Colors.cyan,
+  "grey": Colors.grey,
+  "gray": Colors.grey,
+  "white": Colors.white,
+  "teal": Colors.teal,
+  "pink": Colors.pink,
+  "orange": Colors.orange,
+  "lime": Colors.lime,
 };
 
 Color? colorFromName(String colorName) {
