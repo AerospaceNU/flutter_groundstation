@@ -6,6 +6,8 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'base_widget.dart';
 
+import '../color_names.dart';
+
 class GraphWidget extends StatefulWidget {
   final String title;
   final List keyList;
@@ -63,7 +65,7 @@ class _GraphWidgetState extends BaseWidgetState<GraphWidget> {
       //Remove old data
       var needsToKeepRemoving = true;
       while (needsToKeepRemoving) {
-        if (pointsList[key]![0].x < oldestToKeep) {
+        if (pointsList[key]![0].x < oldestToKeep - 5) {
           pointsList[key]!.removeAt(0);
         } else {
           needsToKeepRemoving = false;
@@ -111,19 +113,22 @@ class _GraphWidgetState extends BaseWidgetState<GraphWidget> {
 
 // This is pretty expensive to do, so try to avoid doing it very often
 makeChart(List<List<FlSpot>> points) {
+  var lineColors = ["red", "blue", "green", "magenta"];
+
+  var lineChartBarData = <LineChartBarData>[];
+  for (var i = 0; i < points.length; i++) {
+    lineChartBarData.add(LineChartBarData(
+      spots: points[i],
+      isCurved: false,
+      dotData: const FlDotData(show: false),
+      color: colorFromName(lineColors[i]),
+    ));
+  }
+
   var ret = LineChartData(
     // lineTouchData: const LineTouchData(enabled: false, ), // Setting this to false throws LateInitializationError: Field 'mostLeftSpot' has not been initialized.
-    lineBarsData: points
-        .map(
-          (it) => LineChartBarData(
-            spots: it,
-            isCurved: false,
-            dotData: const FlDotData(
-              show: false,
-            ),
-          ),
-        )
-        .toList(),
+    lineBarsData: lineChartBarData,
+    clipData: const FlClipData.all(),
   );
 
   return ret;
