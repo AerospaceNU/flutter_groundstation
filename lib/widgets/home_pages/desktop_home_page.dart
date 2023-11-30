@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_groundstation/widgets/base_widget.dart';
-import 'package:flutter_groundstation/widgets/tabs/map_tab.dart';
-import 'package:flutter_groundstation/widgets/tabs/qr_code_tab.dart';
 
-import '../../hardware_interface/test_interface.dart';
-import '../../hardware_interface/serial_groundstation_interface.dart';
+import 'package:flutter_groundstation/widgets/base_widget.dart';
+
+import 'package:flutter_groundstation/widgets/tabs/home_tab.dart';
 
 import 'base_home_page.dart';
 
 import '../tabs/test_tab.dart';
 import '../tabs/graphs_tab.dart';
+import '../desktop_home_page_menu.dart';
 
-import '../test_widget.dart';
+import '../../hardware_interface/test_interface.dart';
+import '../../hardware_interface/serial_groundstation_interface.dart';
+
+import '/constants.dart';
 
 class DesktopHomePage extends StatefulWidget {
   final String title;
@@ -30,40 +32,32 @@ class _DesktopHomePageState extends BaseHomePageState<DesktopHomePage> {
     addHardwareInterface(SerialGroundstationInterface());
   }
 
-  void onButtonPress() {
-    var counterVal = BaseWidgetState.database.getValue("counter", 0);
-    BaseWidgetState.database.updateDatabase("counter", counterVal + 1);
-  }
-
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 5,
-      child: Scaffold(
-        appBar: AppBar(
-          bottom: const TabBar(
-            tabs: [
-              Tab(text: "Test widget"),
-              Tab(text: "Test tab"),
-              Tab(text: "Graphs tab"),
-              Tab(text: "Map Tab"),
-              Tab(text: "QR Code tab"),
+    return Column(children: [
+      const DesktopHomePageMenu(),
+      Expanded(
+          child: DefaultTabController(
+        length: 3,
+        child: Scaffold(
+          appBar: AppBar(
+            title: const TabBar(
+              tabs: [
+                Tab(text: "Test widget"),
+                Tab(text: "Test tab"),
+                Tab(text: "Graphs tab"),
+              ],
+            ),
+          ),
+          body: const TabBarView(
+            children: [
+              HomeTab(),
+              TestTab(),
+              GraphTab(),
             ],
           ),
         ),
-        body: TabBarView(
-          children: [
-            Scaffold(
-              body: const Center(child: TestWidget()),
-              floatingActionButton: FloatingActionButton(onPressed: onButtonPress, tooltip: 'Increment', child: const Icon(Icons.add)),
-            ),
-            const TestTab(),
-            const GraphTab(),
-            const MapTab(),
-            const QrCodeTab(),
-          ],
-        ),
-      ),
-    );
+      ))
+    ]);
   }
 }

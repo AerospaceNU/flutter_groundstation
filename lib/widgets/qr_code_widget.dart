@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import './base_widget.dart';
+import '../constants.dart';
 
 // https://pub.dev/packages/qr_flutter
 // https://medium.com/podiihq/generating-qr-code-in-a-flutter-app-50de15e39830
@@ -38,6 +39,7 @@ class QRCodeImageWidget extends StatelessWidget {
 
 class QRCodeWidget extends StatefulWidget {
   const QRCodeWidget({super.key});
+
   @override
   _QRCodeWidgetState createState() => _QRCodeWidgetState();
 }
@@ -55,14 +57,14 @@ class _QRCodeWidgetState extends BaseWidgetState<QRCodeWidget> {
 
   double getLatNotFrozen() {
     if (!frozen) {
-      curLat = getDatabaseValue("qr_code_lat", 0.0);
+      curLat = getDatabaseValue(Constants.latitude, 0.0);
     }
     return curLat;
   }
 
   double getLonNotFrozen() {
     if (!frozen) {
-      curLon = getDatabaseValue("qr_code_lon", 0.0);
+      curLon = getDatabaseValue(Constants.longitude, 0.0);
     }
     return curLon;
   }
