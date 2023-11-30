@@ -23,13 +23,14 @@ class HomeTab extends StatelessWidget {
             suffix: " m",
             dataKey: Constants.altitude,
             wrapWords: false,
+            decimals: 0,
           ),
           const TextData(
             prefix: "Vertical Velocity: ",
             suffix: " m/s",
             dataKey: Constants.verticalSpeed,
             wrapWords: false,
-            decimals: 6,
+            decimals: 0,
           ),
           BatteryIndicator(
             label: "Battery",

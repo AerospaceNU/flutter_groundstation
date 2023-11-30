@@ -24,5 +24,11 @@ class BaseHardwareInterface {
     enabled = !enabled;
   }
 
-  void runLoopOnce(Timer t) {}
+  void runLoopOnce(Timer t) {
+    if (enabled) {
+      runWhileEnabled();
+    }
+  }
+
+  void runWhileEnabled() {}
 }
