@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter_groundstation/widgets/base_widget.dart';
-
 import 'package:flutter_groundstation/widgets/tabs/home_tab.dart';
 
+import '../../dpf_ground_station.dart';
 import 'base_home_page.dart';
 
 import '../tabs/test_tab.dart';
@@ -12,8 +11,6 @@ import '../desktop_home_page_menu.dart';
 
 import '../../hardware_interface/test_interface.dart';
 import '../../hardware_interface/serial_groundstation_interface.dart';
-
-import '/constants.dart';
 
 class DesktopHomePage extends StatefulWidget {
   final String title;
@@ -38,26 +35,27 @@ class _DesktopHomePageState extends BaseHomePageState<DesktopHomePage> {
       const DesktopHomePageMenu(),
       Expanded(
           child: DefaultTabController(
-        length: 3,
-        child: Scaffold(
-          appBar: AppBar(
-            title: const TabBar(
-              tabs: [
-                Tab(text: "Test widget"),
-                Tab(text: "Test tab"),
-                Tab(text: "Graphs tab"),
-              ],
+            length: 3,
+            child: Scaffold(
+              appBar: AppBar(
+                title: const TabBar(
+                  tabs: [
+                    Tab(text: "Test widget"),
+                    Tab(text: "Test tab"),
+                    Tab(text: "Graphs tab"),
+                  ],
+                ),
+              ),
+              floatingActionButton: const ThemeModeSwitch(),
+              body: const TabBarView(
+                children: [
+                  HomeTab(),
+                  TestTab(),
+                  GraphTab(),
+                ],
+              ),
             ),
-          ),
-          body: const TabBarView(
-            children: [
-              HomeTab(),
-              TestTab(),
-              GraphTab(),
-            ],
-          ),
-        ),
-      ))
+          ))
     ]);
   }
 }

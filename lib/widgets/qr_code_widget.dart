@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import './base_widget.dart';
@@ -29,10 +30,20 @@ class QRCodeImageWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(children: [
       Flexible(
-          child: QrImageView(
-        data: getData(),
-      )),
-      Text(getData())
+        flex: 4,
+        child: Container(
+            color: Colors.white54,
+            child: QrImageView(data: getData())
+        ),
+      ),
+      Flexible(
+          flex: 1,
+          child: AutoSizeText(
+            getData(),
+            presetFontSizes: Constants.stdFontSizes,
+            textAlign: TextAlign.center,
+          )
+      ),
     ]);
   }
 }
@@ -41,7 +52,7 @@ class QRCodeWidget extends StatefulWidget {
   const QRCodeWidget({super.key});
 
   @override
-  _QRCodeWidgetState createState() => _QRCodeWidgetState();
+  State<QRCodeWidget> createState() => _QRCodeWidgetState();
 }
 
 class _QRCodeWidgetState extends BaseWidgetState<QRCodeWidget> {
@@ -77,8 +88,7 @@ class _QRCodeWidgetState extends BaseWidgetState<QRCodeWidget> {
           title: const Text('Location QR Code Generator'),
         ),
         body: Center(
-          child: Container(
-              child: Column(children: [
+          child: Column(children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -114,25 +124,32 @@ class _QRCodeWidgetState extends BaseWidgetState<QRCodeWidget> {
                   }).toList(),
                 ),
                 const Spacer(),
-                Text(printFrozen(frozen)),
-                Checkbox(
-                  value: frozen,
-                  onChanged: (bool? value) {
-                    setState(() {
-                      frozen = value!;
-                    });
-                  },
+                Wrap(
+                  direction: Axis.vertical,
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  spacing: -7.5,
+                  children: [
+                    Text(printFrozen(frozen), softWrap: false),
+                    Checkbox(
+                      value: frozen,
+                      onChanged: (bool? value) {
+                        setState(() {
+                          frozen = value!;
+                        });
+                      },
+                    ),
+                  ],
                 ),
                 const Spacer(),
               ],
             ),
-            Flexible(
+            Expanded(
                 child: QRCodeImageWidget(
-              mapType,
-              getLatNotFrozen(),
-              getLonNotFrozen(),
-            )),
-          ])),
+                  mapType,
+                  getLatNotFrozen(),
+                  getLonNotFrozen(),
+                )),
+          ]),
         ));
   }
 }
