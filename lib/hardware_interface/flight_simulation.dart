@@ -1,10 +1,10 @@
-import 'dart:async';
 import 'dart:math';
 import 'package:matrices/matrices.dart';
 import 'package:latlong2/latlong.dart';
 
 import 'base_hardware_interface.dart';
 
+import '../helper_functions.dart';
 import '../constants.dart';
 
 class STATES {
@@ -66,6 +66,12 @@ class FlightSimulation extends BaseHardwareInterface {
   var flightHeading = 45;
   var startPos = const LatLng(42.3601, -71.0589);
 
+  //Rotational velocity calcs
+  var groundSpeedCalc = DerivativeHelper();
+  var rollVelCalc = DerivativeHelper();
+  var pitchVelCalc = DerivativeHelper();
+  var yawVelCalc = DerivativeHelper();
+
   FlightSimulation() {
     setState(STATES.preFlight);
   }
@@ -83,7 +89,10 @@ class FlightSimulation extends BaseHardwareInterface {
     var parachuteCd = 1;
     var enablePhysics = true;
 
-    var airDensity = 1.229; //kg/m^3 TODO: Change this as a function of altitude
+    //Environmental values
+    var temperature = 30; //C
+    var airPressure = 101325 * pow((1 - 2.25577e-5 * position[1][0]), 5.25588); //Pa
+    var airDensity = airPressure / (287.0500676 * (temperature + 273.15)); //kg/m^3
 
     //Timing values
     var currentTime = DateTime.now().millisecondsSinceEpoch / 1000;
@@ -104,7 +113,7 @@ class FlightSimulation extends BaseHardwareInterface {
         setState(STATES.boost);
       }
     } else if (state == STATES.boost) {
-      var thrustScale = 1 - (timeInState / burnTime) * 0.8;
+      var thrustScale = 1 - (timeInState / burnTime) * 0.3;
 
       thrustForce = rocketMass * liftoffTwr * G * thrustScale;
 
@@ -130,7 +139,6 @@ class FlightSimulation extends BaseHardwareInterface {
         setState(STATES.landed);
       }
     } else if (state == STATES.landed) {
-      position = Matrix.zero(2, 1);
       velocity = Matrix.zero(2, 1);
       acceleration = Matrix.zero(2, 1);
       enablePhysics = false;
@@ -169,13 +177,28 @@ class FlightSimulation extends BaseHardwareInterface {
       theta = atan2(velocity[1][0], velocity[0][0]);
     }
 
-    //Generate FCB data based on simulation ----------------------------------------------------------
+    //Break out a few of the state variables so they're easier to work with
     var altitude = position[1][0];
     var downrange = position[0][0];
     var verticalSpeed = velocity[1][0];
 
+    //Generate FCB data based on simulation ----------------------------------------------------------
     var distance = const Distance();
     var coords = distance.offset(startPos, downrange, flightHeading);
+    var groundSpeed = max(groundSpeedCalc.update(downrange), 0);
+    var distanceFromLaunchSite = vectorNorm(Matrix.fromList([
+      [downrange],
+      [altitude]
+    ]));
+
+    // print(groundSpeed);
+
+    //Completly detached from reality
+    var rssi = -45 - (0.01 * distanceFromLaunchSite) + Random().nextDouble() * 3;
+
+    double yaw = flightHeading.toDouble();
+    double pitch = radianToDeg(theta);
+    double roll = 0;
 
     //Make sim packet
     var packet = <String, dynamic>{};
@@ -183,11 +206,22 @@ class FlightSimulation extends BaseHardwareInterface {
     packet[Constants.verticalSpeed] = verticalSpeed;
     packet[Constants.latitude] = coords.latitude;
     packet[Constants.longitude] = coords.longitude;
+    packet[Constants.gpsAltitude] = altitude + 30;
+    packet[Constants.groundSpeed] = groundSpeed;
     packet[Constants.groundStationLatitude] = startPos.latitude;
     packet[Constants.groundStationLongitude] = startPos.longitude;
     packet[Constants.accelerometerX] = vectorNorm(acceleration) - G;
     packet[Constants.accelerometerY] = Random().nextDouble();
     packet[Constants.accelerometerZ] = Random().nextDouble();
+    packet[Constants.roll] = roll;
+    packet[Constants.pitch] = pitch;
+    packet[Constants.yaw] = yaw;
+    packet[Constants.barometer1Pressure] = airPressure / 101325.0;
+    packet[Constants.barometer2Pressure] = airPressure / 101325.0;
+    packet[Constants.pressureReference] = 1.0;
+    packet[Constants.fcbStateNumber] = state;
+    packet[Constants.rssi] = rssi;
+
     database.bulkUpdateDatabase(packet);
   }
 }

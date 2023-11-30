@@ -105,9 +105,9 @@ class SerialGroundstationInterface extends BaseHardwareInterface {
         Constants.timestampMs: timestamp,
         Constants.callsign: callsign,
         "radio_id": radioId,
-        "rssi": rssi,
+        Constants.rssi: rssi,
         "crc": crc,
-        "lqi": lqi,
+        Constants.lqi: lqi,
       };
 
       var packetBytes = data.sublist(15, data.length - 4);

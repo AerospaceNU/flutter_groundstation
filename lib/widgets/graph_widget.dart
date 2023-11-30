@@ -24,8 +24,9 @@ class _GraphWidgetState extends BaseWidgetState<GraphWidget> {
   late LineChartData data;
   var startTime = DateTime.now().millisecondsSinceEpoch / 1000;
 
-  var maxValue = 0.0;
   var minValue = 0.0;
+  var maxValue = 0.0;
+  var firstLoop = true;
 
   @override
   void initState() {
@@ -55,21 +56,30 @@ class _GraphWidgetState extends BaseWidgetState<GraphWidget> {
       //Get value from database
       var value = getDatabaseValue(key, 0.0);
 
-      //Track min and max values (this needs work eventually), since these will never get smaller
-      maxValue = max(maxValue, value);
-      minValue = min(minValue, value);
-
       //Add it to the line
-      pointsList[key]?.add(FlSpot(time, value));
+      var list = pointsList[key];
+      list?.add(FlSpot(time, value));
 
       //Remove old data
       var needsToKeepRemoving = true;
       while (needsToKeepRemoving) {
-        if (pointsList[key]![0].x < oldestToKeep - 5) {
-          pointsList[key]!.removeAt(0);
+        if (list![0].x < oldestToKeep - 5) {
+          list.removeAt(0);
         } else {
           needsToKeepRemoving = false;
         }
+      }
+
+      //Track min and max values (this needs work eventually), since these will never get smaller
+      if (firstLoop) {
+        maxValue = value;
+        minValue = value;
+        firstLoop = false;
+      } else {
+        var padding = (maxValue - minValue).abs() * 0.03;
+
+        maxValue = max(maxValue, value + padding);
+        minValue = min(minValue, value - padding);
       }
     }
 
