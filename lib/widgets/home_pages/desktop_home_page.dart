@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter_groundstation/widgets/base_widget.dart';
-import 'package:flutter_groundstation/widgets/tabs/diagnostics_tab.dart';
-
 import 'package:flutter_groundstation/widgets/tabs/home_tab.dart';
 
 import 'base_home_page.dart';
 
-import '../tabs/test_tab.dart';
 import '../tabs/graphs_tab.dart';
 import '../tabs/diagnostics_tab.dart';
 
@@ -47,7 +43,7 @@ class _DesktopHomePageState extends BaseHomePageState<DesktopHomePage> {
             title: const TabBar(
               tabs: [
                 Tab(text: "Test widget"),
-                Tab(text: "Test tab"),
+                Tab(text: "Diagnostics"),
                 Tab(text: "Graphs tab"),
               ],
             ),
@@ -55,7 +51,7 @@ class _DesktopHomePageState extends BaseHomePageState<DesktopHomePage> {
           body: const TabBarView(
             children: [
               HomeTab(),
-              TestTab(),
+              DiagnosticsTab(),
               GraphTab(),
             ],
           ),

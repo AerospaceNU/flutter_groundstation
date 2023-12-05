@@ -11,7 +11,6 @@ class PyroDataWidget extends StatefulWidget {
 }
 
 class _PyroWidgetState extends BaseWidgetState<PyroDataWidget> {
-
   _PyroWidgetState();
 
   @override
@@ -19,33 +18,28 @@ class _PyroWidgetState extends BaseWidgetState<PyroDataWidget> {
     return Container(
       padding: const EdgeInsets.all(16.0),
       height: 600,
-      child: Column(
-        
-        children: <Widget>[
-          Container(
-              height: 75,
-              decoration: BoxDecoration(border: Border.all(color: Colors.black)),
-              child: const Center(
-                child: Text('Pyro Output Data'),
-              ),
-            ),
-          SingleChildScrollView(
+      child: Column(children: <Widget>[
+        Container(
+          height: 75,
+          decoration: BoxDecoration(border: Border.all(color: Colors.black)),
+          child: const Center(
+            child: Text('Pyro Output Data'),
+          ),
+        ),
+        SingleChildScrollView(
           child: Container(
-              height: 400,
-              decoration: BoxDecoration(
-                color: Colors.black,
-                border: Border.all(color: Colors.black)),
-              child: const Center(
-                child: Text(
-                  '1',
-                  style: TextStyle(color: Colors.white),
-                  textAlign: TextAlign.right,
-                ),
+            height: 400,
+            decoration: BoxDecoration(color: Colors.black, border: Border.all(color: Colors.black)),
+            child: const Center(
+              child: Text(
+                '1',
+                style: TextStyle(color: Colors.white),
+                textAlign: TextAlign.right,
               ),
             ),
           ),
-        ]
-      ),
+        ),
+      ]),
     );
   }
 }
