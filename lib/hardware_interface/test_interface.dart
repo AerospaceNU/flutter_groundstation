@@ -24,9 +24,6 @@ class TestHardwareInterface extends BaseHardwareInterface {
 
     database.updateDatabase(Constants.latitude, sin(i / 50) / 100 + 42.37);
     database.updateDatabase(Constants.longitude, cos(i / 50) / 100 - 71.06);
-
-    database.updateDatabase(Constants.groundStationLatitude, 42.361145);
-    database.updateDatabase(Constants.groundStationLongitude, -71.0570803);
     database.updateDatabase(Constants.groundStationLatitude, 42.361145);
     database.updateDatabase(Constants.groundStationLongitude, -71.0570803);
 
