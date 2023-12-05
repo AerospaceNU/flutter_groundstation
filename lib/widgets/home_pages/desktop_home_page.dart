@@ -11,6 +11,7 @@ import '../desktop_home_page_menu.dart';
 
 import '../../hardware_interface/test_interface.dart';
 import '../../hardware_interface/serial_groundstation_interface.dart';
+import '../../hardware_interface/flight_simulation.dart';
 
 import '/constants.dart';
 
@@ -29,6 +30,7 @@ class _DesktopHomePageState extends BaseHomePageState<DesktopHomePage> {
   _DesktopHomePageState() {
     addHardwareInterface(TestHardwareInterface());
     addHardwareInterface(SerialGroundstationInterface());
+    addHardwareInterface(FlightSimulation());
   }
 
   @override
@@ -42,7 +44,7 @@ class _DesktopHomePageState extends BaseHomePageState<DesktopHomePage> {
           appBar: AppBar(
             title: const TabBar(
               tabs: [
-                Tab(text: "Test widget"),
+                Tab(text: "Primary"),
                 Tab(text: "Diagnostics"),
                 Tab(text: "Graphs tab"),
               ],

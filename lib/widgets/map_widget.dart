@@ -16,7 +16,7 @@ double latLonToDistance(loc1, loc2) {
   var p = 0.017453292519943295;
   var c = cos;
   var a = 0.5 - c((loc2.latitude - loc1.latitude) * p) / 2 + c(loc1.latitude * p) * c(loc2.latitude * p) * (1 - c((loc2.longitude - loc1.longitude) * p)) / 2;
-  return 12742 * asin(sqrt(a));
+  return 12742 * asin(sqrt(a)) * 1000;
 }
 
 class MapWidget extends StatefulWidget {
@@ -32,28 +32,28 @@ class _MapWidgetState extends BaseWidgetState<MapWidget> {
 
   @override
   Widget build(BuildContext context) {
-    var groundstationLocation = LatLng(getDatabaseValue(Constants.groundStationLatitude, 42.37), getDatabaseValue(Constants.groundStationLongitude, -71.06));
-    var rocketLocation = LatLng(getDatabaseValue(Constants.latitude, 42.37), getDatabaseValue(Constants.longitude, -71.06));
+    var groundstationLocation = LatLng(getDatabaseValue(Constants.groundStationLatitude, 0), getDatabaseValue(Constants.groundStationLongitude, 0));
+    var rocketLocation = LatLng(getDatabaseValue(Constants.latitude, 0), getDatabaseValue(Constants.longitude, 0));
 
-    if (rocketPath.isEmpty || latLonToDistance(rocketLocation, rocketPath.last) > 0.5) {
+    //If we don't have a location
+    if (rocketLocation.latitude == 0 && rocketLocation.longitude == 0) {
+      return Container(
+        padding: const EdgeInsets.all(8),
+        color: const Color.fromARGB(255, 30, 144, 255),
+      );
+    }
+
+    //Add current rocket location to path
+    if (rocketPath.isEmpty || latLonToDistance(rocketLocation, rocketPath.last) > 5) {
       rocketPath.add(rocketLocation);
     }
 
+    //Make map
     return FlutterMap(
       options: MapOptions(
-        center: LatLng(groundstationLocation.latitude, groundstationLocation.longitude),
-        zoom: 10,
+        initialCenter: LatLng(groundstationLocation.latitude, groundstationLocation.longitude),
+        initialZoom: 17,
       ),
-      nonRotatedChildren: [
-        RichAttributionWidget(
-          attributions: [
-            TextSourceAttribution(
-              'OpenStreetMap contributors',
-              onTap: () => launchUrl(Uri.parse('https://openstreetmap.org/copyright')),
-            ),
-          ],
-        ),
-      ],
       children: [
         TileLayer(
           urlTemplate: 'https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}',
@@ -81,6 +81,14 @@ class _MapWidgetState extends BaseWidgetState<MapWidget> {
               radius: 5,
               color: const Color.fromARGB(255, 255, 154, 2),
             )
+          ],
+        ),
+        RichAttributionWidget(
+          attributions: [
+            TextSourceAttribution(
+              'OpenStreetMap contributors',
+              onTap: () => launchUrl(Uri.parse('https://openstreetmap.org/copyright')),
+            ),
           ],
         ),
       ],

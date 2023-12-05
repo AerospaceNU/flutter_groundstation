@@ -1,8 +1,12 @@
 // ignore_for_file: unused_local_variable
 
+import 'dart:math';
+
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'base_widget.dart';
+
+import '../color_names.dart';
 
 class GraphWidget extends StatefulWidget {
   final String title;
@@ -19,6 +23,10 @@ class _GraphWidgetState extends BaseWidgetState<GraphWidget> {
 
   late LineChartData data;
   var startTime = DateTime.now().millisecondsSinceEpoch / 1000;
+
+  var minValue = 0.0;
+  var maxValue = 0.0;
+  var firstLoop = true;
 
   @override
   void initState() {
@@ -40,8 +48,39 @@ class _GraphWidgetState extends BaseWidgetState<GraphWidget> {
     final stopwatch = Stopwatch()..start();
     var time = DateTime.now().millisecondsSinceEpoch / 1000 - startTime;
 
+    var timeToKeep = 30;
+    var oldestToKeep = time - timeToKeep;
+
+    //Loop through the lines we track, get data from the database, and add it to the line
     for (var key in pointsList.keys) {
-      pointsList[key]?.add(FlSpot(time, getDatabaseValue(key, 0.0)));
+      //Get value from database
+      var value = getDatabaseValue(key, 0.0);
+
+      //Add it to the line
+      var list = pointsList[key];
+      list?.add(FlSpot(time, value));
+
+      //Remove old data
+      var needsToKeepRemoving = true;
+      while (needsToKeepRemoving) {
+        if (list![0].x < oldestToKeep - 5) {
+          list.removeAt(0);
+        } else {
+          needsToKeepRemoving = false;
+        }
+      }
+
+      //Track min and max values (this needs work eventually), since these will never get smaller
+      if (firstLoop) {
+        maxValue = value;
+        minValue = value;
+        firstLoop = false;
+      } else {
+        var padding = (maxValue - minValue).abs() * 0.03;
+
+        maxValue = max(maxValue, value + padding);
+        minValue = min(minValue, value - padding);
+      }
     }
 
     stopwatch.stop();
@@ -50,10 +89,10 @@ class _GraphWidgetState extends BaseWidgetState<GraphWidget> {
     stopwatch.start();
 
     // hack for min/max axis ranges. We apparently need to do it since we only create LineChartData once
-    data.minX = time - 30;
+    data.minX = oldestToKeep;
     data.maxX = time;
-    data.minY = -5;
-    data.maxY = 10;
+    data.minY = minValue;
+    data.maxY = maxValue;
 
     stopwatch.stop();
     var dt_2 = stopwatch.elapsedMicroseconds;
@@ -84,19 +123,22 @@ class _GraphWidgetState extends BaseWidgetState<GraphWidget> {
 
 // This is pretty expensive to do, so try to avoid doing it very often
 makeChart(List<List<FlSpot>> points) {
+  var lineColors = ["red", "blue", "green", "magenta"];
+
+  var lineChartBarData = <LineChartBarData>[];
+  for (var i = 0; i < points.length; i++) {
+    lineChartBarData.add(LineChartBarData(
+      spots: points[i],
+      isCurved: false,
+      dotData: const FlDotData(show: false),
+      color: colorFromName(lineColors[i % lineColors.length]),
+    ));
+  }
+
   var ret = LineChartData(
     // lineTouchData: const LineTouchData(enabled: false, ), // Setting this to false throws LateInitializationError: Field 'mostLeftSpot' has not been initialized.
-    lineBarsData: points
-        .map(
-          (it) => LineChartBarData(
-            spots: it,
-            isCurved: false,
-            dotData: const FlDotData(
-              show: false,
-            ),
-          ),
-        )
-        .toList(),
+    lineBarsData: lineChartBarData,
+    clipData: const FlClipData.all(),
   );
 
   return ret;

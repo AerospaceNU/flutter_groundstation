@@ -18,14 +18,14 @@ class GraphTab extends StatelessWidget {
       //TODO: This displays really funny, IDK why
       children: const <Widget>[
         GraphWidget(title: "Altitude", keyList: [Constants.altitude, Constants.gpsAltitude]),
-        GraphWidget(title: "Speeds", keyList: [Constants.verticalSpeed]),
+        GraphWidget(title: "Speeds", keyList: [Constants.verticalSpeed, Constants.groundSpeed]),
         GraphWidget(title: "XYZ Accelerations", keyList: [Constants.accelerometerX, Constants.accelerometerY, Constants.accelerometerZ]),
         GraphWidget(title: "RPY Orientation", keyList: [Constants.roll, Constants.pitch, Constants.yaw]),
         GraphWidget(title: "XYZ Rotational Velocities", keyList: [Constants.gyroX, Constants.gyroY, Constants.gyroZ]),
         GraphWidget(title: "Magnetometer", keyList: [Constants.magnetometerX, Constants.magnetometerY, Constants.magnetometerZ]),
         GraphWidget(title: "Pressure, Pressure, & Pressure", keyList: [Constants.barometer1Pressure, Constants.barometer2Pressure, Constants.pressureReference]),
         GraphWidget(title: "State", keyList: [Constants.fcbStateNumber]),
-        GraphWidget(title: "RSSI", keyList: ["rssi"]),
+        GraphWidget(title: "RSSI", keyList: [Constants.rssi]),
       ],
     );
   }

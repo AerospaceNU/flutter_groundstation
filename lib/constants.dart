@@ -78,4 +78,8 @@ class Constants {
   static const groundElevation = "ground_elevation";
   static const groundTemperature = "ground_temperature";
   static const pitotPressure = "pitot_pressure";
+
+  //Radio variables
+  static const rssi = "rssi";
+  static const lqi = "lqi";
 }
