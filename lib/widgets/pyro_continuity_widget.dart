@@ -1,5 +1,3 @@
-// ignore_for_file: unused_local_variable
-
 import 'package:flutter/material.dart';
 import 'base_widget.dart';
 
@@ -9,13 +7,11 @@ class PyroContinuityWidget extends StatefulWidget {
   const PyroContinuityWidget({Key? key}) : super(key: key);
 
   @override
-  _PyroContinuityWidgetState createState() => _PyroContinuityWidgetState();
+  State createState() => _PyroContinuityWidgetState();
 }
 
 class _PyroContinuityWidgetState extends BaseWidgetState<PyroContinuityWidget> {
-  final Offset _position = const Offset(100, 100);
-
-  //_PyroWidgetState();
+  _PyroContinuityWidgetState();
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +59,9 @@ class _PyroContinuityWidgetState extends BaseWidgetState<PyroContinuityWidget> {
 
 // changes the color based on input data
 Color _getColorByEvent(bool event) {
-  if (event == true) return Colors.green;
-  if (event == false) return Colors.red;
-  return Colors.white;
+  if (event) {
+    return Colors.green;
+  } else {
+    return Colors.red;
+  }
 }
