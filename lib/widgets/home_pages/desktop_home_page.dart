@@ -4,8 +4,9 @@ import 'package:flutter_groundstation/widgets/tabs/home_tab.dart';
 
 import 'base_home_page.dart';
 
-import '../tabs/test_tab.dart';
 import '../tabs/graphs_tab.dart';
+import '../tabs/diagnostics_tab.dart';
+
 import '../desktop_home_page_menu.dart';
 
 import '../../hardware_interface/test_interface.dart';
@@ -43,16 +44,16 @@ class _DesktopHomePageState extends BaseHomePageState<DesktopHomePage> {
           appBar: AppBar(
             title: const TabBar(
               tabs: [
-                Tab(text: "Primary"),
-                Tab(text: "Test tab"),
-                Tab(text: "Graphs"),
+                Tab(text: "Test widget"),
+                Tab(text: "Diagnostics"),
+                Tab(text: "Graphs tab"),
               ],
             ),
           ),
           body: const TabBarView(
             children: [
               HomeTab(),
-              TestTab(),
+              DiagnosticsTab(),
               GraphTab(),
             ],
           ),

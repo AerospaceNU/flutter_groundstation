@@ -11,6 +11,7 @@ class TestHardwareInterface extends BaseHardwareInterface {
   var random = Random();
 
   TestHardwareInterface();
+  int max_pyros = 7;
 
   @override
   void runWhileEnabled() {
@@ -26,5 +27,16 @@ class TestHardwareInterface extends BaseHardwareInterface {
 
     database.updateDatabase(Constants.groundStationLatitude, 42.361145);
     database.updateDatabase(Constants.groundStationLongitude, -71.0570803);
+    database.updateDatabase(Constants.groundStationLatitude, 42.361145);
+      database.updateDatabase(Constants.groundStationLongitude, -71.0570803);
+
+      database.updateDatabase("random_1", random.nextDouble());
+
+      List<bool> wid_3 = List<bool>.filled(max_pyros, false);
+      for (int i = 0; i < max_pyros; i++) {
+        wid_3[i] = random.nextBool();
+      }
+      database.updateDatabase(Constants.pyroFireStatus, wid_3);
+      database.updateDatabase(Constants.pyroContinuity, wid_3);
   }
 }
