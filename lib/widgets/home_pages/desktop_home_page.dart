@@ -44,7 +44,7 @@ class _DesktopHomePageState extends BaseHomePageState<DesktopHomePage> {
           appBar: AppBar(
             title: const TabBar(
               tabs: [
-                Tab(text: "Test widget"),
+                Tab(text: "Primary"),
                 Tab(text: "Diagnostics"),
                 Tab(text: "Graphs tab"),
               ],
