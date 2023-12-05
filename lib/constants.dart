@@ -4,6 +4,9 @@ class Constants {
 
   //GUI internal keys
   static const databaseUpdateKey = "__database_update__";
+  static const moduleInfo = "__module_info__";
+  static const setModuleEnable = "__set_module_enable__";
+  static const toggleModuleEnable = "__toggle_module_enabled__";
 
   //TODO: Change these to what the FCB calls them
 
@@ -49,6 +52,13 @@ class Constants {
   static const groundSpeed = "ground_speed";
   static const courseOverGround = "course_over_ground";
   static const gpsSatellites = "gps_sats";
+
+  //Ground station data
+  static const groundStationLongitude = "ground_station_longitude";
+  static const groundStationLatitude = "ground_station_latitude";
+  static const groundStationAltitude = "ground_station_altitude";
+  static const groundStationPressure = "ground_station_pressure";
+  static const groundStationTemperature = "ground_station_temperature";
 
   //FCB State stuff
   static const fcbState = "fcb_state_text";

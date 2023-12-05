@@ -41,6 +41,10 @@ class DesktopSerialReader implements AbstractSerialPortReader {
     wrapped.port.config.baudRate = baudRate;
   }
 
+  void write(Uint8List bytes) {
+    wrapped.port.write(bytes);
+  }
+
   void close() {
     wrapped.port.close();
     wrapped.close();
