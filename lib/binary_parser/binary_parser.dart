@@ -1,6 +1,9 @@
 // ignore_for_file: constant_identifier_names
 
+import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 
 ///
 /// Duplicates the python struct library
@@ -180,4 +183,38 @@ ByteData packData(String format, List data) {
   }
 
   return output;
+}
+
+// QOL extension methods
+extension StringToBinary on String {
+  /// The UTF-8 encoded representation of this string as [ByteData].
+  ByteData asByteData() {
+    List<int> encoded = utf8.encode(this);
+    ByteData output = ByteData(length);
+    for (int i = 0; i < length; i++) {
+      output.setUint8(i, encoded[i]);
+    }
+    return output;
+  }
+
+  /// The UTF-8 encoded representation of this string as a [Uint8List].
+  Uint8List asUint8List() {
+    return Uint8List.fromList(utf8.encode(this));
+  }
+}
+
+extension ByteDataAsUTF8 on ByteData {
+  /// String representation of this [ByteData] interpreted as UTF-8 encoded
+  /// characters.
+  String toUTF8() {
+    return utf8.decode(buffer.asInt8List().toList(), allowMalformed: true);
+  }
+}
+
+extension Uint8ListAsUTF8 on Uint8List {
+  /// String representation of this [Uint8List] interpreted as UTF-8 encoded
+  /// characters.
+  String toUTF8() {
+    return utf8.decode(toList(), allowMalformed: true);
+  }
 }
