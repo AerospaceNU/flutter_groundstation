@@ -4,11 +4,11 @@ A new Flutter project.
 
 ## Getting Started
 
-If downloading on MacOS, use the flutter.dev instructions (https://docs.flutter.dev/get-started/install/macos/desktop) and follow the instructions "Use VS Code to install Flutter". Download from GitHub instead of using an archive if having issues.
+If downloading on MacOS, use the flutter.dev instructions (https://docs.flutter.dev/get-started/install/macos/desktop) and follow the instructions "Use VS Code to install Flutter."
 
-If downloading on Windows, use the flutter.dev instructions (https://docs.flutter.dev/get-started/install/windows/desktop) and follow the instructions "Use VS Code to install Flutter". Download from GitHub instead of using an archive if having issues.
+If downloading on Windows, use the flutter.dev instructions (https://docs.flutter.dev/get-started/install/windows/desktop) and follow the instructions "Use VS Code to install Flutter."
 
-If downloading on Linux, use the flutter.dev instructions (https://docs.flutter.dev/get-started/install/linux) and follow the instructions "Method 2: Manual installation". Download from GitHub instead of using an archive if having issues.
+If downloading on Linux, use the flutter.dev instructions (https://docs.flutter.dev/get-started/install/linux) and follow the instructions "Method 2: Manual installation."
 
 This project is a starting point for a Flutter application.
 
