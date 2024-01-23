@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_groundstation/widgets/tabs/home_tab.dart';
+import 'package:flutter_groundstation/widgets/tabs/serial_test_tab.dart';
 
 import 'base_home_page.dart';
 
@@ -12,7 +13,6 @@ import '../../hardware_interface/test_interface.dart';
 import '../../hardware_interface/serial_groundstation_interface.dart';
 import '../../hardware_interface/flight_simulation.dart';
 
-import '/constants.dart';
 
 class DesktopHomePage extends StatefulWidget {
   final String title;
@@ -38,7 +38,7 @@ class _DesktopHomePageState extends BaseHomePageState<DesktopHomePage> {
       const DesktopHomePageMenu(),
       Expanded(
           child: DefaultTabController(
-        length: 3,
+        length: 4,
         child: Scaffold(
           appBar: AppBar(
             title: const TabBar(
@@ -46,14 +46,16 @@ class _DesktopHomePageState extends BaseHomePageState<DesktopHomePage> {
                 Tab(text: "Primary"),
                 Tab(text: "Test tab"),
                 Tab(text: "Graphs"),
+                Tab(text: "serial"),
               ],
             ),
           ),
-          body: const TabBarView(
+          body: TabBarView(
             children: [
-              HomeTab(),
-              TestTab(),
-              GraphTab(),
+              const HomeTab(),
+              const TestTab(),
+              const GraphTab(),
+              SerialTab(),
             ],
           ),
         ),

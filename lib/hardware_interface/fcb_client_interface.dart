@@ -25,12 +25,12 @@ final List<String> LOG_TYPES = List.unmodifiable(const ["FCB", "LINECUTTER"]);
 
 /// Controls raw reading and writing to FCB command line via commands.
 class FcbClientInterface extends BaseHardwareInterface {
-  AbstractSerial serialInterface = getAbstractSerial();
-  late AbstractSerialPortReader reader;
+  var serialInterface = getAbstractSerial();
+  late var reader;
   /// Multi-stream wrapper for stream provided by [reader]. Allows for
   /// unsubscribing and resubscribing.
   late Stream<Uint8List> wrapper;
-  static const String desiredPort = "????"; // TODO: no idea what this supposed to be
+  static const String desiredPort = "/dev/pts/2"; // TODO: no idea what this supposed to be
   bool portOpen = false;
 
   CommandRunner<dynamic> runner = CommandRunner("FCB Client", "Flutter FCB Client Runner");
@@ -40,7 +40,7 @@ class FcbClientInterface extends BaseHardwareInterface {
 
   // initializes runner
   FcbClientInterface() {
-    runner.addCommand(_HelpCommand(this));
+    // runner.addCommand(_HelpCommand(this));
     runner.addCommand(_OffloadCommand(this));
     runner.addCommand(_SimulateCommand(this));
     runner.addCommand(_SenseCommand(this));
@@ -50,6 +50,7 @@ class FcbClientInterface extends BaseHardwareInterface {
 
   @override
   void runLoopOnce(Timer t) {
+    print(serialInterface.serialPorts());
     if (portOpen && !enabled) {
       reader.close();
       portOpen = false;
@@ -136,6 +137,7 @@ Future<Uint8List> _readUntilComplete(Stream<Uint8List> stream) async {
   return Uint8List.fromList(data);
 }
 
+/// Doesn't work with current Argparse Library
 class _HelpCommand extends Command<String> {
   @override String name = "help";
   @override String description = "Standard command line help string from FCB";
@@ -228,7 +230,7 @@ class _OffloadCommand extends Command {
       }
       int packetType = buffer.first;
       readBin.readIntoSync(buffer, 1, logSize[packetType] - 1);
-      List<dynamic>? packet = null;
+      List<dynamic>? packet;
       try {
         packet = parseData(ByteData.view(buffer.buffer), logFormat[packetType]);
       } on IndexError {

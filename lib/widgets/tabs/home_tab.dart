@@ -100,9 +100,9 @@ class QRCodeContainer extends StatefulWidget {
 }
 
 class _QRCodeContainerState extends State<QRCodeContainer> {
-  final double _small = 3;
+  final double _small = 2;
   final double _large = 25;
-  double _scaleFactor = 3;
+  double _scaleFactor = 2;
 
   @override
   Widget build(BuildContext context) {
