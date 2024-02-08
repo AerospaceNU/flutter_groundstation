@@ -72,67 +72,78 @@ class _QRCodeWidgetState extends BaseWidgetState<QRCodeWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          title: const Text('Location QR Code Generator'),
-        ),
-        body: Center(
-          child: Container(
-              child: Column(children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const Spacer(),
-                DropdownButton<String>(
-                  value: mapType,
-                  onChanged: (String? newValue) {
-                    setState(() {
-                      mapType = newValue!;
-                    });
-                  },
-                  items: <String>['Google', 'Apple', 'Geo', 'Raw'].map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                ),
-                const Spacer(),
-                DropdownButton<String>(
-                  value: boardType,
-                  onChanged: (String? newValue) {
-                    setState(() {
-                      boardType = newValue!;
-                    });
-                  },
-                  items: <String>['FCB', 'EggFinder'].map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                ),
-                const Spacer(),
-                Text(printFrozen(frozen)),
-                Checkbox(
-                  value: frozen,
-                  onChanged: (bool? value) {
-                    setState(() {
-                      frozen = value!;
-                    });
-                  },
-                ),
-                const Spacer(),
-              ],
-            ),
-            Flexible(
+      appBar: AppBar(
+        centerTitle: true,
+        title: const Text('Location QR Code Generator'),
+      ),
+      body: SingleChildScrollView(
+        child: Container(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              DropdownButton<String>(
+                isExpanded: true,
+                value: mapType,
+                onChanged: (String? newValue) {
+                  setState(() {
+                    mapType = newValue!;
+                  });
+                },
+                items: <String>['Google', 'Apple', 'Geo', 'Raw']
+                    .map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+              ),
+              const SizedBox(height: 10),
+              DropdownButton<String>(
+                isExpanded: true,
+                value: boardType,
+                onChanged: (String? newValue) {
+                  setState(() {
+                    boardType = newValue!;
+                  });
+                },
+                items: <String>['FCB', 'EggFinder']
+                    .map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+              ),
+              const SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(printFrozen(frozen)),
+                  Checkbox(
+                    value: frozen,
+                    onChanged: (bool? value) {
+                      setState(() {
+                        frozen = value!;
+                      });
+                    },
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.4,
                 child: QRCodeImageWidget(
-              mapType,
-              getLatNotFrozen(),
-              getLonNotFrozen(),
-            )),
-          ])),
-        ));
+                  mapType,
+                  getLatNotFrozen(),
+                  getLonNotFrozen(),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+
   }
 }
