@@ -30,15 +30,7 @@ abstract class BaseWidgetState<WidgetClass extends StatefulWidget> extends State
   }
 
   void onDatabaseUpdate<T>(T data) {
-    var updatedKeys = database.getUpdatedKeys();
-    bool needsToUpdate = false;
-
-    for (var key in updatedKeys) {
-      if (_subscribedKeys.contains(key)) {
-        needsToUpdate = true;
-        break;
-      }
-    }
+    bool needsToUpdate = _subscribedKeys.intersection(database.getUpdatedKeys()).isNotEmpty;
 
     if (mounted && needsToUpdate) {
       setState(() {});
