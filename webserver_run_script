@@ -1,0 +1,3 @@
+#!/usr/bin/bash
+
+flutter run lib/main.dart -d web-server -v
