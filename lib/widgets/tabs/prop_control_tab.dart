@@ -21,24 +21,24 @@ class PropControlTab extends StatelessWidget {
                 child: Row(
                   children: [
                     Expanded(child: CustomBox(title: 'SETTINGS', content: BoxContent.none)),
-                    const SizedBox(width: 8), // this makes space between, an invisble box with a width of 8
+                    SizedBox(width: 8), // this makes space between, an invisble box with a width of 8
                     Expanded(child: CustomBox(title: 'PRIMARY', content: BoxContent.button)),
                   ],
                 ),
               ),
-              const SizedBox(height: 8),
+              SizedBox(height: 8),
               Expanded(
                 child: Row(
                   children: [
                     Expanded(child: CustomBox(title: 'DIAGNOSTIC', content: BoxContent.none)),
-                    const SizedBox(width: 8),
+                    SizedBox(width: 8),
                     Expanded(child: CustomBox(title: 'GRAPHS', content: BoxContent.none)),
-                    const SizedBox(width: 8),
+                    SizedBox(width: 8),
                     Expanded(child: CustomBox(title: 'OFFLOAD', content: BoxContent.dropdown)),
                   ],
                 ),
               ),
-              const SizedBox(height: 8),
+              SizedBox(height: 8),
               Expanded(
                 child: CustomBox(title: 'PROP CONTROL', content: BoxContent.none),
               ),
