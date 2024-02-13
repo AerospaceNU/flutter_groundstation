@@ -30,6 +30,7 @@ abstract class BaseWidgetState<WidgetClass extends StatefulWidget> extends State
   }
 
   void onDatabaseUpdate<T>(T data) {
+    // if there is shared keys between the two, we need to update
     bool needsToUpdate = _subscribedKeys.intersection(database.getUpdatedKeys()).isNotEmpty;
 
     if (mounted && needsToUpdate) {
