@@ -40,7 +40,13 @@ class PropControlTab extends StatelessWidget {
               ),
               SizedBox(height: 8),
               Expanded(
-                child: CustomBox(title: 'PROP CONTROL', content: BoxContent.none),
+                // child: CustomBox(title: 'PROP CONTROL', content: BoxContent.none),
+                // Expanded only expands some widgets (ex. Row)
+                child: Row(
+                  children: [
+                    Expanded(child: CustomBox(title: 'PROP CONTROL', content: BoxContent.none)),
+                  ],
+                ),
               ),
             ],
           ),
@@ -100,7 +106,7 @@ class _CustomBoxState extends State<CustomBox> {
         break;
       case BoxContent.none:
       default:
-        contentWidgets.add(Container()); // Empty container
+        contentWidgets.add(Text(widget.title)); // Empty container
         break;
     }
   }
