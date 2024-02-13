@@ -4,7 +4,9 @@ import 'constants.dart';
 class Database {
   static var database = {};
   static late CallbackHandler callbackHandler;
-  static var updatedKeys = <String>{};
+
+  // stores keys that have been updated, meaning we have to run callbacks
+  static final _updatedKeys = <String>{};
 
   Database() {
     callbackHandler = CallbackHandler();
@@ -13,7 +15,7 @@ class Database {
   void bulkUpdateDatabase(Map<String, dynamic> data) {
     for (var key in data.keys) {
       database[key] = data[key];
-      updatedKeys.add(key);
+      _updatedKeys.add(key);
     }
 
     updateWidgets();
@@ -22,17 +24,17 @@ class Database {
   void updateDatabase<T>(String key, T value) {
 //    print("database update: {$key}, {$value}");
     database[key] = value;
-    updatedKeys.add(key);
+    _updatedKeys.add(key);
     updateWidgets();
   }
 
   void updateWidgets() {
     callbackHandler.runCallback(Constants.databaseUpdateKey);
-    updatedKeys.clear();
+    _updatedKeys.clear();
   }
 
   Set<String> getUpdatedKeys() {
-    return updatedKeys;
+    return _updatedKeys;
   }
 
   T getValue<T>(String key, T defaultValue) {
