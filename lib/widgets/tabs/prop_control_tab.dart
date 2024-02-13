@@ -12,16 +12,20 @@ class PropControlTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData.dark(),
-      home: Scaffold(
+      home: const Scaffold(
         body: Padding(
-          padding: const EdgeInsets.all(8.0),
+          // adds padding to outer window edges
+          padding: EdgeInsets.all(8.0),
           child: Column(
             children: [
               Expanded(
+                // makes child expand to fill avaliable space
+                // TODO: if finer grain control wanted, use Flexible and flex property
+                // Expanded for equal dist, Flexible for proportional control
                 child: Row(
                   children: [
                     Expanded(child: CustomBox(title: 'SETTINGS')),
-                    SizedBox(width: 8),
+                    SizedBox(width: 8), // this makes space between, an invisble box with a width of 8
                     Expanded(child: CustomBox(title: 'PRIMARY')),
                   ],
                 ),
@@ -59,7 +63,7 @@ class CustomBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        border: Border.all(color: Colors.blueAccent),
+        border: Border.all(color: Colors.blueAccent, width:10),
         borderRadius: BorderRadius.circular(4),
       ),
       child: Center(
