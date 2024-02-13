@@ -8,25 +8,64 @@ import 'package:flutter/material.dart';
 
 class PropControlTab extends StatelessWidget {
   const PropControlTab({super.key});
-
   @override
   Widget build(BuildContext context) {
-    // return const TextData(
-    //   dataKey: "random_2",
-    //   wrapWords: false,
-    //   decimals: 6,
-    // );
-    return const Material(
-      // Column is a vertical, linear layout.
-      child: Column(
-        children: [
-          Expanded(
-            child: Center(
-              child: Text('Hello, world!'),
-            ),
+    return MaterialApp(
+      theme: ThemeData.dark(),
+      home: Scaffold(
+        body: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              Expanded(
+                child: Row(
+                  children: [
+                    Expanded(child: CustomBox(title: 'SETTINGS')),
+                    SizedBox(width: 8),
+                    Expanded(child: CustomBox(title: 'PRIMARY')),
+                  ],
+                ),
+              ),
+              SizedBox(height: 8),
+              Expanded(
+                child: Row(
+                  children: [
+                    Expanded(child: CustomBox(title: 'DIAGNOSTIC')),
+                    SizedBox(width: 8),
+                    Expanded(child: CustomBox(title: 'GRAPHS')),
+                    SizedBox(width: 8),
+                    Expanded(child: CustomBox(title: 'OFFLOAD')),
+                  ],
+                ),
+              ),
+              SizedBox(height: 8),
+              Expanded(
+                child: CustomBox(title: 'PROP CONTROL'),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
 }
+
+class CustomBox extends StatelessWidget {
+  final String title;
+
+  const CustomBox({Key? key, required this.title}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.blueAccent),
+        borderRadius: BorderRadius.circular(4),
+      ),
+      child: Center(
+        child: Text(title, style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+      ),
+    );
+  }
+}
+
