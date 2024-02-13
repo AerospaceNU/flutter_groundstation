@@ -5,6 +5,7 @@ class QueuedCallback<T> {
   QueuedCallback(this.name, this.data);
 }
 
+// stores multiple callback functions to run at a later time
 class CallbackHandler {
   static var callbacks = <String, List>{};
   static var queuedCallbacks = <QueuedCallback>[];
