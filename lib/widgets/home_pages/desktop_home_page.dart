@@ -6,6 +6,7 @@ import 'base_home_page.dart';
 
 import '../tabs/graphs_tab.dart';
 import '../tabs/diagnostics_tab.dart';
+import '../tabs/prop_control_tab.dart';
 
 import '../desktop_home_page_menu.dart';
 
@@ -39,7 +40,7 @@ class _DesktopHomePageState extends BaseHomePageState<DesktopHomePage> {
       const DesktopHomePageMenu(),
       Expanded(
           child: DefaultTabController(
-        length: 3,
+        length: 4,
         child: Scaffold(
           appBar: AppBar(
             title: const TabBar(
@@ -47,6 +48,7 @@ class _DesktopHomePageState extends BaseHomePageState<DesktopHomePage> {
                 Tab(text: "Primary"),
                 Tab(text: "Diagnostics"),
                 Tab(text: "Graphs tab"),
+                Tab(text: "Prop Control"),
               ],
             ),
           ),
@@ -55,6 +57,7 @@ class _DesktopHomePageState extends BaseHomePageState<DesktopHomePage> {
               HomeTab(),
               DiagnosticsTab(),
               GraphTab(),
+              PropControlTab(),
             ],
           ),
         ),
