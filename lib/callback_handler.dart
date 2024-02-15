@@ -4,7 +4,9 @@ class QueuedCallback<T> {
 
   QueuedCallback(this.name, this.data);
 }
-
+// everything in CallbackHandler is static, so all
+// CallbackHandler objects share fields
+// in essence, CallbackHandler is just a global object
 // stores multiple callback functions to run at a later time
 class CallbackHandler {
   static var callbacks = <String, List>{};
