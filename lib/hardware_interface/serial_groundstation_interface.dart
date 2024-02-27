@@ -14,7 +14,7 @@ import 'base_hardware_interface.dart';
 class SerialGroundstationInterface extends BaseHardwareInterface {
   var serialInterface = getAbstractSerial();
   late var reader;
-  var desiredPort = "/dev/ttyACM0";
+  var desiredPort = "/dev/cu.usbmodem11401";
   var portOpen = false;
 
   var lastDataTime = 0;
@@ -117,12 +117,15 @@ class SerialGroundstationInterface extends BaseHardwareInterface {
     var messageDict = parseMessage(packetType, packet);
     packetDict.addAll(messageDict);
 
+    print("messageDict: $messageDict");
+    print("packetDict: $packetDict");
+
     database.bulkUpdateDatabase(packetDict);
     lastDataTime = DateTime.timestamp().millisecondsSinceEpoch;
 
-//    print(parsedRadioInfo);
-//    print(timestamp);
-//    print(callsign);
-//    print("  ");
+   print(parsedRadioInfo);
+  //  print(timestamp);
+  //  print(callsign);
+   print("  ");
   }
 }

@@ -64,6 +64,29 @@ class PyroInfo extends BaseMessage {
           ParameterDescription(BinaryTypes.UINT_16_TYPE, Constants.pyroFireStatus), //TODO: We need a special parse function
           ParameterDescription(BinaryTypes.UINT_8_TYPE, Constants.flashUsage),
         ]);
+
+    Function dataTransformer = (data) {
+      var pyroContinuity = data[1];
+      var pyro1 = pyroContinuity & 0x01;
+      var pyro2 = (pyroContinuity & 0x02) >> 1;
+      var pyro3 = (pyroContinuity & 0x04) >> 2;
+      var pyro4 = (pyroContinuity & 0x08) >> 3;
+      var pyro5 = (pyroContinuity & 0x10) >> 4;
+      var pyro6 = (pyroContinuity & 0x20) >> 5;
+      var pyro7 = (pyroContinuity & 0x40) >> 6;
+      var pyro8 = (pyroContinuity & 0x80) >> 7;
+
+      return {
+        "pyro1": pyro1,
+        "pyro2": pyro2,
+        "pyro3": pyro3,
+        "pyro4": pyro4,
+        "pyro5": pyro5,
+        "pyro6": pyro6,
+        "pyro7": pyro7,
+        "pyro8": pyro8,
+      };
+    };
 }
 
 class GroundStationMessage extends BaseMessage {
@@ -110,7 +133,10 @@ Map<String, Object> parseMessage(int packetType, ByteData data) {
       //TODO: Alternate format types (date & latlon)
       if (value is num) {
         messageDict[parameter.databaseKey] = value * parameter.multiplier;
-      } else {
+      } else if (parameter.dataTransformer != null) {
+        messageDict[parameter.databaseKey] = parameter.dataTransformer!(value);
+      }
+      else {
         messageDict[parameter.databaseKey] = value;
       }
     }
@@ -132,8 +158,9 @@ class ParameterDescription {
   String databaseKey;
   String alternateFormatType;
   num multiplier;
+  Function? dataTransformer;
 
-  ParameterDescription(this.dataType, this.databaseKey, {this.multiplier = 1, this.alternateFormatType = "_"});
+  ParameterDescription(this.dataType, this.databaseKey, {this.multiplier = 1, this.alternateFormatType = "_", this.dataTransformer = null});
 }
 
 class BaseMessage {
