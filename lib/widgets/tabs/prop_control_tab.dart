@@ -18,11 +18,12 @@ class PropControlTab extends StatelessWidget {
                 // makes child expand to fill avaliable space
                 // TODO: if finer grain control wanted, use Flexible and flex property
                 // Expanded for equal dist, Flexible for proportional control
+                flex: 2,
                 child: Row(
                   children: [
-                    Expanded(child: CustomBox(title: 'SETTINGS', content: BoxContent.none)),
-                    SizedBox(width: 8), // this makes space between, an invisble box with a width of 8
-                    Expanded(child: CustomBox(title: 'PRIMARY', content: BoxContent.button)),
+                    Expanded(flex: 2, child: CustomBox(title: 'Prop System Control', content: BoxContent.none)),
+                    SizedBox(width: 8.0), // this makes space between, an invisble box with a width of 8
+                    Expanded(child: CustomBox(title: 'PRIMARY', content: BoxContent.dropdown)),
                   ],
                 ),
               ),
@@ -30,24 +31,24 @@ class PropControlTab extends StatelessWidget {
               Expanded(
                 child: Row(
                   children: [
-                    Expanded(child: CustomBox(title: 'DIAGNOSTIC', content: BoxContent.none)),
+                    Expanded(child: CustomBox(title: 'Engine Sequencer Control', content: BoxContent.none)),
                     SizedBox(width: 8),
-                    Expanded(child: CustomBox(title: 'GRAPHS', content: BoxContent.none)),
+                    Expanded(child: CustomBox(title: 'Connection', content: BoxContent.none)),
                     SizedBox(width: 8),
-                    Expanded(child: CustomBox(title: 'OFFLOAD', content: BoxContent.dropdown)),
+                    Expanded(child: CustomBox(title: 'Offload', content: BoxContent.none)),
                   ],
                 ),
               ),
-              SizedBox(height: 8),
-              Expanded(
-                // child: CustomBox(title: 'PROP CONTROL', content: BoxContent.none),
-                // Expanded only expands some widgets (ex. Row)
-                child: Row(
-                  children: [
-                    Expanded(child: CustomBox(title: 'PROP CONTROL', content: BoxContent.none)),
-                  ],
-                ),
-              ),
+              // SizedBox(height: 8),
+              // Expanded(
+              //   // child: CustomBox(title: 'PROP CONTROL', content: BoxContent.none),
+              //   // Expanded only expands some widgets (ex. Row)
+              //   child: Row(
+              //     children: [
+              //       Expanded(child: CustomBox(title: 'PROP CONTROL', content: BoxContent.none)),
+              //     ],
+              //   ),
+              // ),
             ],
           ),
         ),
