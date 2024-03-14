@@ -1,7 +1,17 @@
 import 'package:flutter/material.dart';
+import 'base_widget.dart';
 
-class PropSequencerWidget extends StatelessWidget {
+
+class PropSequencerWidget extends StatefulWidget {
   const PropSequencerWidget({super.key});
+
+  @override
+  State<PropSequencerWidget> createState() => _PropWidgetState();
+}
+
+class _PropWidgetState extends BaseWidgetState<PropSequencerWidget> {
+  String selectedValue = "TEST_SEQUENCE_1";
+  _PropWidgetState();
 
   @override
   Widget build(BuildContext context) {
@@ -9,7 +19,7 @@ class PropSequencerWidget extends StatelessWidget {
       const Text("Sequencer"),
       Checkbox(value: false, onChanged: (temp) => false),
       DropdownButton<String>(
-          value: "Bruh1",
+          value: selectedValue,
           hint: const Text('Sequences'),
           isExpanded: true,
           items: <String>['TEST_SEQUENCE_1', 'TEST_SEQUENCE_2', 'TEST_SEQUENCE_3'].map((String value) {
@@ -18,51 +28,14 @@ class PropSequencerWidget extends StatelessWidget {
               child: Text(value),
             );
           }).toList(),
-          onChanged: null,
-          // onChanged: (newValue) {
-          //   setState(() {
-              
-          //   });
-          // },
+          // onChanged: null,
+          onChanged: (String? newValue) {
+            setState(() {
+              this.selectedValue = newValue!;
+            });
+          },
         )
 
     ],);
   }
-
-  // @override
-  // State<PyroDataWidget> createState() => _PyroWidgetState();
 }
-
-// class _PyroWidgetState extends BaseWidgetState<PyroDataWidget> {
-//   _PyroWidgetState();
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       padding: const EdgeInsets.all(16.0),
-//       height: 600,
-//       child: Column(children: <Widget>[
-//         Container(
-//           height: 75,
-//           decoration: BoxDecoration(border: Border.all(color: Colors.black)),
-//           child: const Center(
-//             child: Text('Pyro Output Data'),
-//           ),
-//         ),
-//         SingleChildScrollView(
-//           child: Container(
-//             height: 400,
-//             decoration: BoxDecoration(color: Colors.black, border: Border.all(color: Colors.black)),
-//             child: const Center(
-//               child: Text(
-//                 '1',
-//                 style: TextStyle(color: Colors.white),
-//                 textAlign: TextAlign.right,
-//               ),
-//             ),
-//           ),
-//         ),
-//       ]),
-//     );
-//   }
-// }

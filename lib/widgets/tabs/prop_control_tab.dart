@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_groundstation/widgets/text_data.dart'; // Import if needed for TextData
+import 'package:flutter_groundstation/widgets/prop_sequencer_widget.dart';
 
 class PropControlTab extends StatelessWidget {
   const PropControlTab({Key? key}) : super(key: key);
@@ -31,7 +32,7 @@ class PropControlTab extends StatelessWidget {
               Expanded(
                 child: Row(
                   children: [
-                    Expanded(child: CustomBox(title: 'Engine Sequencer Control', content: BoxContent.none)),
+                    Expanded(child: PropSequencerWidget()),
                     SizedBox(width: 8),
                     Expanded(child: CustomBox(title: 'Connection', content: BoxContent.none)),
                     SizedBox(width: 8),
