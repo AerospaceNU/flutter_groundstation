@@ -34,11 +34,13 @@ class _PropWidgetState extends BaseWidgetState<PropSequencerWidget> {
             );
           }).toList(),
           // onChanged: null,
-          onChanged: this.enabled ? (String? newValue) {
+          onChanged: this.enabled ? 
+          (String? newValue) { // if enabled, actually working funct
             setState(() {
               this.selectedValue = newValue!;
             });
-          } : null,
+          } 
+          : null, // if not enabled, setting onChanged to null disables it
         )
 
     ],);
