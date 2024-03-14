@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_groundstation/widgets/text_data.dart'; // Import if needed for TextData
 import 'package:flutter_groundstation/widgets/prop_sequencer_widget.dart';
+import 'package:flutter_groundstation/widgets/prop_control_widget.dart';
 
 class PropControlTab extends StatelessWidget {
   const PropControlTab({Key? key}) : super(key: key);
@@ -22,7 +23,7 @@ class PropControlTab extends StatelessWidget {
                 flex: 2,
                 child: Row(
                   children: [
-                    Expanded(flex: 2, child: CustomBox(title: 'Prop System Control', content: BoxContent.none)),
+                    Expanded(flex: 2, child: PropControlWidget()),
                     SizedBox(width: 8.0), // this makes space between, an invisble box with a width of 8
                     Expanded(child: CustomBox(title: 'PRIMARY', content: BoxContent.dropdown)),
                   ],
@@ -40,16 +41,6 @@ class PropControlTab extends StatelessWidget {
                   ],
                 ),
               ),
-              // SizedBox(height: 8),
-              // Expanded(
-              //   // child: CustomBox(title: 'PROP CONTROL', content: BoxContent.none),
-              //   // Expanded only expands some widgets (ex. Row)
-              //   child: Row(
-              //     children: [
-              //       Expanded(child: CustomBox(title: 'PROP CONTROL', content: BoxContent.none)),
-              //     ],
-              //   ),
-              // ),
             ],
           ),
         ),
