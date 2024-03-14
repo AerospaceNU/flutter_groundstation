@@ -11,15 +11,20 @@ class PropSequencerWidget extends StatefulWidget {
 
 class _PropWidgetState extends BaseWidgetState<PropSequencerWidget> {
   String selectedValue = "TEST_SEQUENCE_1";
+  bool enabled = false;
   _PropWidgetState();
 
   @override
   Widget build(BuildContext context) {
     return Column(children: [
       const Text("Sequencer"),
-      Checkbox(value: false, onChanged: (temp) => false),
+      Checkbox(value: this.enabled, onChanged: (temp) => {
+            setState(() {
+              this.enabled = temp!;
+            })
+          }),
       DropdownButton<String>(
-          value: selectedValue,
+          value: this.selectedValue,
           hint: const Text('Sequences'),
           isExpanded: true,
           items: <String>['TEST_SEQUENCE_1', 'TEST_SEQUENCE_2', 'TEST_SEQUENCE_3'].map((String value) {
@@ -29,11 +34,11 @@ class _PropWidgetState extends BaseWidgetState<PropSequencerWidget> {
             );
           }).toList(),
           // onChanged: null,
-          onChanged: (String? newValue) {
+          onChanged: this.enabled ? (String? newValue) {
             setState(() {
               this.selectedValue = newValue!;
             });
-          },
+          } : null,
         )
 
     ],);
