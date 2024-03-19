@@ -48,15 +48,25 @@ class _PropWidgetState extends BaseWidgetState<PropSequencerWidget> {
         ElevatedButton(onPressed: this.enabled ?
           () {}
           : null,
-          child: Text("Set Sequence"),
+          style: ElevatedButton.styleFrom(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(5),
+            ),
           ),
+          child: Text("Set Sequence"),
+        ),
+
         ElevatedButton(onPressed: this.enabled ?
           () {}
           : null,
-          child: Text("Abort Sequence"),
           style: ElevatedButton.styleFrom(
-            backgroundColor: Color.fromARGB(0xFF, 0xFF, 0, 0)
-          )),
+            backgroundColor: Color.fromARGB(0xFF, 0xFF, 0, 0),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(5),
+            ),
+          ),
+          child: Text("Abort Sequence"),
+        ),
       ],
     );
   }
