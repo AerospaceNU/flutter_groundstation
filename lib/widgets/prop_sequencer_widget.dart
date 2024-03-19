@@ -16,7 +16,9 @@ class _PropWidgetState extends BaseWidgetState<PropSequencerWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
       const Text("Sequencer"),
       Checkbox(value: this.enabled, onChanged: (temp) => {
             setState(() {
@@ -41,8 +43,20 @@ class _PropWidgetState extends BaseWidgetState<PropSequencerWidget> {
             });
           } 
           : null, // if not enabled, setting onChanged to null disables it
-        )
+        ),
 
+      ElevatedButton(onPressed: this.enabled ?
+        () {}
+        : null,
+        child: Text("Set Sequence"),
+        ),
+      ElevatedButton(onPressed: this.enabled ?
+        () {}
+        : null,
+        child: Text("Abort Sequence"),
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Color.fromARGB(0xFF, 0xFF, 0, 0)
+        )),
     ],);
   }
 }
