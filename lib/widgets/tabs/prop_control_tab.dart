@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_groundstation/widgets/prop_data_widget.dart';
 import 'package:flutter_groundstation/widgets/text_data.dart'; // Import if needed for TextData
 import 'package:flutter_groundstation/widgets/prop_sequencer_widget.dart';
 import 'package:flutter_groundstation/widgets/prop_control_widget.dart';
