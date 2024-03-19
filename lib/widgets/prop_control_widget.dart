@@ -11,6 +11,7 @@ class PropControlWidget extends StatefulWidget {
 class _PropControlWidgetState extends BaseWidgetState<PropControlWidget> {
   _PropControlWidgetState();
   bool enabled = false;
+  String currentState = "UNKNOWN";
 
   @override 
   Widget build(BuildContext context){
@@ -26,7 +27,7 @@ class _PropControlWidgetState extends BaseWidgetState<PropControlWidget> {
       SizedBox(height: 16.0),
       Container(decoration: BoxDecoration(border: Border.all(color: Colors.white)),
                 child: Row(children: [
-                            Expanded(child: Text('Current State: UNKNOWN')),
+                            Expanded(child: Text('Current State: $currentState')),
                             Expanded(child: Text('Current Sequence: UNKNOWN')),
                             Expanded(child: Text('Last Abort: UNKNOWN'))]))
     ]);
