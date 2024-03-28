@@ -86,11 +86,29 @@ class AltitudeInfoMessage extends BaseMessage {
         ]);
 }
 
+  List<bool> parsePyroContinuity(int pyroDec) {
+    var pyroContinuity = pyroDec.toRadixString(2);
+    String value = pyroContinuity;
+    var padLeftZeros = 8 - pyroContinuity.length;
+    for (var x = 0; x < padLeftZeros; x++) {
+      pyroContinuity = "0" + pyroContinuity;
+    }
+    List<bool> pyroContinuityList = [];
+    for (var i = pyroContinuity.length - 1; i >= 0; i--) {
+      if (pyroContinuity[i] == "1") {
+        pyroContinuityList.add(true);
+      } else {
+        pyroContinuityList.add(false);
+      }
+    }
+    return pyroContinuityList;
+  }
+  
 class PyroInfo extends BaseMessage {
   PyroInfo()
       : super("Pyro Info", [
           ParameterDescription(
-              BinaryTypes.UINT_8_TYPE, Constants.pyroContinuity),
+              BinaryTypes.UINT_8_TYPE, Constants.pyroContinuity, dataTransformer: parsePyroContinuity),
           ParameterDescription(
               BinaryTypes.UINT_16_TYPE,
               Constants
@@ -140,38 +158,19 @@ Map<String, Object> parseMessage(int packetType, ByteData data) {
     var packetObject = MessageOptions.options[packetType];
     var parsedBinary = parseData(data, packetObject!.binaryFormatString);
     messageDict["message_type"] = packetObject.messageType;
-    var messageType = packetObject.messageType;
 
     for (var i = 0; i < packetObject.parameters.length; i++) {
       var parameter = packetObject.parameters[i];
       var value = parsedBinary[i];
-      var databaseKey = parameter.databaseKey;
-
-      if (parameter.databaseKey == "pyro_continuity") {
-        if (messageDict["message_type"] == "Pyro Info") {
-          var pyroContinuity = value.toRadixString(2);
-          value = pyroContinuity;
-          var padLeftZeros = 8 - pyroContinuity.length;
-          for (var x = 0; x < padLeftZeros; x++) {
-            pyroContinuity = "0" + pyroContinuity;
-          }
-          List<bool> pyroContinuityList = [];
-          for (var i = pyroContinuity.length - 1; i >= 0; i--) {
-            if (pyroContinuity[i] == "1") {
-              pyroContinuityList.add(true);
-            } else {
-              pyroContinuityList.add(false);
-            }
-          }
-          value = pyroContinuityList;
-        }
-      }
 
       //TODO: Alternate format types (date & latlon)
+      if (parameter.dataTransformer != null) {
+        value = parameter.dataTransformer!(value);
+      }
       if (value is num) {
         messageDict[parameter.databaseKey] = value * parameter.multiplier;
-      } else if (parameter.dataTransformer != null) {
-        messageDict[parameter.databaseKey] = parameter.dataTransformer!(value);
+      } else {
+        messageDict[parameter.databaseKey] = value;
       }
     }
   } else {
@@ -194,7 +193,7 @@ class ParameterDescription {
   Function? dataTransformer;
 
   ParameterDescription(this.dataType, this.databaseKey,
-      {this.multiplier = 1, this.alternateFormatType = "_"});
+      {this.multiplier = 1, this.alternateFormatType = "_", this.dataTransformer});
 }
 
 class BaseMessage {

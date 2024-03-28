@@ -64,6 +64,7 @@ class Constants {
   static const fcbState = "fcb_state_text";
   static const fcbStateNumber = "fcb_state_number";
   static const pyroContinuity = "pyro_continuity";
+  static const pyroInfo = "Pyro Info";
   static const pyroFireStatus = "pyro_status";
   static const flashUsage = "flash_usage";
   static const softwareVersion = "software_version";
