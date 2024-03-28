@@ -87,22 +87,14 @@ class AltitudeInfoMessage extends BaseMessage {
 }
 
   List<bool> parsePyroContinuity(int pyroDec) {
-    var pyroContinuity = pyroDec.toRadixString(2);
-    String value = pyroContinuity;
-    var padLeftZeros = 8 - pyroContinuity.length;
-    for (var x = 0; x < padLeftZeros; x++) {
-      pyroContinuity = "0" + pyroContinuity;
-    }
     List<bool> pyroContinuityList = [];
-    for (var i = pyroContinuity.length - 1; i >= 0; i--) {
-      if (pyroContinuity[i] == "1") {
-        pyroContinuityList.add(true);
-      } else {
-        pyroContinuityList.add(false);
-      }
+    // Convert the integer pyroDec to an array of booleans that represent Pyro Continuity for each channel
+    for (var i = 0; i < 8; i++) {
+      pyroContinuityList.add((pyroDec & (1<<i)) > 0);
     }
-    return pyroContinuityList;
+  return pyroContinuityList;
   }
+  
   
 class PyroInfo extends BaseMessage {
   PyroInfo()
