@@ -59,8 +59,9 @@ class AltitudeInfoMessage extends BaseMessage {
 
 List<bool> parsePyroContinuity(int pyroDec) {
   List<bool> pyroContinuityList = [];
+  int sizeOfPyroContinuityPacket = 8;
   // Convert the integer pyroDec to an array of booleans that represent Pyro Continuity for each channel
-  for (var i = 0; i < 8; i++) {
+  for (var i = 0; i < sizeOfPyroContinuityPacket; i++) {
     pyroContinuityList.add((pyroDec & (1 << i)) > 0);
   }
   return pyroContinuityList;
