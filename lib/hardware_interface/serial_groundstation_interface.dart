@@ -119,9 +119,9 @@ class SerialGroundstationInterface extends BaseHardwareInterface {
     database.bulkUpdateDatabase(packetDict);
     lastDataTime = DateTime.timestamp().millisecondsSinceEpoch;
 
-   print(parsedRadioInfo);
-  //  print(timestamp);
-  //  print(callsign);
-   print("  ");
+    print(parsedRadioInfo);
+    //  print(timestamp);
+    //  print(callsign);
+    print("  ");
   }
 }

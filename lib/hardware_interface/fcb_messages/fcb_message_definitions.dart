@@ -9,102 +9,69 @@ import '../../constants.dart';
 class OrientationMessage extends BaseMessage {
   OrientationMessage()
       : super("Orientation", [
-          ParameterDescription(
-              BinaryTypes.UINT_8_TYPE, Constants.fcbStateNumber),
-          ParameterDescription(BinaryTypes.INT_8_TYPE, Constants.qW,
-              multiplier: 0.01),
-          ParameterDescription(BinaryTypes.INT_8_TYPE, Constants.qX,
-              multiplier: 0.01),
-          ParameterDescription(BinaryTypes.INT_8_TYPE, Constants.qY,
-              multiplier: 0.01),
-          ParameterDescription(BinaryTypes.INT_8_TYPE, Constants.qZ,
-              multiplier: 0.01),
+          ParameterDescription(BinaryTypes.UINT_8_TYPE, Constants.fcbStateNumber),
+          ParameterDescription(BinaryTypes.INT_8_TYPE, Constants.qW, multiplier: 0.01),
+          ParameterDescription(BinaryTypes.INT_8_TYPE, Constants.qX, multiplier: 0.01),
+          ParameterDescription(BinaryTypes.INT_8_TYPE, Constants.qY, multiplier: 0.01),
+          ParameterDescription(BinaryTypes.INT_8_TYPE, Constants.qZ, multiplier: 0.01),
           ParameterDescription(BinaryTypes.FLOAT_32_TYPE, Constants.gyroX),
           ParameterDescription(BinaryTypes.FLOAT_32_TYPE, Constants.gyroY),
           ParameterDescription(BinaryTypes.FLOAT_32_TYPE, Constants.gyroZ),
-          ParameterDescription(
-              BinaryTypes.FLOAT_32_TYPE, Constants.accelerometerX),
-          ParameterDescription(
-              BinaryTypes.FLOAT_32_TYPE, Constants.accelerometerY),
-          ParameterDescription(
-              BinaryTypes.FLOAT_32_TYPE, Constants.accelerometerZ),
-          ParameterDescription(
-              BinaryTypes.FLOAT_32_TYPE, Constants.magnetometerX),
-          ParameterDescription(
-              BinaryTypes.FLOAT_32_TYPE, Constants.magnetometerY),
-          ParameterDescription(
-              BinaryTypes.FLOAT_32_TYPE, Constants.magnetometerZ),
-          ParameterDescription(BinaryTypes.INT_16_TYPE, Constants.angleVertical,
-              multiplier: 0.1),
+          ParameterDescription(BinaryTypes.FLOAT_32_TYPE, Constants.accelerometerX),
+          ParameterDescription(BinaryTypes.FLOAT_32_TYPE, Constants.accelerometerY),
+          ParameterDescription(BinaryTypes.FLOAT_32_TYPE, Constants.accelerometerZ),
+          ParameterDescription(BinaryTypes.FLOAT_32_TYPE, Constants.magnetometerX),
+          ParameterDescription(BinaryTypes.FLOAT_32_TYPE, Constants.magnetometerY),
+          ParameterDescription(BinaryTypes.FLOAT_32_TYPE, Constants.magnetometerZ),
+          ParameterDescription(BinaryTypes.INT_16_TYPE, Constants.angleVertical, multiplier: 0.1),
         ]);
 }
 
 class PositionData extends BaseMessage {
   PositionData()
       : super("Position Data", [
-          ParameterDescription(
-              BinaryTypes.FLOAT_32_TYPE, Constants.temperature),
+          ParameterDescription(BinaryTypes.FLOAT_32_TYPE, Constants.temperature),
           ParameterDescription(BinaryTypes.FLOAT_32_TYPE, Constants.altitude),
-          ParameterDescription(
-              BinaryTypes.FLOAT_32_TYPE, Constants.verticalSpeed),
+          ParameterDescription(BinaryTypes.FLOAT_32_TYPE, Constants.verticalSpeed),
           ParameterDescription(BinaryTypes.FLOAT_32_TYPE, Constants.latitude),
           ParameterDescription(BinaryTypes.FLOAT_32_TYPE, Constants.longitude),
-          ParameterDescription(
-              BinaryTypes.FLOAT_32_TYPE, Constants.gpsAltitude),
-          ParameterDescription(
-              BinaryTypes.FLOAT_32_TYPE, Constants.batteryVoltage),
-          ParameterDescription(BinaryTypes.FLOAT_32_TYPE, Constants.groundSpeed,
-              multiplier: 0.514444),
-          ParameterDescription(
-              BinaryTypes.FLOAT_32_TYPE, Constants.courseOverGround),
-          ParameterDescription(BinaryTypes.UINT_32_TYPE, Constants.gpsTime,
-              alternateFormatType: "TIME"),
-          ParameterDescription(
-              BinaryTypes.UINT_8_TYPE, Constants.gpsSatellites),
-          ParameterDescription(
-              BinaryTypes.UINT_8_TYPE, Constants.fcbStateNumber),
-          ParameterDescription(
-              BinaryTypes.UINT_8_TYPE, Constants.bluetoothConnection),
+          ParameterDescription(BinaryTypes.FLOAT_32_TYPE, Constants.gpsAltitude),
+          ParameterDescription(BinaryTypes.FLOAT_32_TYPE, Constants.batteryVoltage),
+          ParameterDescription(BinaryTypes.FLOAT_32_TYPE, Constants.groundSpeed, multiplier: 0.514444),
+          ParameterDescription(BinaryTypes.FLOAT_32_TYPE, Constants.courseOverGround),
+          ParameterDescription(BinaryTypes.UINT_32_TYPE, Constants.gpsTime, alternateFormatType: "TIME"),
+          ParameterDescription(BinaryTypes.UINT_8_TYPE, Constants.gpsSatellites),
+          ParameterDescription(BinaryTypes.UINT_8_TYPE, Constants.fcbStateNumber),
+          ParameterDescription(BinaryTypes.UINT_8_TYPE, Constants.bluetoothConnection),
         ]);
 }
 
 class AltitudeInfoMessage extends BaseMessage {
   AltitudeInfoMessage()
       : super("Altitude Info", [
-          ParameterDescription(
-              BinaryTypes.FLOAT_32_TYPE, Constants.barometer1Pressure),
-          ParameterDescription(
-              BinaryTypes.FLOAT_32_TYPE, Constants.barometer2Pressure),
-          ParameterDescription(
-              BinaryTypes.FLOAT_32_TYPE, Constants.pressureReference),
-          ParameterDescription(
-              BinaryTypes.FLOAT_32_TYPE, Constants.groundElevation),
-          ParameterDescription(
-              BinaryTypes.FLOAT_32_TYPE, Constants.groundTemperature),
-          ParameterDescription(
-              BinaryTypes.FLOAT_32_TYPE, Constants.pitotPressure),
+          ParameterDescription(BinaryTypes.FLOAT_32_TYPE, Constants.barometer1Pressure),
+          ParameterDescription(BinaryTypes.FLOAT_32_TYPE, Constants.barometer2Pressure),
+          ParameterDescription(BinaryTypes.FLOAT_32_TYPE, Constants.pressureReference),
+          ParameterDescription(BinaryTypes.FLOAT_32_TYPE, Constants.groundElevation),
+          ParameterDescription(BinaryTypes.FLOAT_32_TYPE, Constants.groundTemperature),
+          ParameterDescription(BinaryTypes.FLOAT_32_TYPE, Constants.pitotPressure),
         ]);
 }
 
-  List<bool> parsePyroContinuity(int pyroDec) {
-    List<bool> pyroContinuityList = [];
-    // Convert the integer pyroDec to an array of booleans that represent Pyro Continuity for each channel
-    for (var i = 0; i < 8; i++) {
-      pyroContinuityList.add((pyroDec & (1<<i)) > 0);
-    }
-  return pyroContinuityList;
+List<bool> parsePyroContinuity(int pyroDec) {
+  List<bool> pyroContinuityList = [];
+  // Convert the integer pyroDec to an array of booleans that represent Pyro Continuity for each channel
+  for (var i = 0; i < 8; i++) {
+    pyroContinuityList.add((pyroDec & (1 << i)) > 0);
   }
-  
-  
+  return pyroContinuityList;
+}
+
 class PyroInfo extends BaseMessage {
   PyroInfo()
       : super("Pyro Info", [
-          ParameterDescription(
-              BinaryTypes.UINT_8_TYPE, Constants.pyroContinuity, dataTransformer: parsePyroContinuity),
-          ParameterDescription(
-              BinaryTypes.UINT_16_TYPE,
-              Constants
-                  .pyroFireStatus), //TODO: We need a special parse function
+          ParameterDescription(BinaryTypes.UINT_8_TYPE, Constants.pyroContinuity, dataTransformer: parsePyroContinuity),
+          ParameterDescription(BinaryTypes.UINT_16_TYPE, Constants.pyroFireStatus), //TODO: We need a special parse function
           ParameterDescription(BinaryTypes.UINT_8_TYPE, Constants.flashUsage),
         ]);
 }
@@ -112,16 +79,11 @@ class PyroInfo extends BaseMessage {
 class GroundStationMessage extends BaseMessage {
   GroundStationMessage()
       : super("GroundStation Message", [
-          ParameterDescription(
-              BinaryTypes.FLOAT_32_TYPE, Constants.groundStationLatitude),
-          ParameterDescription(
-              BinaryTypes.FLOAT_32_TYPE, Constants.groundStationLongitude),
-          ParameterDescription(
-              BinaryTypes.FLOAT_32_TYPE, Constants.groundStationAltitude),
-          ParameterDescription(
-              BinaryTypes.FLOAT_64_TYPE, Constants.groundStationPressure),
-          ParameterDescription(
-              BinaryTypes.FLOAT_64_TYPE, Constants.groundStationTemperature),
+          ParameterDescription(BinaryTypes.FLOAT_32_TYPE, Constants.groundStationLatitude),
+          ParameterDescription(BinaryTypes.FLOAT_32_TYPE, Constants.groundStationLongitude),
+          ParameterDescription(BinaryTypes.FLOAT_32_TYPE, Constants.groundStationAltitude),
+          ParameterDescription(BinaryTypes.FLOAT_64_TYPE, Constants.groundStationPressure),
+          ParameterDescription(BinaryTypes.FLOAT_64_TYPE, Constants.groundStationTemperature),
         ]);
 }
 
@@ -184,8 +146,7 @@ class ParameterDescription {
   num multiplier;
   Function? dataTransformer;
 
-  ParameterDescription(this.dataType, this.databaseKey,
-      {this.multiplier = 1, this.alternateFormatType = "_", this.dataTransformer});
+  ParameterDescription(this.dataType, this.databaseKey, {this.multiplier = 1, this.alternateFormatType = "_", this.dataTransformer});
 }
 
 class BaseMessage {
