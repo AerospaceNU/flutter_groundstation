@@ -57,10 +57,20 @@ class AltitudeInfoMessage extends BaseMessage {
         ]);
 }
 
+List<bool> parsePyroContinuity(int pyroDec) {
+  List<bool> pyroContinuityList = [];
+  int sizeOfPyroContinuityPacket = 8;
+  // Convert the integer pyroDec to an array of booleans that represent Pyro Continuity for each channel
+  for (var i = 0; i < sizeOfPyroContinuityPacket; i++) {
+    pyroContinuityList.add((pyroDec & (1 << i)) > 0);
+  }
+  return pyroContinuityList;
+}
+
 class PyroInfo extends BaseMessage {
   PyroInfo()
       : super("Pyro Info", [
-          ParameterDescription(BinaryTypes.UINT_8_TYPE, Constants.pyroContinuity),
+          ParameterDescription(BinaryTypes.UINT_8_TYPE, Constants.pyroContinuity, dataTransformer: parsePyroContinuity),
           ParameterDescription(BinaryTypes.UINT_16_TYPE, Constants.pyroFireStatus), //TODO: We need a special parse function
           ParameterDescription(BinaryTypes.UINT_8_TYPE, Constants.flashUsage),
         ]);
@@ -108,6 +118,9 @@ Map<String, Object> parseMessage(int packetType, ByteData data) {
       var value = parsedBinary[i];
 
       //TODO: Alternate format types (date & latlon)
+      if (parameter.dataTransformer != null) {
+        value = parameter.dataTransformer!(value);
+      }
       if (value is num) {
         messageDict[parameter.databaseKey] = value * parameter.multiplier;
       } else {
@@ -117,7 +130,6 @@ Map<String, Object> parseMessage(int packetType, ByteData data) {
   } else {
     print("Unknown message type $packetType");
   }
-
   return messageDict;
 }
 
@@ -132,8 +144,9 @@ class ParameterDescription {
   String databaseKey;
   String alternateFormatType;
   num multiplier;
+  Function? dataTransformer;
 
-  ParameterDescription(this.dataType, this.databaseKey, {this.multiplier = 1, this.alternateFormatType = "_"});
+  ParameterDescription(this.dataType, this.databaseKey, {this.multiplier = 1, this.alternateFormatType = "_", this.dataTransformer});
 }
 
 class BaseMessage {
