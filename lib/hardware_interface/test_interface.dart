@@ -1,5 +1,6 @@
-import 'dart:async';
 import 'dart:math';
+
+import 'package:flutter_groundstation/data_stream.dart';
 
 import 'base_hardware_interface.dart';
 
@@ -15,25 +16,30 @@ class TestHardwareInterface extends BaseHardwareInterface {
 
   @override
   void runWhileEnabled() {
-    database.updateDatabase("test", i++);
-    database.updateDatabase("test_1", sin(i / 50));
-    database.updateDatabase("test_2", sin(i / 5) + 3);
-    database.updateDatabase("test_3", sin(i / 50) + 6);
+    //Make sim packet
+    var packet = <String, dynamic>{};
+    packet["test"] = i++;
+    packet["test_1"] = sin(i / 50);
+    packet["test_2"] = sin(i / 5) + 3;
+    packet["test_3"] = sin(i / 50) + 6;
+    packet["random_1"] = random.nextDouble();
+    packet[Constants.latitude] = sin(i / 50) / 100 + 42.37;
+    packet[Constants.longitude] = cos(i / 50) / 100 - 71.06;
+    packet[Constants.groundStationLatitude] = 42.361145;
+    packet[Constants.groundStationLongitude] = -71.0570803;
 
-    database.updateDatabase("random_1", random.nextDouble());
-
-    database.updateDatabase(Constants.latitude, sin(i / 50) / 100 + 42.37);
-    database.updateDatabase(Constants.longitude, cos(i / 50) / 100 - 71.06);
-    database.updateDatabase(Constants.groundStationLatitude, 42.361145);
-    database.updateDatabase(Constants.groundStationLongitude, -71.0570803);
-
-    database.updateDatabase("random_1", random.nextDouble());
-
-    List<bool> wid_3 = List<bool>.filled(max_pyros, false);
+    List<bool> testPyroFireStatus = List<bool>.filled(max_pyros, false);
     for (int i = 0; i < max_pyros; i++) {
-      wid_3[i] = random.nextBool();
+      testPyroFireStatus[i] = random.nextBool();
     }
-    database.updateDatabase(Constants.pyroFireStatus, wid_3);
-    database.updateDatabase(Constants.pyroContinuity, wid_3);
+    packet[Constants.pyroFireStatus] = testPyroFireStatus;
+
+    List<bool> testPyroContinuity = List<bool>.filled(max_pyros, false);
+    for (int i = 0; i < max_pyros; i++) {
+      testPyroContinuity[i] = random.nextBool();
+    }
+    packet[Constants.pyroContinuity] = testPyroContinuity;
+
+    DataStream.streamcontroller.add(packet);
   }
 }

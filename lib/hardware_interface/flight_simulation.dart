@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:flutter_groundstation/data_stream.dart';
 import 'package:matrices/matrices.dart';
 import 'package:latlong2/latlong.dart';
 
@@ -91,8 +92,10 @@ class FlightSimulation extends BaseHardwareInterface {
 
     //Environmental values
     var temperature = 30; //C
-    var airPressure = 101325 * pow((1 - 2.25577e-5 * position[1][0]), 5.25588); //Pa
-    var airDensity = airPressure / (287.0500676 * (temperature + 273.15)); //kg/m^3
+    var airPressure =
+        101325 * pow((1 - 2.25577e-5 * position[1][0]), 5.25588); //Pa
+    var airDensity =
+        airPressure / (287.0500676 * (temperature + 273.15)); //kg/m^3
 
     //Timing values
     var currentTime = DateTime.now().millisecondsSinceEpoch / 1000;
@@ -159,7 +162,11 @@ class FlightSimulation extends BaseHardwareInterface {
       //Calculate component forces
       var thrustVector = rotationMatrix(theta) * vector(thrustForce, 0);
       var gravityVector = vector(0, -rocketMass * G);
-      var parachuteForceMagnitude = parachuteCd * airDensity * pow(velocityMagnitude, 2) * parachuteArea / 2;
+      var parachuteForceMagnitude = parachuteCd *
+          airDensity *
+          pow(velocityMagnitude, 2) *
+          parachuteArea /
+          2;
       var parachuteVector = unitVector(velocity) * -1 * parachuteForceMagnitude;
       //TODO: Calculate drag
 
@@ -194,7 +201,8 @@ class FlightSimulation extends BaseHardwareInterface {
     // print(groundSpeed);
 
     //Completly detached from reality
-    var rssi = -45 - (0.01 * distanceFromLaunchSite) + Random().nextDouble() * 3;
+    var rssi =
+        -45 - (0.01 * distanceFromLaunchSite) + Random().nextDouble() * 3;
 
     double yaw = flightHeading.toDouble();
     double pitch = radianToDeg(theta);
@@ -222,6 +230,7 @@ class FlightSimulation extends BaseHardwareInterface {
     packet[Constants.fcbStateNumber] = state;
     packet[Constants.rssi] = rssi;
 
-    database.bulkUpdateDatabase(packet);
+    // database.bulkUpdateDatabase(packet);
+    DataStream.streamcontroller.add(packet);
   }
 }

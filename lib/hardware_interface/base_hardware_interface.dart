@@ -1,15 +1,18 @@
 import 'dart:async';
 
-import '../database.dart';
+// import '../database.dart';
+import '../data_stream.dart';
 
 ///Extend this class to add custom (non-front-end) functionality to the GUI
 class BaseHardwareInterface {
-  var database = Database();
+  // var database = Database();
+  var dataStream = DataStream();
   late Timer guiUpdateLoopTimer;
   var enabled = false;
 
   BaseHardwareInterface() {
-    guiUpdateLoopTimer = Timer.periodic(const Duration(milliseconds: 50), runLoopOnce);
+    guiUpdateLoopTimer =
+        Timer.periodic(const Duration(milliseconds: 50), runLoopOnce);
   }
 
   bool isEnabled() {

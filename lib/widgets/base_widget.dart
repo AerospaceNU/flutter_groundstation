@@ -2,22 +2,33 @@ import 'package:flutter/material.dart';
 
 import '../callback_handler.dart';
 import '../database.dart';
+import '../data_stream.dart';
 import '../constants.dart';
 
-abstract class BaseWidgetState<WidgetClass extends StatefulWidget> extends State<WidgetClass> {
+abstract class BaseWidgetState<WidgetClass extends StatefulWidget>
+    extends State<WidgetClass> {
   late CallbackHandler callbackHandler;
   static late Database database;
-  final _subscribedKeys = <String>{}; //I don't understand why you can keep adding to a list declared final, but I'm not going to question it
+  static late DataStream dataStream;
+  final _subscribedKeys =
+      <String>{}; //I don't understand why you can keep adding to a list declared final, but I'm not going to question it
 
   BaseWidgetState() {
     callbackHandler = CallbackHandler();
     database = Database();
+    dataStream =
+        DataStream(); // this isn't the same one is it - shoudl use a getter as opposed to a constructor
 
-    callbackHandler.registerCallback(Constants.databaseUpdateKey, onDatabaseUpdate);
+    callbackHandler.registerCallback(
+        Constants.databaseUpdateKey, onDatabaseUpdate);
   }
 
   void subscribeToDatabaseKey(String key) {
     _subscribedKeys.add(key);
+  }
+
+  Stream<dynamic> getStream() {
+    return DataStream.streamcontroller.stream;
   }
 
   T getDatabaseValue<T>(String key, T defaultValue) {

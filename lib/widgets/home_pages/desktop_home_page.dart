@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 import 'package:flutter_groundstation/widgets/tabs/home_tab.dart';
@@ -6,12 +8,14 @@ import 'base_home_page.dart';
 
 import '../tabs/graphs_tab.dart';
 import '../tabs/diagnostics_tab.dart';
+import '../tabs/serial_stream_tab.dart';
 
 import '../desktop_home_page_menu.dart';
 
 import '../../hardware_interface/test_interface.dart';
 import '../../hardware_interface/serial_groundstation_interface.dart';
 import '../../hardware_interface/flight_simulation.dart';
+import '../../hardware_interface/file_interface.dart';
 
 import '/constants.dart';
 
@@ -31,6 +35,7 @@ class _DesktopHomePageState extends BaseHomePageState<DesktopHomePage> {
     addHardwareInterface(TestHardwareInterface());
     addHardwareInterface(SerialGroundstationInterface());
     addHardwareInterface(FlightSimulation());
+    addHardwareInterface(FileInterface());
   }
 
   @override
@@ -39,7 +44,7 @@ class _DesktopHomePageState extends BaseHomePageState<DesktopHomePage> {
       const DesktopHomePageMenu(),
       Expanded(
           child: DefaultTabController(
-        length: 3,
+        length: 4,
         child: Scaffold(
           appBar: AppBar(
             title: const TabBar(
@@ -47,6 +52,7 @@ class _DesktopHomePageState extends BaseHomePageState<DesktopHomePage> {
                 Tab(text: "Primary"),
                 Tab(text: "Diagnostics"),
                 Tab(text: "Graphs tab"),
+                Tab(text: "Stream Tab")
               ],
             ),
           ),
@@ -55,6 +61,7 @@ class _DesktopHomePageState extends BaseHomePageState<DesktopHomePage> {
               HomeTab(),
               DiagnosticsTab(),
               GraphTab(),
+              SerialStreamTab()
             ],
           ),
         ),

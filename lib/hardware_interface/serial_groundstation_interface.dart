@@ -1,7 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
-import '../serial/serial_none.dart' if (dart.library.io) '../serial/serial_desktop.dart' if (dart.library.html) '../serial/serial_web.dart';
+import '../serial/serial_none.dart'
+    if (dart.library.io) '../serial/serial_desktop.dart'
+    if (dart.library.html) '../serial/serial_web.dart';
 
 import '../binary_parser/binary_parser.dart';
 import 'fcb_messages/fcb_message_definitions.dart';
@@ -9,6 +11,8 @@ import 'fcb_messages/fcb_message_generation.dart';
 
 import '../constants.dart';
 import 'base_hardware_interface.dart';
+
+import '../data_stream.dart';
 
 ///Reads data from serial port, and updates database
 class SerialGroundstationInterface extends BaseHardwareInterface {
@@ -116,7 +120,12 @@ class SerialGroundstationInterface extends BaseHardwareInterface {
 
     var messageDict = parseMessage(packetType, packet);
     packetDict.addAll(messageDict);
-    database.bulkUpdateDatabase(packetDict);
+
+    //TODO: change this to return a stream
+    // database.bulkUpdateDatabase(packetDict);
+    // smth like "yield packetDict" OR smth like stream.push
+    DataStream.streamcontroller.add(packetDict);
+
     lastDataTime = DateTime.timestamp().millisecondsSinceEpoch;
 
     print(parsedRadioInfo);
