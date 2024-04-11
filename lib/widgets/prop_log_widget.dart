@@ -3,6 +3,8 @@ import 'base_widget.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 import 'package:web_socket_channel/status.dart' as status;
 import 'package:intl/intl.dart';
+import 'dart:convert';
+
 
 class PropLogWidget extends StatefulWidget {
   const PropLogWidget({super.key});
@@ -42,7 +44,13 @@ class CommandData extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(data);
+    dynamic dataJson = jsonDecode(this.data);
+    String commandType = dataJson["command"];
+    int timeStamp = dataJson["timeStamp"];
+    var date = DateTime.fromMillisecondsSinceEpoch(timeStamp * 1000);
+
+
+    return Text("${DateFormat('kk:mm:ss').format(date)} $commandType");
   }
 }
 
@@ -69,7 +77,7 @@ class _PropLogWidgetState extends BaseWidgetState<PropLogWidget> {
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
-        border: Border.all(color: Colors.white)
+        border: Border.all(color: const Color.fromARGB(255, 57, 6, 6))
         ),
             child: Column(children: [
         StreamBuilder(
@@ -87,18 +95,18 @@ class _PropLogWidgetState extends BaseWidgetState<PropLogWidget> {
       );
     }
 
-  /*
-    Future<List<Widget>> buildLog () async {
-      while (!snapshot.hasData) {
-        logWidget.add(Container(
-            child: 
-            Text("${DateFormat('kk:mm:ss').format(DateTime.now())} Trying to connect to $url\n"),
-            )
-        );
-      }
-      return logWidget;
-    }
-    */
+
+    // Future<List<Widget>> buildLog () async {
+    //   while (!snapshot.hasData) {
+    //     logWidget.add(Container(
+    //         child: 
+    //         Text("${DateFormat('kk:mm:ss').format(DateTime.now())} Trying to connect to $url\n"),
+    //         )
+    //     );
+    //   }
+    //   return logWidget;
+    // }
+
 }
 
     /* hypoethetically this is how you would send data
